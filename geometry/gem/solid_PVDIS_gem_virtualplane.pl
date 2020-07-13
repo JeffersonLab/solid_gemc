@@ -14,6 +14,7 @@ my $DetectorMother="root";
 sub solid_PVDIS_gem_virtualplane
 {
 make_gem_virtualplane();
+make_gem_shield();
 }
 
 my $Nplate	= $parameters{"Nplate"};
@@ -83,6 +84,36 @@ sub make_gem_virtualplane
     $detector{"hit_type"}    = "flux";
     my $id=1000000+$n*100000+10000;
     $detector{"identifiers"} = "id manual $id";
+    print_det(\%configuration, \%detector);
+ }
+}
+
+sub make_gem_shield
+{
+ my $Dz   = 0.01436/2; 
+ my @PlateZ_shield = ($PlateZ1-0.95);
+
+ for(my $n=1; $n<=2; $n++)
+ {
+    my %detector=init_det();
+    $detector{"name"}        = "$DetectorName\_$n";
+    $detector{"mother"}      = "$DetectorMother" ;
+    $detector{"description"} = $detector{"name"};
+    $detector{"pos"}        = "0*cm 0*cm $PlateZ_shield[$n-1]*cm";
+    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
+    $detector{"color"}      = "44ee11";
+    $detector{"type"}       = "Tube";
+    $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz*cm 0*deg 360*deg";
+    $detector{"material"}   = "G4_Gu";
+    $detector{"mfield"}     = "no";
+    $detector{"ncopy"}      = 1;
+    $detector{"pMany"}       = 1;
+    $detector{"exist"}       = 1;
+    $detector{"visible"}     = 1;
+    $detector{"style"}       = 0;
+    $detector{"sensitivity"} = "no";
+    $detector{"hit_type"}    = "no";
+    $detector{"identifiers"} = "no";
     print_det(\%configuration, \%detector);
  }
 }

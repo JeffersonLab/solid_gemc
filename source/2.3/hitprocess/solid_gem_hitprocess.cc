@@ -99,6 +99,13 @@ map<string, double> solid_gem_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	dgtz["py"] = p.y()/MeV;
 	dgtz["pz"] = p.z()/MeV;
 	
+	dgtz["mpid"]    = (double) aHit->GetmPID();
+	dgtz["mtid"]    = (double) aHit->GetmTrackId();
+	dgtz["otid"]    = (double) aHit->GetoTrackId();
+	dgtz["mvx"]     = aHit->GetmVert().getX();
+	dgtz["mvy"]     = aHit->GetmVert().getY();
+	dgtz["mvz"]     = aHit->GetmVert().getZ();		
+	
 	dgtz["id"]  =  identity[0].id;	
 	dgtz["hitn"] = hitn;
 	
