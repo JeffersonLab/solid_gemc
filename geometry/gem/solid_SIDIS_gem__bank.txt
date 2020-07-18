@@ -23,13 +23,9 @@
            solid_gem  |                  py  |                                        Momentum y  |   21   |                  Dd  
            solid_gem  |                  pz  |                                        Momentum z  |   22   |                  Dd  
            solid_gem  |                  id  |                                         Volume ID  |   23   |                  Di  
-           solid_gem  |                mpid  |ID of the mother of the first particle entering the sensitive volume  |    24   |                  Di  
-           solid_gem  |                mtid  |Track ID of the mother of the first particle entering the sensitive volume  |    25   |                  Di  
-           solid_gem  |                otid  |Track ID of the original track that generated the first particle entering the sensitive volume  |    26   |                  Di  
-          solid_gem  |                 mvx  |x component of primary vertex of the mother of the particle entering the sensitive volume  |   27   |           
-       Dd  
-           solid_gem  |                 mvy  |y component of primary vertex of the mother of the particle entering the sensitive volume  |   28  |           
-       Dd  
-           solid_gem  |                 mvz  |z component of primary vertex of the mother of the particle entering the sensitive volume  |   29   |           
-       Dd  
-           
+           solid_gem  |                mpid  |ID of the mother of the first particle entering the sensitive volume  |   24   |                  Di  
+           solid_gem  |                mtid  |Track ID of the mother of the first particle entering the sensitive volume  |   25   |                  Di  
+           solid_gem  |                otid  |Track ID of the original track that generated the first particle entering the sensitive volume  |   26   |                  Di  
+           solid_gem  |                 mvx  |x component of primary vertex of the mother of the particle entering the sensitive volume  |   27   |                  Dd  
+           solid_gem  |                 mvy  |y component of primary vertex of the mother of the particle entering the sensitive volume  |   28   |                  Dd  
+           solid_gem  |                 mvz  |z component of primary vertex of the mother of the particle entering the sensitive volume  |   29   |                  Dd  

@@ -47,7 +47,12 @@ sub define_bank
 	insert_bank_variable(\%configuration, $bankname, "py",          21, "Dd", "Momentum y");
 	insert_bank_variable(\%configuration, $bankname, "pz",          22, "Dd", "Momentum z");
 	insert_bank_variable(\%configuration, $bankname, "id",          23, "Di", "Volume ID");
-	
+	insert_bank_variable(\%configuration, $bankname, "mpid",        24, "Di", "ID of the mother of the first particle entering the sensitive volume");
+	insert_bank_variable(\%configuration, $bankname, "mtid",        25, "Di", "Track ID of the mother of the first particle entering the sensitive volume");
+	insert_bank_variable(\%configuration, $bankname, "otid",        26, "Di", "Track ID of the original track that generated the first particle entering the sensitive volume");
+	insert_bank_variable(\%configuration, $bankname, "mvx",         27, "Dd", "x component of primary vertex of the mother of the particle entering the sensitive volume");
+	insert_bank_variable(\%configuration, $bankname, "mvy",         28, "Dd", "y component of primary vertex of the mother of the particle entering the sensitive volume");
+	insert_bank_variable(\%configuration, $bankname, "mvz",         29, "Dd", "z component of primary vertex of the mother of the particle entering the sensitive volume");	
 }
 define_bank();
 
