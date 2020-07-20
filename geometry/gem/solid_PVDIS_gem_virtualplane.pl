@@ -91,7 +91,7 @@ sub make_gem_virtualplane
 sub make_gem_shield
 {
  my $Dz   = 0.01436/2; 
- my @PlateZ_shield = ($PlateZ1-0.95);
+ my @PlateZ_shield = ($PlateZ1-0.95,$PlateZ2-0.95);
 
  for(my $n=1; $n<=2; $n++)
  {
