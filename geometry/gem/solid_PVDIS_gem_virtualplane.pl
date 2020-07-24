@@ -96,7 +96,7 @@ sub make_gem_shield
  for(my $n=1; $n<=2; $n++)
  {
     my %detector=init_det();
-    $detector{"name"}        = "$DetectorName\_$n";
+    $detector{"name"}        = "$DetectorName\_shield\_$n";
     $detector{"mother"}      = "$DetectorMother" ;
     $detector{"description"} = $detector{"name"};
     $detector{"pos"}        = "0*cm 0*cm $PlateZ_shield[$n-1]*cm";
