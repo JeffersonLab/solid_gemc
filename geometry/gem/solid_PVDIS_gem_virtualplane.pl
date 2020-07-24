@@ -104,7 +104,7 @@ sub make_gem_shield
     $detector{"color"}      = "44ee11";
     $detector{"type"}       = "Tube";
     $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz*cm 0*deg 360*deg";
-    $detector{"material"}   = "G4_Gu";
+    $detector{"material"}   = "G4_Cu";
     $detector{"mfield"}     = "no";
     $detector{"ncopy"}      = 1;
     $detector{"pMany"}       = 1;
