@@ -53,6 +53,8 @@ sub define_bank
 	insert_bank_variable(\%configuration, $bankname, "mvx",         27, "Dd", "x component of primary vertex of the mother of the particle entering the sensitive volume");
 	insert_bank_variable(\%configuration, $bankname, "mvy",         28, "Dd", "y component of primary vertex of the mother of the particle entering the sensitive volume");
 	insert_bank_variable(\%configuration, $bankname, "mvz",         29, "Dd", "z component of primary vertex of the mother of the particle entering the sensitive volume");	
+	insert_bank_variable(\%configuration, $bankname, "nsteps",      30, "Di", "Number of geant4 steps");			
+	insert_bank_variable(\%configuration, $bankname, "procID",      31, "Di", "Process that created the first particle");		
 }
 define_bank();
 
