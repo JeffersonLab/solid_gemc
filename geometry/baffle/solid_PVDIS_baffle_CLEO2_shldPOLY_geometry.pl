@@ -153,7 +153,7 @@ sub solid_PVDIS_baffle_CLEO2_shldPOLY_geometry
     $Nblock  = $parameters{"Nblock"};
     $zc0 = $parameters{"zc0"}; 
     $Dzc = $parameters{"Dzc"};
-    $Dz_gap = 0.002; # space for baffle observers (full length)
+    $Dz_gap = 0.1; # space for baffle observers (full length)
     $Dz_shld =  $Dzc - 2 * $Dz - 2 * $Dz_gap ; #full length (Polycone)
     @rinin = ($parameters{"rinin1"}, $parameters{"rinin2"}, 
 	      $parameters{"rinin3"}, $parameters{"rinin4"}, 
