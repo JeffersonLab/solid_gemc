@@ -102,7 +102,7 @@ int analysis_rate(string inputfile_name,string par="e",string runmode="trigger",
   gStyle->SetLabelSize(0.04,"xyz"); // size of axis values
   gStyle->SetTitleSize(0.04,"xyz");   
   gStyle->SetTitleSize(0.07,"t");    
-   gStyle->SetPaintTextFormat("4.1f");   
+  gStyle->SetPaintTextFormat("4.1f");   
   
   
   string par_title,e_title,par_filename;
@@ -391,7 +391,7 @@ cout << "output file " << outputfile_name << endl;
 	      //       cout << "gen_pid->size() " << gen_pid->size() << endl;        
 		for (int j=0;j<gen_pid->size();j++) {
 // 	            cout << gen_pid->at(j) << " " << gen_px->at(j) << " " << gen_py->at(j) << " " << gen_pz->at(j) << " " << gen_vx->at(j) << " " << gen_vy->at(j) << " " << gen_vz->at(j) << endl; 
-		    pid_gen=gen_pid->at(j);
+		    pid_gen=TMath::Nint(gen_pid->at(j));
 		    px_gen=gen_px->at(j)/1e3;
 		    py_gen=gen_py->at(j)/1e3;
 		    pz_gen=gen_pz->at(j)/1e3;
@@ -403,7 +403,8 @@ cout << "output file " << outputfile_name << endl;
 		    phi_gen=atan2(py_gen,px_gen)*DEG;
 // 	            cout << "p_gen " << p_gen << endl; 
 
-		    if ((par=="e" && pid_gen==11) || (par=="pi0" && pid_gen==111) || (par=="pim" && pid_gen==-211) || (par=="pip" && pid_gen==211) || (par=="p" && pid_gen==2212)){
+		    if ((par=="e" && pid_gen==11) || (par=="pi0" && pid_gen==111) || (par=="pim" && pid_gen==-211) || 
+				(par=="pip" && pid_gen==211) || (par=="p" && pid_gen==2212)) {
 		      Q2_gen=4*11*p_gen*sin(theta_gen/2/180*3.1416)*sin(theta_gen/2/180*3.1416);
 		      x_gen=Q2_gen/2/0.938/(11-p_gen);
 		      tid_theone=j+1;
@@ -435,40 +436,47 @@ cout << "output file " << outputfile_name << endl;
 		double hit_vr=sqrt(pow(flux_vx->at(j),2)+pow(flux_vy->at(j),2))/1e1; //mm to cm
 		double hit_vy=flux_vy->at(j)/1e1,hit_vx=flux_vx->at(j)/1e1,hit_vz=flux_vz->at(j)/1e1;           //mm to cm		  
 		double hit_r=sqrt(pow(flux_avg_x->at(j),2)+pow(flux_avg_y->at(j),2))/1e1; //mm to cm
-		double hit_y=flux_avg_y->at(j)/1e1,hit_x=flux_avg_x->at(j)/1e1,hit_z=flux_avg_z->at(j)/1e1;           //mm to cm		
+		double hit_y=flux_avg_y->at(j)/1e1,hit_x=flux_avg_x->at(j)/1e1,hit_z=flux_avg_z->at(j)/1e1;     //mm to cm		
 		double hit_phi=atan2(hit_y,hit_x)*DEG;       //rad to  deg
 		double hit_p=sqrt(flux_px->at(j)*flux_px->at(j)+flux_py->at(j)*flux_py->at(j)+flux_pz->at(j)*flux_pz->at(j))/1e3;  //MeV to GeV
 			
 // 		TVector3 *vec_hit(hit_x,hit_y,hit_z), *vec_v(hit_vx,hit_vy,hit_vz),*vec_p(flux_px->at(j),flux_py->at(j),flux_pz->at(j));
 // 		TVector3 *vec_path=vec_hit-vec_v_gen;
 		  
-		  if (flux_id->at(j)==3110000) {
+		  if (TMath::Nint(flux_id->at(j))==3110000) {
+			//apply cuts
+            if(hit_p<0.3) continue;      //particle less than 0.3GeV will not pass pre-lead (1.12cm), do not event consider this particle
+			if(hit_r > rout_cut_FA || hit_r < rin_cut_FA)  continue;
+			
 // 		    cout << " ec " << flux_tid->at(j) << " " <<  flux_mtid->at(j) << endl;
-		    
+		    int this_pid = TMath::Nint(flux_pid->at(j));
+		    int this_tid = TMath::Nint(flux_tid->at(j));
+		    int this_otid = TMath::Nint(flux_otid->at(j));
 		    //find the original particle and plot its vertex values assuming tracking can reconstruct those
-		    if ((par=="e" && flux_pid->at(j)==11) || (par=="pim" && flux_tid->at(j)==tid_theone && flux_pid->at(j)==-211) || (par=="pip" && flux_tid->at(j)==tid_theone && flux_pid->at(j)==211) || (par=="p" && flux_tid->at(j)==tid_theone && flux_pid->at(j)==2212)){
+		    if ((par=="e" && this_pid==11) || (par=="pim" && this_tid==tid_theone && this_pid==-211) || 
+				(par=="pip" && this_tid==tid_theone && this_pid==211) || (par=="p" && this_tid==tid_theone && this_pid==2212) ) {
 // 		    if ((par=="e" && flux_tid->at(j)==tid_theone && flux_pid->at(j)==11) || (par=="pim" && flux_tid->at(j)==tid_theone && flux_pid->at(j)==-211) || (par=="pip" && flux_tid->at(j)==tid_theone && flux_pid->at(j)==211) || (par=="p" && flux_tid->at(j)==tid_theone && flux_pid->at(j)==2212)){
 		      hPTheta->Fill(theta_gen,p_gen,rate/1e3);
 		      hQ2x->Fill(x_gen,Q2_gen,rate/1e3);
 		    }
 		    
 // 		    for pi0, find the e- from pi0 originally
-		    if (par=="pi0" && flux_otid->at(j)==tid_theone && flux_pid->at(j)==11){
+		    if (par=="pi0" && this_otid==tid_theone && this_pid==11) {
 // 		    for pi0, find the e- from direct decay only pi0 ->e-e+
 // 		    if (par=="pi0" && flux_mtid->at(j)==tid_theone && flux_pid->at(j)==11){
 // 		      cout << " ec " << tid_theone << " " <<  flux_tid->at(j) << " " <<  flux_mtid->at(j) << " " << flux_otid->at(j) << endl;		      
 		      
 		      // assume this e- is scattered e- beam and use flux value instead of vertex values
-     		      double hit_theta=atan2(flux_px->at(j)*flux_px->at(j)+flux_py->at(j)*flux_py->at(j),flux_pz->at(j)*flux_pz->at(j))/3.1416*180;
+		      double hit_theta=atan2(flux_px->at(j)*flux_px->at(j)+flux_py->at(j)*flux_py->at(j),flux_pz->at(j)*flux_pz->at(j))/3.1416*180;
 		      double hit_Q2=4*11*hit_p*sin(hit_theta/2/180*3.1416)*sin(hit_theta/2/180*3.1416);
 		      double hit_x=hit_Q2/2/0.938/(11-hit_p);
 		      hPTheta->Fill(hit_theta,hit_p,rate/1e3);
-		      hQ2x->Fill(hit_x,hit_Q2,rate/1e3);		      
+		      hQ2x->Fill(hit_x,hit_Q2,rate/1e3);
 		    }
 		    
-		    if (par=="eany" && flux_pid->at(j)==11) {
+		    if (par=="eany" && this_pid==11) {
 		      // assume this e- is scattered e- beam and use flux value instead of vertex values
-     		      double hit_theta=atan2(flux_px->at(j)*flux_px->at(j)+flux_py->at(j)*flux_py->at(j),flux_pz->at(j)*flux_pz->at(j))/3.1416*180;
+		      double hit_theta=atan2(flux_px->at(j)*flux_px->at(j)+flux_py->at(j)*flux_py->at(j),flux_pz->at(j)*flux_pz->at(j))/3.1416*180;
 		      double hit_Q2=4*11*hit_p*sin(hit_theta/2/180*3.1416)*sin(hit_theta/2/180*3.1416);
 		      double hit_x=hit_Q2/2/0.938/(11-hit_p);
 		      hPTheta->Fill(hit_theta,hit_p,rate/1e3);
@@ -494,7 +502,8 @@ outputfile->Flush();
    hPTheta->Draw("text colz");
 //    hPTheta->SetMaximum(1e13);
 //    hPTheta->SetMinimum(1e-3);
-   cPTheta->SaveAs(Form("%s_rate_PTheta_%s.pdf",type.c_str(),par.c_str()));         
+   cPTheta->SaveAs(Form("%s_rate_PTheta_%s.pdf",type.c_str(),par.c_str()));  
+   cPTheta->SaveAs(Form("%s_rate_PTheta_%s.png",type.c_str(),par.c_str()));         
 	
    TCanvas *cQ2x = new TCanvas("cQ2x","cQ2x",1800,1000);
    hQ2x->SetTitle(Form("%s rate (kHz);x;Q^{2} (GeV/c)^{2}",par_title.c_str()));       
@@ -503,7 +512,8 @@ outputfile->Flush();
    hQ2x->Draw("text colz");
 //    hQ2x->SetMaximum(1e13);
 //    hQ2x->SetMinimum(1e-3);
-   cQ2x->SaveAs(Form("%s_rate_Q2x_%s.pdf",type.c_str(),par.c_str()));         
+   cQ2x->SaveAs(Form("%s_rate_Q2x_%s.pdf",type.c_str(),par.c_str()));  
+   cQ2x->SaveAs(Form("%s_rate_Q2x_%s.png",type.c_str(),par.c_str()));         
 	
 	
 }
