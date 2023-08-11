@@ -1,7 +1,7 @@
-     SL_mrpc_MMMylar  |                 Mylar in MRPC  |     1.400  |         3  |         G4_H 0.041958 G4_C 0.625017 G4_O 0.333025  | none  | none  | none  | none  | none  
- SL_mrpc_AlHoneycomb  |           AlHoneycomb in MRPC  |     0.130  |         1  |                                           G4_Al 1  | none  | none  | none  | none  | none  
-SL_mrpc_AlHoneycomb2  |            denser AlHoneycomb  |     1.000  |         1  |                                           G4_Al 1  | none  | none  | none  | none  | none  
-    SL_mrpc_PCBoardM  |             PCB board in MRPC  |     1.860  |         3  |                      G4_C 0.4 G4_Si 0.3 G4_Fe 0.3  | none  | none  | none  | none  | none  
-       SL_mrpc_Freon  |             TetraFluoroEthane  |   0.00425  |         3  |                                       C 2 H 2 F 4  | none  | none  | none  | none  | none  
-         SL_mrpc_SF6  |           Sulfur hexafluoride  |     0.010  |         2  |                                           S 1 F 6  | none  | none  | none  | none  | none  
-         SL_mrpc_Gas  |                   Gas in MRPC  |   0.00445  |         3  |SL_mrpc_Freon 0.8659 SL_mrpc_SF6 0.0269 G4_BUTANE 0.1072  | none  | none  | none  | none  | none  
+     SL_mrpc_MMMylar  |                 Mylar in MRPC  |     1.400  |         3  |         G4_H 0.041958 G4_C 0.625017 G4_O 0.333025  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
+ SL_mrpc_AlHoneycomb  |           AlHoneycomb in MRPC  |     0.130  |         1  |                                           G4_Al 1  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
+SL_mrpc_AlHoneycomb2  |            denser AlHoneycomb  |     1.000  |         1  |                                           G4_Al 1  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
+    SL_mrpc_PCBoardM  |             PCB board in MRPC  |     1.860  |         3  |                      G4_C 0.4 G4_Si 0.3 G4_Fe 0.3  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
+       SL_mrpc_Freon  |             TetraFluoroEthane  |   0.00425  |         3  |                                       C 2 H 2 F 4  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
+         SL_mrpc_SF6  |           Sulfur hexafluoride  |     0.010  |         2  |                                           S 1 F 6  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
+         SL_mrpc_Gas  |                   Gas in MRPC  |   0.00445  |         3  |SL_mrpc_Freon 0.8659 SL_mrpc_SF6 0.0269 G4_BUTANE 0.1072  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
