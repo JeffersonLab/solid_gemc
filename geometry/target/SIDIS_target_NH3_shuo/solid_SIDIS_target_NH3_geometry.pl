@@ -22,12 +22,12 @@ make_target_LHe();
 make_target_tail_nose();
 make_target_4Kshield();
 make_target_LN2shield();
-#make_target_steel();
-#make_target_coil();
-#make_target_coil_box();
-#make_target_coil_box_2();
+make_target_steel();
+make_target_coil();
+make_target_coil_box();
+make_target_coil_box_2();
+make_target_coil_lid();
 }
-
 
 sub make_target_field
 {
@@ -649,4 +649,3 @@ sub make_target_coil_lid
     print_det(\%configuration, \%detector);
  }
 }
-
