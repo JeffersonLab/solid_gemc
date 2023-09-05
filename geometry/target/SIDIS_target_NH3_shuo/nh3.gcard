@@ -17,8 +17,6 @@
 <option name="HALL_DIMENSIONS" value="20*m,20*m,20*m"/>
 
 <option name="FIELD_DIR" value="/group/solid/www/solid/html/files/field"/>
-<option name="HALL_FIELD" value="solenoid_v1"/>
-<option name="FIELD_PROPERTIES" value="solenoid_v1, 0.01*mm, G4ClassicalRK4,linear"/>
 <option name="geometry" value="1000x1000"/>
 <option name="HIGH_RES" value="1"/>
 <option name="USE_GUI"  value="1"/>
@@ -28,6 +26,9 @@
 <!--  comment out
 <detector name="../../../geometry/target/SIDIS_target_NH3_shuo/" factory="CAD"/>
 <detector name="../../../geometry/magnet_moved/solid_solenoid" factory="TEXT" variation="v4"/>
+
+<option name="HALL_FIELD" value="solenoid_v1"/>
+<option name="FIELD_PROPERTIES" value="solenoid_v1, 0.01*mm, G4ClassicalRK4,linear"/>
 
 <detector name="../../../geometry/magnet_moved/solid_solenoid_cryo" factory="TEXT" variation="Original"/>
 " variation="Original"/>

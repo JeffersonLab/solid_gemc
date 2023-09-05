@@ -450,7 +450,8 @@ sub make_target_steel
  my @Dz   = (1.95,1.95);
  my @name = ("left_steel","right_steel"); 
  my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in"); 
- my @mat  = ("G4_STAINLESS-STEEL","G4_STAINLESS-STEEL");
+ my @mat  = ("G4_Fe","G4_Fe");
+ #my @mat  = ("G4_STAINLESS-STEEL","G4_STAINLESS-STEEL");
 
  for(my $n=1; $n<=$NUM; $n++)
  {
@@ -614,7 +615,7 @@ sub make_target_coil_box_2
 sub make_target_coil_lid
 {
  my $NUM  = 2;
- my @x    = (-8,8);
+ my @x    = (0,0);#8 is in zPln
 # my @numZPlane = 15;
  my @Rot  = (90,-90);
  my @Rin  = (8.75,  8.75,   8.825,  9.954, 9.954, 12.736,12.736,16.068,16.068,17.57, 17.75); 
