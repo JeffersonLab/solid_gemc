@@ -3,6 +3,7 @@
   I converted some parts of the CAD file to geant4 volumes in solid_SIDIS_target_NH3_geometry.pl
 . The converted volume stl files are then deleted. 
 ##Volumes converted
+```bash
 -make_target_fiels();
 -make_scattering_chamber();
 -make_scattering_windows();
@@ -17,7 +18,7 @@
 -make_target_coil_box();#Al coil holder
 -make_target_coil_box_2();#Al coil holder
 -make_target_coil_lid();#Al coil holder lid
-
+```
 ##To use
 First build the geometry
 ```bash
