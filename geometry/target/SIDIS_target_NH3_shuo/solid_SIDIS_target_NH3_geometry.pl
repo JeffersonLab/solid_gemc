@@ -445,9 +445,10 @@ sub make_target_steel
 {
  my $NUM  = 2;
  my @x    = (-5.55,5.55);
- my @Rin  = (5.9,5.9);
- my @Rout = (7.9,7.9);
- my @Dz   = (1.95,1.95);
+ my @Rot  = (-90,90);
+ my @Rin  = (5.9,5.9,5.9);
+ my @Rout = (7.9,7.9,7.82);#25deg chamfer
+ my @zPln = (0,1.91,1.95);#25deg chamfer 4mm*8mm
  my @name = ("left_steel","right_steel"); 
  my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in"); 
  my @mat  = ("G4_Fe","G4_Fe");
@@ -461,10 +462,10 @@ sub make_target_steel
     $detector{"mother"}      = "$mother[$n-1]" ;
     $detector{"description"} = "$DetectorName\_$name[$n-1]";
     $detector{"pos"}        = "$x[$n-1]*cm 0*cm 0*cm";
-    $detector{"rotation"}   = "0*deg -90*deg 0*deg";
+    $detector{"rotation"}   = "0*deg $Rot[$n-1]*deg 0*deg";
     $detector{"color"}      = "00BFFF";
-    $detector{"type"}       = "Tube";
-    $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz[$n-1]*cm 0*deg 360*deg";
+    $detector{"type"}       = "Polycone";
+    $detector{"dimensions"} = "0*deg 360*deg 3*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm";
     $detector{"material"}   = $mat[$n-1];
     $detector{"mfield"}     = "no";
     $detector{"ncopy"}      = 1;
@@ -478,6 +479,43 @@ sub make_target_steel
     print_det(\%configuration, \%detector);
  }
 }
+#sub make_target_steel
+#{
+# my $NUM  = 2;
+# my @x    = (-5.55,5.55);
+# my @Rin  = (5.9,5.9);
+# my @Rout = (7.9,7.9);
+# my @Dz   = (1.95,1.95);
+# my @name = ("left_steel","right_steel"); 
+# my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in"); 
+# my @mat  = ("G4_Fe","G4_Fe");
+# #my @mat  = ("G4_STAINLESS-STEEL","G4_STAINLESS-STEEL");
+#
+# for(my $n=1; $n<=$NUM; $n++)
+# {
+##     my $pnumber     = cnumber($n-1, 10);
+#     my %detector=init_det();
+#    $detector{"name"}        = "$DetectorName\_$name[$n-1]";
+#    $detector{"mother"}      = "$mother[$n-1]" ;
+#    $detector{"description"} = "$DetectorName\_$name[$n-1]";
+#    $detector{"pos"}        = "$x[$n-1]*cm 0*cm 0*cm";
+#    $detector{"rotation"}   = "0*deg -90*deg 0*deg";
+#    $detector{"color"}      = "00BFFF";
+#    $detector{"type"}       = "Tube";
+#    $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz[$n-1]*cm 0*deg 360*deg";
+#    $detector{"material"}   = $mat[$n-1];
+#    $detector{"mfield"}     = "no";
+#    $detector{"ncopy"}      = 1;
+#    $detector{"pMany"}       = 1;
+#    $detector{"exist"}       = 1;
+#    $detector{"visible"}     = 1;
+#    $detector{"style"}       = 1;
+#    $detector{"sensitivity"} = "no";
+#    $detector{"hit_type"}    = "no";
+#    $detector{"identifiers"} = "no";
+#    print_det(\%configuration, \%detector);
+# }
+#}
 
 sub make_target_coil
 {
@@ -519,7 +557,7 @@ sub make_target_coil
 sub make_target_coil_box
 {
  my $NUM  = 2;
- my @x    = (-3.6,3.6,-3.6,3.6);
+ my @x    = (-4,4,-4,4);
 # my @numZPlane = 15;
  my @Rot  = (90,-90,90,-90);
  my @Rin  = (7.9,    7.9,   5.88,  5.88,   5.88,   6.58125,11.685, 11.685,15.212,15.212, 15.212, 15.212, 15.212, 18.856, 18.856);
