@@ -4,10 +4,10 @@
 . The converted volume stl files are then deleted. 
 ##Volumes converted
 ```bash
--make_target_fiels();
--make_scattering_chamber();
+-make_target_field();#a box of air
+-make_scattering_chamber();#Tube
 -make_scattering_windows();
--make_target();#NH3
+-make_target();#NH3_He
 -make_target_endcaps();#Al
 -make_target_LHe();#liquid He
 -make_target_tail_nose();
