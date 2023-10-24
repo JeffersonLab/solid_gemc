@@ -25,6 +25,8 @@
 <option name="HIGH_RES" value="1"/>
 <option name="USE_GUI"  value="1"/>
 
+<option name="EXEC_MACRO" value="solid_slice.vis"/>
+
 </gcard>
 
 <!--  comment out
@@ -33,7 +35,6 @@
 
 <option name="FIELD_DIR" value="/group/solid/www/solid/html/files/field"/>
 
-<option name="EXEC_MACRO" value="solid_slice_nohit.vis"/>
 
 <option name="HALL_FIELD" value="solenoid_v1"/>
 <option name="FIELD_PROPERTIES" value="solenoid_v1, 0.01*mm, G4ClassicalRK4,linear"/>

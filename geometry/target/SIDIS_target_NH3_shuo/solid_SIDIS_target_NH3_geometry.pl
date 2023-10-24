@@ -29,6 +29,7 @@ make_40K_shield();
 make_target_steel();
 make_target_coil_box();
 make_target_coil_box_2();
+#make_target_coil_1();
 make_target_coil();
 #make_target_coil_lid();
 }
@@ -871,12 +872,58 @@ sub make_target_steel
 sub make_target_coil
 {
  my $NUM  = 8;
+ my @x    = (9.5,7.15,5.1,2.95,2.95,5.1,7.15,9.5);
+ #my @x    = (-13.5,-11.15,-9.1,-6.95,6.95,9.1,11.15,13.5);
+ my @rot  = (0,0,0,0,0,0,0,0);
+ #my @rot  = (90,90,90,90,-90,-90,-90,-90);
+ my @Rin  = (19.9,16.1,13,9.9,9.9,13,16.1,19.9);
+ my @Rout = (22.9,18.6,15,11.4,11.4,15,18.6,22.9);
+ my @Dz   = (2.3,1.85,1.5,1.15,1.15,1.5,1.85,2.3);
+ my @name = ("left_coil_xl","left_coil_l","left_coil_m","left_coil_s","right_coil_s","right_coil_m","right_coil_l","right_coild_xl"); 
+ #my @mother = ("$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box"); 
+ my @mother = ("$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box"); 
+ #my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in"); 
+ my @mat  = ("G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu");
+
+ for(my $n=1; $n<=$NUM; $n++)
+ {
+#     my $pnumber     = cnumber($n-1, 10);
+     my %detector=init_det();
+    $detector{"name"}        = "$DetectorName\_$name[$n-1]";
+    $detector{"mother"}      = "$mother[$n-1]" ;
+    $detector{"description"} = "$DetectorName\_$name[$n-1]";
+    #$detector{"pos"}        = "$x[$n-1]*cm 0*cm 0*cm";
+    $detector{"pos"}        = "0*cm 0*cm $x[$n-1]*cm";
+    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
+    $detector{"color"}      = "FF8C00";
+    $detector{"type"}       = "Tube";
+    $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz[$n-1]*cm 0*deg 360*deg";
+    $detector{"material"}   = $mat[$n-1];
+    $detector{"mfield"}     = "no";
+    $detector{"ncopy"}      = 1;
+    $detector{"pMany"}       = 1;
+    $detector{"exist"}       = 1;
+    $detector{"visible"}     = 1;
+    $detector{"style"}       = 1;
+    $detector{"sensitivity"} = "no";
+    $detector{"hit_type"}    = "no";
+    $detector{"identifiers"} = "no";
+    print_det(\%configuration, \%detector);
+ }
+}
+
+#somehow the addcutwayplane in solid_slice.vis would change the position and rotation of the coils. This is the origin parameters without addcutwayplane option.
+sub make_target_coil_1
+{
+ my $NUM  = 8;
  my @x    = (-13.5,-11.15,-9.1,-6.95,6.95,9.1,11.15,13.5);
+ #my @rot  = (0,0,0,0,-180,-180,-180,-180);
  my @rot  = (90,90,90,90,-90,-90,-90,-90);
  my @Rin  = (19.9,16.1,13,9.9,9.9,13,16.1,19.9);
  my @Rout = (22.9,18.6,15,11.4,11.4,15,18.6,22.9);
  my @Dz   = (2.3,1.85,1.5,1.15,1.15,1.5,1.85,2.3);
  my @name = ("left_coil_xl","left_coil_l","left_coil_m","left_coil_s","right_coil_s","right_coil_m","right_coil_l","right_coild_xl"); 
+ #my @mother = ("$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box"); 
  my @mother = ("$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box"); 
  #my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in"); 
  my @mat  = ("G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu");
