@@ -155,7 +155,7 @@ sub make_scattering_windows
 #  my @SPhi = (85,85,245,245);
 #  my @DPhi = (10,10,50,50);
  
- my @Rin  = ($chamber_inner,$chamber_inner+($window_beam_inner),$chamber_inner+$window_beam_inner+$window_beam_thick,$chamber_inner,$chamber_inner+($window_beam_inner),$chamber_inner+$window_beam_inner+$window_beam_thick);
+ my @Rin  = ($chamber_inner,$chamber_inner+($window_beam_inner),$chamber_inner+$window_beam_inner+$window_beam_thick,$chamber_inner,$chamber_inner+($window_exit_inner),$chamber_inner+$window_exit_inner+$window_exit_thick);
  my @Rout = ($chamber_inner+($window_beam_inner),$chamber_inner+$window_beam_inner+$window_beam_thick,$chamber_out,$chamber_inner+($window_exit_inner),$chamber_inner+$window_exit_inner+$window_exit_thick,$chamber_out);
  my @Dz   = (19,19,19,19,19,19);
  my @SPhi = (80,80,80,242,242,242);
@@ -881,7 +881,7 @@ sub make_target_coil
  my @Dz   = (2.3,1.85,1.5,1.15,1.15,1.5,1.85,2.3);
  my @name = ("left_coil_xl","left_coil_l","left_coil_m","left_coil_s","right_coil_s","right_coil_m","right_coil_l","right_coild_xl"); 
  #my @mother = ("$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box"); 
- my @mother = ("$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2"); 
+ my @mother = ("$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2"); 
  #my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in"); 
  my @mat  = ("G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu");
 
@@ -924,7 +924,7 @@ sub make_target_coil_1
  my @Dz   = (2.3,1.85,1.5,1.15,1.15,1.5,1.85,2.3);
  my @name = ("left_coil_xl","left_coil_l","left_coil_m","left_coil_s","right_coil_s","right_coil_m","right_coil_l","right_coild_xl"); 
  #my @mother = ("$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box"); 
- my @mother = ("$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2"); 
+ my @mother = ("$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2"); 
  #my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in"); 
  my @mat  = ("G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu");
 
@@ -978,7 +978,7 @@ sub make_target_coil_box
     $detector{"color"}      = "2F4F4F";
     $detector{"type"}       = "Polycone";
     $detector{"pos"}        = "$x[$n-1]*cm 0*cm 0*cm";
-    $detector{"dimensions"} = "0*deg 360*deg 6*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[4]*cm $Rin[5]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[4]*cm $Rout[5]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[4]*cm $zPln[5]*cm";
+    $detector{"dimensions"} = "0*deg 360*deg 2*counts $Rin[4]*cm $Rin[5]*cm $Rout[4]*cm $Rout[5]*cm $zPln[4]*cm $zPln[5]*cm";
     
 #"0*deg 360*deg 15*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[4]*cm $Rin[5]*cm $Rin[6]*cm $Rin[7]*cm $Rin[8]*cm $Rin[9]*cm $Rin[10]*cm $Rin[11]*cm $Rin[12]*cm $Rin[13]*cm $Rin[14]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[4]*cm $Rout[5]*cm $Rout[6]*cm $Rout[7]*cm $Rout[8]*cm $Rout[9]*cm $Rout[10]*cm $Rout[11]*cm $Rout[12]*cm $Rout[13]*cm $Rout[14]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[4]*cm $zPln[5]*cm $zPln[6]*cm $zPln[7]*cm $zPln[8]*cm $zPln[9]*cm $zPln[10]*cm $zPln[11]*cm $zPln[12]*cm $zPln[13]*cm $zPln[14]*cm ";
 #"0*deg 360*deg 3*counts 7.9*cm 7.9*cm 5.88*cm 8.58*cm 17.015*cm 17.015*cm 0*cm 4*cm 4*cm"; 
@@ -1025,7 +1025,8 @@ sub make_target_coil_box_2
     # } 
     # if($n>=3){
     $detector{"pos"}        = "$x[$n-1]*cm 0*cm 0*cm";
-    $detector{"dimensions"} = "0*deg 360*deg 9*counts $Rin[6]*cm $Rin[7]*cm $Rin[8]*cm $Rin[9]*cm $Rin[10]*cm $Rin[11]*cm $Rin[12]*cm $Rin[13]*cm $Rin[14]*cm $Rout[6]*cm $Rout[7]*cm $Rout[8]*cm $Rout[9]*cm $Rout[10]*cm $Rout[11]*cm $Rout[12]*cm $Rout[13]*cm $Rout[14]*cm $zPln[6]*cm $zPln[7]*cm $zPln[8]*cm $zPln[9]*cm $zPln[10]*cm $zPln[11]*cm $zPln[12]*cm $zPln[13]*cm $zPln[14]*cm";
+    $detector{"dimensions"} = "0*deg 360*deg 13*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[6]*cm $Rin[7]*cm $Rin[8]*cm $Rin[9]*cm $Rin[10]*cm $Rin[11]*cm $Rin[12]*cm $Rin[13]*cm $Rin[14]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[6]*cm $Rout[7]*cm $Rout[8]*cm $Rout[9]*cm $Rout[10]*cm $Rout[11]*cm $Rout[12]*cm $Rout[13]*cm $Rout[14]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[6]*cm $zPln[7]*cm $zPln[8]*cm $zPln[9]*cm $zPln[10]*cm $zPln[11]*cm $zPln[12]*cm $zPln[13]*cm $zPln[14]*cm";
+    #$detector{"dimensions"} = "0*deg 360*deg 9*counts $Rin[6]*cm $Rin[7]*cm $Rin[8]*cm $Rin[9]*cm $Rin[10]*cm $Rin[11]*cm $Rin[12]*cm $Rin[13]*cm $Rin[14]*cm $Rout[6]*cm $Rout[7]*cm $Rout[8]*cm $Rout[9]*cm $Rout[10]*cm $Rout[11]*cm $Rout[12]*cm $Rout[13]*cm $Rout[14]*cm $zPln[6]*cm $zPln[7]*cm $zPln[8]*cm $zPln[9]*cm $zPln[10]*cm $zPln[11]*cm $zPln[12]*cm $zPln[13]*cm $zPln[14]*cm";
     #}
     
 #"0*deg 360*deg 15*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[4]*cm $Rin[5]*cm $Rin[6]*cm $Rin[7]*cm $Rin[8]*cm $Rin[9]*cm $Rin[10]*cm $Rin[11]*cm $Rin[12]*cm $Rin[13]*cm $Rin[14]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[4]*cm $Rout[5]*cm $Rout[6]*cm $Rout[7]*cm $Rout[8]*cm $Rout[9]*cm $Rout[10]*cm $Rout[11]*cm $Rout[12]*cm $Rout[13]*cm $Rout[14]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[4]*cm $zPln[5]*cm $zPln[6]*cm $zPln[7]*cm $zPln[8]*cm $zPln[9]*cm $zPln[10]*cm $zPln[11]*cm $zPln[12]*cm $zPln[13]*cm $zPln[14]*cm ";
