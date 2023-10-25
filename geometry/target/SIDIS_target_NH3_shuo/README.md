@@ -1,5 +1,7 @@
 # For the SoLID target part
+  Oct.25 2023 Shuo
   This SoLID NH3 target part definition. The stl files are imported from the CAD file. The arrangement is in cad.gxml. 
+  One cad file is remained in cad.gxml, the magnet support 
   I converted some parts of the CAD file to geant4 volumes in solid_SIDIS_target_NH3_geometry.pl
 . The converted volume stl files are then deleted. 
 ##Volumes converted
