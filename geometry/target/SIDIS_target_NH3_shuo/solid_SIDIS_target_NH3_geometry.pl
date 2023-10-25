@@ -162,7 +162,7 @@ sub make_scattering_windows
  my @DPhi = (20,20,20,56,56,56); 
  my @name = ("entrance_cut","entrance_win","entrance_cut2","exit_cut","exit_win","exit_cut2");
  my @mother = ("$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out");
- my @mat  = ("G4_Galactic","G4_Al","G4_Air","G4_Galactic","G4_Al","G4_Air");
+ my @mat  = ("G4_Galactic","G4_Al","G4_AIR","G4_Galactic","G4_Al","G4_AIR");
  my @color = ("FFFFFF","000000","FFFFFF","FFFFFF","000000","FFFFFF");
 
  for(my $n=1; $n<=$NUM; $n++)
@@ -881,7 +881,7 @@ sub make_target_coil
  my @Dz   = (2.3,1.85,1.5,1.15,1.15,1.5,1.85,2.3);
  my @name = ("left_coil_xl","left_coil_l","left_coil_m","left_coil_s","right_coil_s","right_coil_m","right_coil_l","right_coild_xl"); 
  #my @mother = ("$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box"); 
- my @mother = ("$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box"); 
+ my @mother = ("$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2"); 
  #my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in"); 
  my @mat  = ("G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu");
 
@@ -924,7 +924,7 @@ sub make_target_coil_1
  my @Dz   = (2.3,1.85,1.5,1.15,1.15,1.5,1.85,2.3);
  my @name = ("left_coil_xl","left_coil_l","left_coil_m","left_coil_s","right_coil_s","right_coil_m","right_coil_l","right_coild_xl"); 
  #my @mother = ("$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box"); 
- my @mother = ("$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_left_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box"); 
+ my @mother = ("$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box_2","$DetectorName\_left_coil_box","$DetectorName\_right_coil_box","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2","$DetectorName\_right_coil_box_2"); 
  #my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in","$DetectorName\_SC_in"); 
  my @mat  = ("G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu","G4_Cu");
 

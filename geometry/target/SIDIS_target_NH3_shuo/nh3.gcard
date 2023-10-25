@@ -27,6 +27,8 @@
 <option name="USE_GUI"  value="1"/>
 
 <option name="EXEC_MACRO" value="solid_slice.vis"/>
+<option name="CHECK_OVERLAPS"  value="1"/>
+<option name="USE_GUI"  value="0"/>
 
 </gcard>
 
@@ -49,8 +51,6 @@
 <option name="FIELD_VERBOSITY"  value="100"/>
 <option name="GEO_VERBOSITY"  value="100"/>
 
-<option name="CHECK_OVERLAPS"  value="1"/>
-<option name="USE_GUI"  value="0"/>
 
 
 <option name="geometry" value="1000x1000"/>
