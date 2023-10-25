@@ -162,7 +162,7 @@ sub make_scattering_windows
  my @DPhi = (20,20,20,56,56,56); 
  my @name = ("entrance_cut","entrance_win","entrance_cut2","exit_cut","exit_win","exit_cut2");
  my @mother = ("$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out");
- my @mat  = ("G4_Galactic","G4_Al","G4_Galactic","G4_Galactic","G4_Al","G4_Galactic");
+ my @mat  = ("G4_Galactic","G4_Al","G4_Air","G4_Galactic","G4_Al","G4_Air");
  my @color = ("FFFFFF","000000","FFFFFF","FFFFFF","000000","FFFFFF");
 
  for(my $n=1; $n<=$NUM; $n++)
