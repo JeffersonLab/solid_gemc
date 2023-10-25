@@ -1,0 +1,1 @@
+SL_PVDIS_baffle_BorPoly  |          Borated_Polyethylene  |      1.19  |         2  |                      G4_POLYETHYLENE 0.7 G4_B 0.3  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
