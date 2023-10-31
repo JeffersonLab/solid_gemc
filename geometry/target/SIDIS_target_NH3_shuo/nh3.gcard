@@ -1,11 +1,7 @@
 <gcard>
 
 <detector name="../../../geometry/target/SIDIS_target_NH3_shuo/solid_SIDIS_target_NH3" factory="TEXT" variation="Original"/>
-<detector name="../../../geometry/target/SIDIS_target_NH3_shuo/" factory="CAD"/>
-<detector name="../../../geometry/magnet_moved/solid_solenoid" factory="TEXT" variation="v4"/>
 
-<detector name="../../../geometry/magnet_moved/solid_solenoid_cryo" factory="TEXT" variation="Original"/>
-" variation="Original"/>
 
 
 <option name="INTEGRATEDRAW" value="flux"/>
@@ -34,6 +30,12 @@
 </gcard>
 
 <!--  comment out
+<detector name="../../../geometry/target/SIDIS_target_NH3_shuo/" factory="CAD"/>
+<detector name="../../../geometry/magnet_moved/solid_solenoid" factory="TEXT" variation="v4"/>
+<detector name="../../../geometry/magnet_moved/solid_solenoid_cryo" factory="TEXT" variation="Original"/>
+" variation="Original"/>
+
+<detector name="../../../geometry/hgc_moved/solid_SIDIS_hgc" factory="TEXT" variation="Original"/>
 
 <option name="HALL_FIELD" value="solenoid_v1"/>
 <option name="FIELD_PROPERTIES" value="solenoid_v1, 0.01*mm, G4ClassicalRK4,linear"/>

@@ -23,15 +23,16 @@ make_target_LHe();
 make_target_LHe_shield();
 make_5T_JLab();
 make_40K_shield();
-#make_vacuum_4K();#from ChaoGu
+#make_vacuum_4K();#dimensions are from the g2p target from ChaoGu
 #make_vacuum_LN2();#from ChaoGu
 
 make_target_steel();
 make_target_coil_box();
 make_target_coil_box_2();
-#make_target_coil_1();
+#make_target_coil_1();#somehow the solid_slice.vis would change the rotation 
 make_target_coil();
-#make_target_coil_lid();
+make_target_coil_lid();
+make_magnet_support_1();
 }
 
 my $target_l=2.82702;#cm/1.113"
@@ -1082,4 +1083,44 @@ sub make_target_coil_lid
     $detector{"identifiers"} = "no";
     print_det(\%configuration, \%detector);
  }
+
+#The out surface is flat, not cutted
+sub make_magnet_support_1
+{
+ my $NUM  = 1;
+ my @Rin  = (47.6/2,47.6/2,39/2,39/2,47.6/2,47.6/2);
+ my @Rout = (25,25,25,25,25,25);
+ my @zPln = (0,1.05957,(24.31549-18.18608)/2,(24.31549-18.18608)/2+18.18608,24.31549-1.05957,24.31549);
+ my @x    = (24.31549/2);
+ my @name = ("magnet_support");
+ my @mother = ("$DetectorName\_SC_in"); 
+ my @mat  = ("G4_Al");
+ my @rot  = (90);
+ #my @color = ("ff0000","ff0000");
+ my @color = ("FF6600");
+ 
+ for(my $n=1; $n<=$NUM; $n++)
+ {
+     my %detector=init_det(); 
+    $detector{"name"}        = "$DetectorName\_$name[$n-1]";
+    $detector{"mother"}      = "$mother[$n-1]" ;
+    $detector{"description"} = "$DetectorName\_$name[$n-1]";
+    $detector{"pos"}        = "$x[$n-1]*cm 0*cm 0*cm";
+    $detector{"rotation"}   = "0*deg $rot[$n-1]*deg 0*deg";
+    $detector{"color"}      = $color[$n-1];    
+    $detector{"type"}       = "Polycone";
+    $detector{"dimensions"} = "0*deg 360*deg 6*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[4]*cm $Rin[5]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[4]*cm $Rout[5]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[4]*cm $zPln[5]*cm";
+    $detector{"material"}   = $mat[$n-1];
+    $detector{"mfield"}     = "no";
+    $detector{"ncopy"}      = 1;
+    $detector{"pMany"}       = 1;
+    $detector{"exist"}       = 1;
+    $detector{"visible"}     = 1;
+    $detector{"style"}       = 1;
+    $detector{"sensitivity"} = "no";
+    $detector{"hit_type"}    = "no";
+    $detector{"identifiers"} = "no";
+    print_det(\%configuration, \%detector);
+ }
+}
 }
