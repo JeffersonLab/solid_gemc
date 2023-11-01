@@ -23,7 +23,6 @@
 <option name="HIGH_RES" value="1"/>
 <option name="USE_GUI"  value="1"/>
 
-<option name="EXEC_MACRO" value="solid_slice.vis"/>
 <option name="CHECK_OVERLAPS"  value="1"/>
 <option name="USE_GUI"  value="0"/>
 
@@ -47,6 +46,7 @@
 <detector name="../geometry/beamline_moved/solid_SIDIS_beamline_NH3" factory="TEXT" variation="Original"/>
 
 
+<option name="EXEC_MACRO" value="solid_slice.vis"/>
 <option name="EXEC_MACRO" value="solid_slice_nohit.vis"/>
 
 

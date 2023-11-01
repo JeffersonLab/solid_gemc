@@ -21,17 +21,16 @@ make_target_endcaps();
 make_target_cell();
 make_target_LHe();
 make_target_LHe_shield();
-make_5T_JLab();
-make_40K_shield();
-#make_vacuum_4K();#dimensions are from the g2p target from ChaoGu
-#make_vacuum_LN2();#from ChaoGu
-
-make_target_steel();
-make_target_coil_box();
-make_target_coil_box_2();
-#make_target_coil_1();#somehow the solid_slice.vis would change the rotation 
-make_target_coil();
-make_target_coil_lid();
+#make_5T_JLab();
+#make_40K_shield();
+##make_vacuum_4K();#dimensions are from the g2p target from ChaoGu
+##make_vacuum_LN2();#from ChaoGu
+#make_target_steel();
+#make_target_coil_box();
+#make_target_coil_box_2();
+##make_target_coil_1();#somehow the solid_slice.vis would change the rotation 
+#make_target_coil();
+#make_target_coil_lid();
 make_magnet_support_1();
 }
 
@@ -1109,30 +1108,70 @@ sub make_magnet_support_1
  $detector{"type"}       = "Polycone";
  $detector{"dimensions"} = "0*deg 360*deg 10*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[4]*cm $Rin[5]*cm $Rin[6]*cm $Rin[7]*cm $Rin[8]*cm $Rin[9]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[4]*cm $Rout[5]*cm $Rout[6]*cm $Rout[7]*cm $Rout[8]*cm $Rout[9]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[4]*cm $zPln[5]*cm $zPln[6]*cm $zPln[7]*cm $zPln[8]*cm $zPln[9]*cm"; 
  $detector{"material"}   = $mat[0];
- $detector{"mfield"}     = "no";
- $detector{"ncopy"}      = 1;
- $detector{"pMany"}       = 1;
- $detector{"exist"}       = 1;
- $detector{"visible"}     = 1;
- $detector{"style"}       = 1;
- $detector{"sensitivity"} = "no";
- $detector{"hit_type"}    = "no";
- $detector{"identifiers"} = "no";
  print_det(\%configuration, \%detector);
 
- #my $R_out1 = 18.3592/2;
- #my $R_out2 = 22.796/2;#need to check this
- #my $pDz    =;
+ my $N      = 4;
+ my $R_out1 = 18.3592/2;
+ my $R_out2 = 25*0.4663;
+ my $pDz    = 5.66127/2;
+ my @cone_x = (0,22.169365,0,-22.169360);
+ my @cone_y = (22.169365,0,-22.169360,0);
+ my @cone_rot = (90,0,90,0);
+ for(my $i=1; $i<=$N; $i++){
+   %detector=init_det();
+   $detector{"name"}        = "$DetectorName\_cone_$i";
+   $detector{"mother"}      = "$DetectorName\_SC_in" ;
+   $detector{"description"} = "The holes cones";
+   $detector{"pos"}        = "0*cm $cone_y[$i-1]*cm $cone_x[$i-1]*cm";
+   $detector{"rotation"}   = "$cone_rot[$i-1]*deg 0*deg 0*deg";
+   $detector{"color"}      = "FF6600";    
+   $detector{"type"}       = "Cons";
+   $detector{"dimensions"} = "0*cm $R_out1*cm 0*cm $R_out2*cm $pDz*cm 0*deg 360*deg"; 
+   $detector{"material"}   = $mat[0];
+   print_det(\%configuration, \%detector);
 
+   %detector=init_det();
+   $detector{"name"}        = "$DetectorName\_cuts_$i";
+   $detector{"mother"}      = "$DetectorName\_SC_in" ;
+   $detector{"description"} = "The holes";
+   $detector{"pos"}        = "0*cm $cone_y[$i-1]*cm $cone_x[$i-1]*cm";
+   $detector{"rotation"}   = "$cone_rot[$i-1]*deg 0*deg 0*deg";
+   #$detector{"pos"}        = "0*cm 22.169365*cm 0*cm";
+   #$detector{"rotation"}   = "90*deg 0*deg 0*deg";
+   $detector{"color"}      = "FF6600";    
+   $detector{"type"}       = "Operation:@ $DetectorName\_cone_$i * $DetectorName\_polycone";
+   $detector{"dimensions"} = "0"; 
+   $detector{"material"}   = $mat[0];
+   $detector{"mfield"}     = "no";
+   $detector{"ncopy"}      = 1;
+   $detector{"pMany"}       = 1;
+   $detector{"exist"}       = 1;
+   $detector{"visible"}     = 1;
+   $detector{"style"}       = 1;
+   print_det(\%configuration, \%detector);
+
+ }
  #%detector=init_det();
- #$detector{"name"}        = "$DetectorName\_cone";
- #$detector{"mother"}      = "$DetectorName\_SC_in" ;
- #$detector{"description"} = "The holes";
- #$detector{"pos"}        = "0*cm 0*cm 0*cm";
- #$detector{"rotation"}   = "0*deg 90*deg 0*deg";
- #$detector{"color"}      = "FF6600";    
- #$detector{"type"}       = "Cons";
- #$detector{"dimensions"} = "0*cm $R_out1*cm 0*cm $R_out2*cm $pDz*cm 0*deg 360*deg"; 
- #$detector{"material"}   = $mat[0];
+ # $detector{"name"}        = "$DetectorName\_magnet_support";
+ # $detector{"mother"}      = "$DetectorName\_SC_in" ;
+ # $detector{"description"} = "The magnet support";
+ # $detector{"pos"}        = "0*cm 0*cm 0*cm";
+ # $detector{"rotation"}   = "0*deg 0*deg 0*deg";
+ # #$detector{"pos"}        = "0*cm 22.169365*cm 0*cm";
+ # #$detector{"rotation"}   = "90*deg 0*deg 0*deg";
+ # $detector{"color"}      = "FF6600";    
+ # $detector{"type"}       = "Operation:@ $DetectorName\_polycone - $DetectorName\_cuts_0 ";
+ # $detector{"dimensions"} = "0"; 
+ # $detector{"material"}   = $mat[0];
+ # $detector{"mfield"}     = "no";
+ # $detector{"ncopy"}      = 1;
+ # $detector{"pMany"}       = 1;
+ # $detector{"exist"}       = 1;
+ # $detector{"visible"}     = 1;
+ # $detector{"style"}       = 1;
+ # $detector{"sensitivity"} = "no";
+ # $detector{"hit_type"}    = "no";
+ # $detector{"identifiers"} = "no";
+ # print_det(\%configuration, \%detector);
 }
 }
