@@ -1088,9 +1088,9 @@ sub make_target_coil_lid
 sub make_magnet_support_1
 {
  my $NUM  = 1;
- my @Rin  = (47.6/2,47.6/2,39/2,39/2,47.6/2,47.6/2);
- my @Rout = (25,25,25,25,25,25);
- my @zPln = (0,1.05957,(24.31549-18.18608)/2,(24.31549-18.18608)/2+18.18608,24.31549-1.05957,24.31549);
+ my @Rin  = (47.6/2,47.6/2,23.22839568,23.22839568,39/2,39/2,23.22839568,23.22839568,47.6/2,47.6/2);
+ my @Rout = (25,25,25,24,24,24,24,25,25,25);
+ my @zPln = (0,1.05957,2.5,2.5,(24.31549-18.18608)/2,(24.31549-18.18608)/2+18.18608,24.31549-2.5,24.31549-2.5,24.31549-1.05957,24.31549);
  my @x    = (24.31549/2);
  my @name = ("magnet_support");
  my @mother = ("$DetectorName\_SC_in"); 
@@ -1099,28 +1099,40 @@ sub make_magnet_support_1
  #my @color = ("ff0000","ff0000");
  my @color = ("FF6600");
  
- for(my $n=1; $n<=$NUM; $n++)
- {
-     my %detector=init_det(); 
-    $detector{"name"}        = "$DetectorName\_$name[$n-1]";
-    $detector{"mother"}      = "$mother[$n-1]" ;
-    $detector{"description"} = "$DetectorName\_$name[$n-1]";
-    $detector{"pos"}        = "$x[$n-1]*cm 0*cm 0*cm";
-    $detector{"rotation"}   = "0*deg $rot[$n-1]*deg 0*deg";
-    $detector{"color"}      = $color[$n-1];    
-    $detector{"type"}       = "Polycone";
-    $detector{"dimensions"} = "0*deg 360*deg 6*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[4]*cm $Rin[5]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[4]*cm $Rout[5]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[4]*cm $zPln[5]*cm";
-    $detector{"material"}   = $mat[$n-1];
-    $detector{"mfield"}     = "no";
-    $detector{"ncopy"}      = 1;
-    $detector{"pMany"}       = 1;
-    $detector{"exist"}       = 1;
-    $detector{"visible"}     = 1;
-    $detector{"style"}       = 1;
-    $detector{"sensitivity"} = "no";
-    $detector{"hit_type"}    = "no";
-    $detector{"identifiers"} = "no";
-    print_det(\%configuration, \%detector);
- }
+ my %detector=init_det(); 
+ $detector{"name"}        = "$DetectorName\_polycone";
+ $detector{"mother"}      = "$DetectorName\_SC_in" ;
+ $detector{"description"} = "The tube";
+ $detector{"pos"}        = "$x[0]*cm 0*cm 0*cm";
+ $detector{"rotation"}   = "0*deg $rot[0]*deg 0*deg";
+ $detector{"color"}      = "FF6600";    
+ $detector{"type"}       = "Polycone";
+ $detector{"dimensions"} = "0*deg 360*deg 10*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[4]*cm $Rin[5]*cm $Rin[6]*cm $Rin[7]*cm $Rin[8]*cm $Rin[9]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[4]*cm $Rout[5]*cm $Rout[6]*cm $Rout[7]*cm $Rout[8]*cm $Rout[9]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[4]*cm $zPln[5]*cm $zPln[6]*cm $zPln[7]*cm $zPln[8]*cm $zPln[9]*cm"; 
+ $detector{"material"}   = $mat[0];
+ $detector{"mfield"}     = "no";
+ $detector{"ncopy"}      = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 1;
+ $detector{"sensitivity"} = "no";
+ $detector{"hit_type"}    = "no";
+ $detector{"identifiers"} = "no";
+ print_det(\%configuration, \%detector);
+
+ #my $R_out1 = 18.3592/2;
+ #my $R_out2 = 22.796/2;#need to check this
+ #my $pDz    =;
+
+ #%detector=init_det();
+ #$detector{"name"}        = "$DetectorName\_cone";
+ #$detector{"mother"}      = "$DetectorName\_SC_in" ;
+ #$detector{"description"} = "The holes";
+ #$detector{"pos"}        = "0*cm 0*cm 0*cm";
+ #$detector{"rotation"}   = "0*deg 90*deg 0*deg";
+ #$detector{"color"}      = "FF6600";    
+ #$detector{"type"}       = "Cons";
+ #$detector{"dimensions"} = "0*cm $R_out1*cm 0*cm $R_out2*cm $pDz*cm 0*deg 360*deg"; 
+ #$detector{"material"}   = $mat[0];
 }
 }
