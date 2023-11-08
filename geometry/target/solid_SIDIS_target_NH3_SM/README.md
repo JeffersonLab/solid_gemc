@@ -12,23 +12,24 @@ solid_gemc nh3.gcard
 ```
 
 geometry details
-* the magnet coil support is loaded from cad file in cad.gxml
-* some are from cad file and some are from old solid_SIDIS_target_NH3_geometry.pl
+* All geometries. 
 ```
 -make_target_field();#a box of air containing the entire target
 -make_scattering_chamber();#Tube
 -make_scattering_windows();
 -make_target();#NH3_He
 -make_target_endcaps();#Al
+-make_target_cell();#Target cell mounted on the ladder
 -make_target_LHe();#liquid He
--make_target_tail_nose();
--make_target_4Kshield();#Al
--make_target_LN2shield();
+-make_target_LHe_shield();#liquid He container
 -make_target_steel();#stainless steel 
 -make_target_coil();#Cu coils
 -make_target_coil_box();#Al coil holder
 -make_target_coil_box_2();#Al coil holder
 -make_target_coil_lid();#Al coil holder lid
+-make_40K_shield();#the out tube tank
+_make_magnet_support;#defines the 25deg acceptance
 ```
 
-2013/10/25 first checking, Shuo Jia and Zhiwen Zhao
+2023/10/25 first checking, Shuo Jia and Zhiwen Zhao
+2023/11/08 updated the target geometry, removed the magnet support cad file. Shuo Jia

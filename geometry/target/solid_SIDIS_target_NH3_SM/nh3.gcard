@@ -1,9 +1,8 @@
 <gcard>
 
-<detector name="./solid_SIDIS_target_NH3" factory="TEXT" variation="Original"/>
-<detector name="./" factory="CAD"/>
-<detector name="../../../geometry/magnet_moved/solid_solenoid" factory="TEXT" variation="v4"/>
-<detector name="../../../geometry/magnet_moved/solid_solenoid_cryo" factory="TEXT" variation="Original"/>
+<detector name="../../../geometry/target/SIDIS_target_NH3_shuo/solid_SIDIS_target_NH3" factory="TEXT" variation="Original"/>
+
+
 
 <option name="INTEGRATEDRAW" value="flux"/>
 
@@ -24,12 +23,18 @@
 <option name="HIGH_RES" value="1"/>
 <option name="USE_GUI"  value="1"/>
 
-<option name="EXEC_MACRO" value="solid_slice.vis"/>
 <option name="CHECK_OVERLAPS"  value="1"/>
+<option name="USE_GUI"  value="0"/>
 
 </gcard>
 
 <!--  comment out
+<detector name="../../../geometry/target/SIDIS_target_NH3_shuo/" factory="CAD"/>
+<detector name="../../../geometry/magnet_moved/solid_solenoid" factory="TEXT" variation="v4"/>
+<detector name="../../../geometry/magnet_moved/solid_solenoid_cryo" factory="TEXT" variation="Original"/>
+" variation="Original"/>
+
+<detector name="../../../geometry/hgc_moved/solid_SIDIS_hgc" factory="TEXT" variation="Original"/>
 
 <option name="HALL_FIELD" value="solenoid_v1"/>
 <option name="FIELD_PROPERTIES" value="solenoid_v1, 0.01*mm, G4ClassicalRK4,linear"/>
@@ -41,6 +46,7 @@
 <detector name="../geometry/beamline_moved/solid_SIDIS_beamline_NH3" factory="TEXT" variation="Original"/>
 
 
+<option name="EXEC_MACRO" value="solid_slice.vis"/>
 <option name="EXEC_MACRO" value="solid_slice_nohit.vis"/>
 
 
