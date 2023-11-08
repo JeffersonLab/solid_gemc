@@ -1244,6 +1244,15 @@ sub make_magnet_support
   my @cone_y = (19.5*cos(25*$DEG)+$pDz,0,-(19.5*cos(25*$DEG)+$pDz),0);
   my @cone_rot = (90,0,-90,180);
 
+  #For the additional hole cuts
+  my @rec_rot    = (0,90,0,-90);
+  my @rec_z      = (0,20.58,0,-20.58);
+  my @rec_y      = (20.58,0,-20.58,0);
+  my @addtub_rot = (90,90,90,90);
+  my @addtub_rot2 = (0,90,180,270);
+  my @addtub_z   = (0,21.66,0,-21.66);
+  my @addtub_y   = (21.66,0,-21.66,0);
+
   my %detector=init_det(); 
   $detector{"name"}        = "$DetectorName\_polycone";
   $detector{"mother"}      = "$DetectorName\_SC_in" ;
@@ -1254,77 +1263,8 @@ sub make_magnet_support
   $detector{"type"}       = "Polycone";
   $detector{"dimensions"} = "0*deg 360*deg 10*counts $Rin[0]*cm $Rin[1]*cm $Rin[2]*cm $Rin[3]*cm $Rin[4]*cm $Rin[5]*cm $Rin[6]*cm $Rin[7]*cm $Rin[8]*cm $Rin[9]*cm $Rout[0]*cm $Rout[1]*cm $Rout[2]*cm $Rout[3]*cm $Rout[4]*cm $Rout[5]*cm $Rout[6]*cm $Rout[7]*cm $Rout[8]*cm $Rout[9]*cm $zPln[0]*cm $zPln[1]*cm $zPln[2]*cm $zPln[3]*cm $zPln[4]*cm $zPln[5]*cm $zPln[6]*cm $zPln[7]*cm $zPln[8]*cm $zPln[9]*cm"; 
   $detector{"material"}   = "Component";
-  #$detector{"exist"}       = 0;
-  #$detector{"mfield"}     = "no";
-  #$detector{"ncopy"}      = 1;
-  #$detector{"pMany"}       = 1;
-  #$detector{"exist"}       = 1;
-  #$detector{"visible"}     = 1;
-  #$detector{"style"}       = 1;
-  #$detector{"sensitivity"} = "no";
-  #$detector{"hit_type"}    = "no";
-  #$detector{"identifiers"} = "no";
   print_det(\%configuration, \%detector);
 
-  #my %detector=init_det();
-  #$detector{"name"}        = "$DetectorName\_cone_0";
-  #$detector{"mother"}      = "$DetectorName\_SC_in" ;
-  #$detector{"description"} = "The holes cones";
-  #$detector{"pos"}        = "0*cm $cone_y[0]*cm $cone_x[0]*cm";
-  #$detector{"rotation"}   = "$cone_rot[0]*deg 0*deg 0*deg";
-  #$detector{"color"}      = "808080";    
-  #$detector{"type"}       = "Cons";
-  #$detector{"dimensions"} = "0*cm $R_out1*cm 0*cm $R_out2*cm $pDz*cm 0*deg 360*deg"; 
-  #$detector{"material"}   = "Component";
-  ##$detector{"exist"}       = 0;
-  #print_det(\%configuration, \%detector);
-
-  ##Operation@ indicates that the postion and rotation depends on the first volume( volume before the operation)
-  #my %detector=init_det();
-  #$detector{"name"}        = "$DetectorName\_cuts_0";
-  #$detector{"mother"}      = "$DetectorName\_SC_in" ;
-  #$detector{"description"} = "The holes";
-  #$detector{"pos"}        = "$x[0]*cm 0*cm 0*cm";
-  #$detector{"rotation"}   = "0*deg $rot[0]*deg 0*deg";
-  ##$detector{"pos"}        = "0*cm 22.169365*cm 0*cm";
-  ##$detector{"rotation"}   = "90*deg 0*deg 0*deg";
-  #$detector{"color"}      = "808080";    
-  #$detector{"type"}       = "Operation:@ $DetectorName\_polycone * $DetectorName\_cone_0";
-  #$detector{"dimensions"} = "0"; 
-  #$detector{"material"}   = "Component";
-  #$detector{"mfield"}     = "no";
-  ##$detector{"ncopy"}      = 1;
-  ##$detector{"pMany"}       = 1;
-  ##$detector{"exist"}       = 0;
-  ##$detector{"visible"}     = 1;
-  ##$detector{"style"}       = 1;
-  ##$detector{"sensitivity"} = "no";
-  ##$detector{"hit_type"}    = "no";
-  ##$detector{"identifiers"} = "no";
-  #print_det(\%configuration, \%detector);
-  #
-  #my %detector=init_det();
-  #$detector{"name"}        = "$DetectorName\_magnet_support";
-  #$detector{"mother"}      = "$DetectorName\_SC_in" ;
-  #$detector{"description"} = "The holes";
-  #$detector{"pos"}        = "$x[0]*cm 0*cm 0*cm";
-  #$detector{"rotation"}   = "0*deg $rot[0]*deg 0*deg";
-  ##$detector{"pos"}        = "0*cm 22.169365*cm 0*cm";
-  ##$detector{"rotation"}   = "90*deg 0*deg 0*deg";
-  #$detector{"color"}      = "808080";    
-  #$detector{"type"}       = "Operation:@ $DetectorName\_polycone - $DetectorName\_cuts_0";
-  #$detector{"dimensions"} = "0"; 
-  #$detector{"material"}   = $mat[0];
-  #$detector{"mfield"}     = "no";
-  #$detector{"ncopy"}      = 1;
-  #$detector{"pMany"}       = 1;
-  #$detector{"exist"}       = 1;
-  #$detector{"visible"}     = 1;
-  #$detector{"style"}       = 1;
-  #$detector{"sensitivity"} = "no";
-  #$detector{"hit_type"}    = "no";
-  #$detector{"identifiers"} = "no";
-  #print_det(\%configuration, \%detector);
 
   for(my $i=1; $i<=$N; $i++){
     #The holes
@@ -1340,7 +1280,90 @@ sub make_magnet_support
     $detector{"material"}   = "Component";
     $detector{"exist"}       = 0;
     print_det(\%configuration, \%detector);
+    
+    #The cuts addition to the holes
+    %detector=init_det();
+    $detector{"name"}        = "$DetectorName\_rec_$i";
+    $detector{"mother"}      = "$DetectorName\_SC_in" ;
+    $detector{"description"} = "The holes addition cuts";
+    $detector{"pos"}        = "0*cm $rec_y[$i-1]*cm $rec_z[$i-1]*cm";
+    $detector{"rotation"}   = "$rec_rot[$i-1]*deg 0*deg 0*deg";
+    $detector{"color"}      = "808080";    
+    $detector{"type"}       = "Box";
+    $detector{"dimensions"} = "12.157*cm 1.08*cm 2.5*cm"; 
+    $detector{"material"}   = "Component";
+    $detector{"mfield"}     = "no";
+    print_det(\%configuration, \%detector);
+    #The cuts addition to the holes
+    %detector=init_det();
+    $detector{"name"}        = "$DetectorName\_addtub_$i";
+    $detector{"mother"}      = "$DetectorName\_SC_in" ;
+    $detector{"description"} = "The holes addition cuts";
+    $detector{"pos"}        = "0*cm $addtub_y[$i-1]*cm $addtub_z[$i-1]*cm";
+    $detector{"rotation"}   = "0*deg $addtub_rot[$i-1]*deg  $addtub_rot2[$i-1]*deg";
+    $detector{"color"}      = "808080";    
+    $detector{"type"}       = "Tube";
+    $detector{"dimensions"} = "0*cm 2.5*cm 12.157*cm 0*deg 180*deg"; 
+    $detector{"material"}   = "Component";
+    print_det(\%configuration, \%detector);
+    %detector=init_det();
+    $detector{"name"}        = "$DetectorName\_rectub_$i";
+    $detector{"mother"}      = "$DetectorName\_SC_in" ;
+    $detector{"description"} = "The holes addition cuts";
+    $detector{"pos"}        = "0*cm $rec_y[$i-1]*cm $rec_z[$i-1]*cm";
+    $detector{"rotation"}   = "$rec_rot[$i-1]*deg 0*deg  0*deg";
+    $detector{"color"}      = "808080";    
+    $detector{"type"}       = "Operation:@ $DetectorName\_rec_$i + $DetectorName\_addtub_$i";
+    $detector{"dimensions"} = "0"; 
+    $detector{"material"}   = "Component";
+    print_det(\%configuration, \%detector);
+    
+    #combine the rectangular tube and cone together, they corresponds to each other, lucky!
+    %detector=init_det();
+    $detector{"name"}        = "$DetectorName\_holes_$i";
+    $detector{"mother"}      = "$DetectorName\_SC_in" ;
+    $detector{"description"} = "The holes all";
+    $detector{"pos"}        = "0*cm $rec_y[$i-1]*cm $rec_z[$i-1]*cm";
+    $detector{"rotation"}   = "$rec_rot[$i-1]*deg 0*deg  0*deg";
+    $detector{"color"}      = "808080";    
+    $detector{"type"}       = "Operation:@ $DetectorName\_rectub_$i + $DetectorName\_cone_$i";
+    $detector{"dimensions"} = "0"; 
+    $detector{"material"}   = "Component";
+    #$detector{"material"}   = $mat[0];
+    #$detector{"mfield"}     = "no";
+    #$detector{"ncopy"}      = 1;
+    #$detector{"pMany"}       = 1;
+    #$detector{"exist"}       = 1;
+    #$detector{"visible"}     = 1;
+    #$detector{"style"}       = 1;
+    #$detector{"sensitivity"} = "no";
+    #$detector{"hit_type"}    = "no";
+    #$detector{"identifiers"} = "no";
+    print_det(\%configuration, \%detector);
 
+    ##Operation@ indicates that the postion and rotation depends on the first volume( volume before the operation)
+    #%detector=init_det();
+    #$detector{"name"}        = "$DetectorName\_cuts_$i";
+    #$detector{"mother"}      = "$DetectorName\_SC_in" ;
+    #$detector{"description"} = "The holes";
+    #$detector{"pos"}        = "$x[0]*cm 0*cm 0*cm";
+    #$detector{"rotation"}   = "0*deg $rot[0]*deg 0*deg";
+    ##$detector{"pos"}        = "0*cm 22.169365*cm 0*cm";
+    ##$detector{"rotation"}   = "90*deg 0*deg 0*deg";
+    #$detector{"color"}      = "808080";    
+    #$detector{"type"}       = "Operation:@ $DetectorName\_polycone * $DetectorName\_holes_$i";
+    #$detector{"dimensions"} = "0"; 
+    #$detector{"material"}   = $mat[0];
+    #$detector{"mfield"}     = "no";
+    #$detector{"ncopy"}      = 1;
+    #$detector{"pMany"}       = 1;
+    #$detector{"exist"}       = 1;
+    #$detector{"visible"}     = 1;
+    #$detector{"style"}       = 1;
+    #$detector{"sensitivity"} = "no";
+    #$detector{"hit_type"}    = "no";
+    #$detector{"identifiers"} = "no";
+    #print_det(\%configuration, \%detector);
     #Operation@ indicates that the postion and rotation depends on the first volume( volume before the operation)
     %detector=init_det();
     $detector{"name"}        = "$DetectorName\_cuts_$i";
@@ -1351,7 +1374,7 @@ sub make_magnet_support
     #$detector{"pos"}        = "0*cm 22.169365*cm 0*cm";
     #$detector{"rotation"}   = "90*deg 0*deg 0*deg";
     $detector{"color"}      = "808080";    
-    $detector{"type"}       = "Operation:@ $DetectorName\_polycone * $DetectorName\_cone_$i";
+    $detector{"type"}       = "Operation:@ $DetectorName\_polycone * $DetectorName\_holes_$i";
     $detector{"dimensions"} = "0"; 
     $detector{"material"}   = "Component";
     $detector{"mfield"}     = "no";

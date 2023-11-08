@@ -5,8 +5,8 @@
 /vis/viewer/zoom 1.5
 
 /vis/viewer/set/cutawayMode intersection
-#/vis/viewer/addCutawayPlane 0  0  0  cm 1 0 0 #front view
-/vis/viewer/addCutawayPlane 0  0  0  cm 0 -1 0 #top view
+/vis/viewer/addCutawayPlane 0  0  0  cm 1 0 0 #front view
+#/vis/viewer/addCutawayPlane 0  0  0  cm 0 -1 0 #top view
 
 /vis/scene/add/axes 0 -3 -3.5 1 m
 
