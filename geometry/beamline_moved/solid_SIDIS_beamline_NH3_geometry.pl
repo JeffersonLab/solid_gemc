@@ -108,11 +108,17 @@ sub make_beam_exit
 #     if ($n==3) {$detector{"dimensions"} = "0*deg 360*deg 2*counts 0*cm 0*cm 18.95*cm 18.95*cm 549.9*cm 550*cm";}
 #     if ($n==4) {$detector{"dimensions"} = "0*deg 360*deg 2*counts 0*cm 0*cm 1.*cm 1.*cm -325*cm -324.99*cm";}
     #for chamber radius 34cm     
+#     $detector{"type"}       = "Polycone";
+#     if ($n==1) {$detector{"dimensions"} = "0*deg 360*deg 3*counts 0*cm 0*cm 0*cm 1.05*cm 19*cm 19*cm -315*cm 190*cm 550*cm";}
+#     if ($n==2) {$detector{"dimensions"} = "0*deg 360*deg 3*counts 0*cm 0*cm 0*cm 1.*cm 18.95*cm 18.95*cm -315*cm 190*cm 550*cm";}
+#     if ($n==3) {$detector{"dimensions"} = "0*deg 360*deg 2*counts 0*cm 0*cm 18.95*cm 18.95*cm 549.9*cm 550*cm";}
+#     if ($n==4) {$detector{"dimensions"} = "0*deg 360*deg 2*counts 0*cm 0*cm 1.*cm 1.*cm -315*cm -314.99*cm";}
+    #for chamber radius 47cm     
     $detector{"type"}       = "Polycone";
-    if ($n==1) {$detector{"dimensions"} = "0*deg 360*deg 3*counts 0*cm 0*cm 0*cm 1.05*cm 19*cm 19*cm -315*cm 190*cm 550*cm";}
-    if ($n==2) {$detector{"dimensions"} = "0*deg 360*deg 3*counts 0*cm 0*cm 0*cm 1.*cm 18.95*cm 18.95*cm -315*cm 190*cm 550*cm";}
+    if ($n==1) {$detector{"dimensions"} = "0*deg 360*deg 3*counts 0*cm 0*cm 0*cm 1.05*cm 19*cm 19*cm -300*cm 190*cm 550*cm";}
+    if ($n==2) {$detector{"dimensions"} = "0*deg 360*deg 3*counts 0*cm 0*cm 0*cm 1.*cm 18.95*cm 18.95*cm -300*cm 190*cm 550*cm";}
     if ($n==3) {$detector{"dimensions"} = "0*deg 360*deg 2*counts 0*cm 0*cm 18.95*cm 18.95*cm 549.9*cm 550*cm";}
-    if ($n==4) {$detector{"dimensions"} = "0*deg 360*deg 2*counts 0*cm 0*cm 1.*cm 1.*cm -315*cm -314.99*cm";}
+    if ($n==4) {$detector{"dimensions"} = "0*deg 360*deg 2*counts 0*cm 0*cm 1.*cm 1.*cm -300*cm -299.96*cm";}
     $detector{"material"}   = $mat[$n-1];
     $detector{"mfield"}     = "no";
     $detector{"ncopy"}      = $n;
