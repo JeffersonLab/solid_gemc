@@ -80,7 +80,8 @@ sub make_target_field
     $detector{"material"}   = $mat[$n-1];
 #     $detector{"mfield"}     = "solenoid_ptarget";
 #     $detector{"mfield"}     = "g2p_ptarget";
-    $detector{"mfield"}     = "oxford_ptarget";
+#     $detector{"mfield"}     = "oxford_ptarget";
+    $detector{"mfield"}     = "no";
     $detector{"ncopy"}      = 1;
     $detector{"pMany"}       = 1;
     $detector{"exist"}       = 1;

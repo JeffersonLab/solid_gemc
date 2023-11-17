@@ -1,8 +1,6 @@
 <gcard>
 
-<detector name="../../../geometry/target/SIDIS_target_NH3_shuo/solid_SIDIS_target_NH3" factory="TEXT" variation="Original"/>
-
-
+<detector name="solid_SIDIS_target_NH3" factory="TEXT" variation="Original"/>
 
 <option name="INTEGRATEDRAW" value="flux"/>
 
