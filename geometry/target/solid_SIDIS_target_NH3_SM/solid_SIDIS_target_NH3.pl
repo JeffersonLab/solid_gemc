@@ -25,11 +25,11 @@ sub help()
 }
 
 # Make sure the argument list is correct
-if( scalar @ARGV != 1) 
-{
-	help();
-	exit;
-}
+# if( scalar @ARGV != 1 || scalar @ARGV != 2) 
+# {
+# 	help();
+# 	exit;
+# }
 
 
 # Loading configuration file and paramters
@@ -44,13 +44,22 @@ our %configuration = load_configuration($config_file);
 
 # One can change the "variation" here if one is desired different from the config.dat
 $configuration{"detector_name"} = "solid_SIDIS_target_NH3";
-$configuration{"variation"} = "Original";
+
+my $cad=$ARGV[1];
+
+if($cad eq "cad"){
+  $configuration{"variation"} = "CAD";  
+  require "solid_SIDIS_target_NH3_CAD_geometry.pl";
+}else{
+  $configuration{"variation"} = "Original";
+  require "solid_SIDIS_target_NH3_geometry.pl";
+}
+
 
 # To get the parameters proper authentication is needed.
 # our %parameters    = get_parameters(%configuration);
-
 #Geometry definition
-require "solid_SIDIS_target_NH3_geometry.pl";
+# require "solid_SIDIS_target_NH3_geometry.pl";
 solid_SIDIS_target_NH3();
 
 #materials definition 

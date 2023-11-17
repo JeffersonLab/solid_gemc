@@ -37,21 +37,21 @@ use utils;
 use materials;
 
 # Help Message
-sub help()
-{
-	print "\n Usage: \n";
-	print "   this_script.pl <configuration filename>\n";
- 	print "   Will create materials used in SoLID\n";
-	exit;
-}
-
-# Make sure the argument list is correct
-# If not pring the help
-if( scalar @ARGV != 1)
-{
-	help();
-	exit;
-}
+# sub help()
+# {
+# 	print "\n Usage: \n";
+# 	print "   this_script.pl <configuration filename>\n";
+#  	print "   Will create materials used in SoLID\n";
+# 	exit;
+# }
+# 
+# # Make sure the argument list is correct
+# # If not pring the help
+# if( scalar @ARGV != 1)
+# {
+# 	help();
+# 	exit;
+# }
 
 # Loading configuration file from argument
 our %configuration = load_configuration($ARGV[0]);

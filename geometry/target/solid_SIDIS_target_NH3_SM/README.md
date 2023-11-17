@@ -5,6 +5,8 @@ we use the magnet cad file from jlab target group and also refer g2p target to m
 build the geometry
 ```
 ./solid_SIDIS_target_NH3.pl config_solid_SIDIS_target_NH3.dat
+
+./solid_SIDIS_target_NH3.pl config_solid_SIDIS_target_NH3.dat cad
 ```
 run the gcard file to show graphic
 ```
