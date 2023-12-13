@@ -166,7 +166,7 @@ sub make_scattering_windows
  my @Rout = ($chamber_inner+$window_beam_inner,$chamber_out,$chamber_inner+$window_exit_inner,$chamber_out);
  #my @Rin  = ($chamber_inner,$chamber_inner+($window_beam_inner),$chamber_inner+$window_beam_inner+$window_beam_thick,$chamber_inner,$chamber_inner+($window_exit_inner),$chamber_inner+$window_exit_inner+$window_exit_thick);
  #my @Rout = ($chamber_inner+($window_beam_inner),$chamber_inner+$window_beam_inner+$window_beam_thick,$chamber_out,$chamber_inner+($window_exit_inner),$chamber_inner+$window_exit_inner+$window_exit_thick,$chamber_out);
- my @Dz   = (19,19,19,19);
+ my @Dz   = (10,10,22,22);
  my @SPhi = (80,80,242,242);
  my @DPhi = (20,20,56,56); 
  my @name = ("entrance_cut","entrance_win","exit_cut","exit_win");
@@ -462,7 +462,7 @@ sub make_30K_window
  my @Rin  = ($shield_30K_Rin,$shield_30K_Rout-$shield_30K_window_thick,$shield_30K_Rin,$shield_30K_Rout-$shield_30K_window_thick);
  #my @Rout = ($shield_30K_Rout,$shield_30K_Rout);
  my @Rout = ($shield_30K_Rout-$shield_30K_window_thick,$shield_30K_Rout,$shield_30K_Rout-$shield_30K_window_thick,$shield_30K_Rout);
- my @Dz   = (10,10,20,20);#cm estimate. first is for beam entrance 
+ my @Dz   = (10,10,22,22);#cm estimate. first is for beam entrance 
  #my @Dz   = (105/2); 
  my @name = ("30K_inwindow_vacuum","30K_inwindow_Al","30K_outwindow_vacuum","30K_outwindow_Al");
  #my @mother = ("$DetectorName\_SC_in","$DetectorName\_SC_in"); 
