@@ -166,14 +166,14 @@ sub make_scattering_windows
  my @Rout = ($chamber_inner+$window_beam_inner,$chamber_out,$chamber_inner+$window_exit_inner,$chamber_out);
  #my @Rin  = ($chamber_inner,$chamber_inner+($window_beam_inner),$chamber_inner+$window_beam_inner+$window_beam_thick,$chamber_inner,$chamber_inner+($window_exit_inner),$chamber_inner+$window_exit_inner+$window_exit_thick);
  #my @Rout = ($chamber_inner+($window_beam_inner),$chamber_inner+$window_beam_inner+$window_beam_thick,$chamber_out,$chamber_inner+($window_exit_inner),$chamber_inner+$window_exit_inner+$window_exit_thick,$chamber_out);
- my @Dz   = (10,10,22,22);
- my @SPhi = (80,80,242,242);
- my @DPhi = (20,20,56,56); 
+ my @Dz   = (10,10,22,22);#first two are for beam entrance, height is 20cm. Second two are for the scattering windows, height 40 cm. 
+ my @SPhi = (80,80,242,242);#beam entrance angle opening, starts from 20 deg, center at 90 deg(80 + 20/2)
+ my @DPhi = (20,20,56,56); #total angle opening, combined with start angle
  my @name = ("entrance_cut","entrance_win","exit_cut","exit_win");
  my @mother = ("$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out","$DetectorName\_SC_out");
  my @mat  = ("G4_Galactic","G4_Al","G4_Galactic","G4_Al");
  my @color = ("FFFFFF","000000","FFFFFF","000000");
- my @style = (0,1,0,1);
+ my @style = (0,1,0,1);#0 for the vacuum part, 1 for the window, thin Al layer
 
  for(my $n=1; $n<=$NUM; $n++)
  {

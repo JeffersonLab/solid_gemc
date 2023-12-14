@@ -19,11 +19,13 @@ geometry details
 -make_target_field();#a box of air containing the entire target
 -make_scattering_chamber();#Tube
 -make_scattering_windows();
+-make_30K_shield();
+-make_30K_window();
+-make_target_LHe();#liquid He
+-make_target_LHe_shield();#liquid He container
 -make_target();#NH3_He
 -make_target_endcaps();#Al
 -make_target_cell();#Target cell mounted on the ladder
--make_target_LHe();#liquid He
--make_target_LHe_shield();#liquid He container
 -make_target_steel();#stainless steel 
 -make_target_coil();#Cu coils
 -make_target_coil_box();#Al coil holder
@@ -35,3 +37,4 @@ _make_magnet_support;#defines the 25deg acceptance
 
 2023/10/25 first checking, Shuo Jia and Zhiwen Zhao
 2023/11/08 updated the target geometry, removed the magnet support cad file. Shuo Jia
+2023/12/14 updated the geometry, added windows on the 30K shield. There are two geometry pl file, one purely g4 geometry, one with magnet support CAD. The only difference is if the magnet support is enabled.  
