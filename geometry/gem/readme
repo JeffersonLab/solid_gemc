@@ -35,13 +35,13 @@ https://hallaweb.jlab.org/wiki/index.php/Solid_Tracking
 ****** initial checkin  2015/10/15 by Zhiwen Zhao ************************
 
 The GEM module construction is borrowed from SBS mc code as described below and converted from  previous file for GEMC 1.x
+SBS code is at http://www.iss.infn.it/cisbani/atmp/sbs/ft/gemc/code/ (a local copy http://hallaweb.jlab.org/12GeV/SoLID/download/tracking/SBS_code)
 
-only first two gas layer is kepted sensitive and use flux as hitprocess
+only first two gas layer is kept sensitive and use flux as hitprocess
 
 hit processing is taken from
 https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/banks/solid_hits_def.txt
 https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/banks/bankdefs/SBSGEM.bank
-
 
  * Describe the single GEM Chamber module (similar to COMPASS)
  * see: "Construction Of GEM Detectors for the COMPASS experiment", CERN Tech Note TA1/00-03
@@ -79,7 +79,6 @@ https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/banks/bankdefs/SBS
  * 21   NEMA G10 120 um
  * 22   NOMEX    3 mm       #should be 3um?
  * 23   NEMA G10 120 um
-#  * 23   NEMA G10 120 um
 
 ****** update 2015/12/30 by Zhiwen Zhao ************************
 
@@ -87,7 +86,7 @@ make several copper layers to be senstive, similar to
 https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_gem_sbsgem.pl
 https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_gem_sbsgem.pl
 
-SoLID GEM geometry below is similar to the updated SBS GEM geometry except SBS GEM has an addtional bottom Honeycomb {l) Honeycomb l.0)   NEMA G10 120 um l.1)   NOMEX    3 um  l.2)   NEMA G10 120 um} between k and m
+SoLID GEM geometry below is similar to the updated SBS GEM geometry except SBS GEM has an additional bottom Honeycomb {l) Honeycomb l.0)   NEMA G10 120 um l.1)   NOMEX    3 um  l.2)   NEMA G10 120 um} between k and m
 
 a) Entrance window 
  a.0) Al 5um (approx)

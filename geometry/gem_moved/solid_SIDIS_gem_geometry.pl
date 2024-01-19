@@ -53,44 +53,7 @@ sub make_gem
 #  my $Dz   = 15.955/2;
 
 # ==== old copy from SBS code ================================
-#  * Describe the single GEM Chamber module (similar to COMPASS)
-#  * see: "Construction Of GEM Detectors for the COMPASS experiment", CERN Tech Note TA1/00-03
-#  *
-#  * Consist of 15 layers of different size, material and position
-#  *
-#  *
-#  * HoneyComb
-#  *  0   NEMA G10 120 um
-#  *  1   NOMEX    3 mm  #should be 3um?
-#  *  2   NEMA G10 120 um
-#  * Drift Cathode
-#  *  3   Copper 5 um    #should exchange with 4?
-#  *  4   Kapton 50 um   #should exchange with 3?
-#  *  5   Air 3 mm
-#  * GEM0
-#  *  6   Copper 5 um
-#  *  7   Kapton 50 um
-#  *  8   Copper 5 um
-#  *  9   Air 2 mm
-#  * GEM1
-#  * 10   Copper 5 um
-#  * 11   Kapton 50 um
-#  * 12   Copper 5 um
-#  * 13   Air 2 mm
-#  * GEM2
-#  * 14   Copper 5 um
-#  * 15   Kapton 50 um
-#  * 16   Copper 5 um
-#  * 17   Air 2 mm 
-#  * Readout Board
-#  * 18   Copper 10 um
-#  * 19   Kapton 50 um
-#  * 20   G10 120 um + 60 um (assume 60 um glue as G10)    # not implmented yet
-#  * Honeycomb
-#  * 21   NEMA G10 120 um
-#  * 22   NOMEX    3 mm       #should be 3um?
-#  * 23   NEMA G10 120 um
-# 
+
 # my $Dz   = 9.781/2; # unit in mm 
 #  my $Nlayer = 23;
 #  my @layer_thickness = (0.12,0.003,0.12,0.05,0.005,3,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.01,0.05,0.12,0.003,0.12);   # unit in mm
@@ -106,29 +69,38 @@ sub make_gem
 # ======================================
 
 # =====SoLID GEM =================================
-# refer  to https://hallaweb.jlab.org/wiki/index.php/Solid_Tracking#GEM_module.27s_geometry_and_material
 
-my $Nlayer = 24;
-
-# change top and bottom 3 layers to 50um Al + 125um G10 + 3mm honey comb according to SBS GEM experience
-my @layer_thickness = (0.05,0.125,3,0.05,0.005,3,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.01,0.05,0.18,3,0.125,0.05);  # unit in mm
-my @material = ("G4_Al","SL_gem_NEMAG10","SL_gem_NOMEX","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","SL_gem_NEMAG10","SL_gem_NOMEX","SL_gem_NEMAG10","G4_Al");
-
-# my @layer_thickness = (0.005,0.02,3,0.05,0.005,3,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.01,0.05,0.18,3,0.02,0.005);  # unit in mm
-# my @material = ("G4_Al","SL_gem_mylar","SL_gem_GEMgas","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","SL_gem_NEMAG10","SL_gem_GEMgas","SL_gem_mylar","G4_Al");
-
-my $Dz   = 0;
-$Dz += $_ for @layer_thickness;
-$Dz = int($Dz*5000)/10000.0;  # half thickness in mm
-
+my $color_NOMEX = "00ff11";
 my $color_NEMAG10 = "00ffdd";
 my $color_Al = "00ff00";
 my $color_mylar = "ffse14";
 my $color_Copper = "ffe731";
 my $color_Kapton = "1a4fff";
 my $color_gas = "ff33fc"; 
-my @color = ($color_Al,$color_mylar,$color_gas,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_NEMAG10,$color_gas,$color_mylar,$color_Al);
-my @hittype = ("no","no","no","no","solid_gem","solid_gem","solid_gem","no","solid_gem","solid_gem","solid_gem","no","no","no","no","no","no","no","solid_gem","no","no","no","no","no");
+
+# add a missing G10 layer at top according to Xinzhan Bai
+my $Nlayer = 25;
+my @layer_thickness = (0.05,0.125,3,0.18,0.05,0.005,3,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.01,0.05,0.18,3,0.125,0.05);  # unit in mm
+my @material = ("G4_Al","SL_gem_NEMAG10","SL_gem_NOMEX","SL_gem_NEMAG10","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","SL_gem_NEMAG10","SL_gem_NOMEX","SL_gem_NEMAG10","G4_Al");
+my @color = ($color_Al,$color_NEMAG10,$color_NOMEX,$color_NEMAG10,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_NEMAG10,$color_NOMEX,$color_NEMAG10,$color_Al);
+my @hittype = ("no","no","no","no","no","solid_gem","solid_gem","solid_gem","no","solid_gem","solid_gem","solid_gem","no","no","no","no","no","no","no","solid_gem","no","no","no","no","no");
+
+# my $Nlayer = 24;
+
+# change top and bottom 3 layers to 50um Al + 125um G10 + 3mm honey comb according to SBS GEM experience
+# my @layer_thickness = (0.05,0.125,3,0.05,0.005,3,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.01,0.05,0.18,3,0.125,0.05);  # unit in mm
+# my @material = ("G4_Al","SL_gem_NEMAG10","SL_gem_NOMEX","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","SL_gem_NEMAG10","SL_gem_NOMEX","SL_gem_NEMAG10","G4_Al");
+# my @color = ($color_Al,$color_NEMAG10,$color_NOMEX,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_NEMAG10,$color_NOMEX,$color_NEMAG10,$color_Al);
+
+# my @layer_thickness = (0.005,0.02,3,0.05,0.005,3,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.005,0.05,0.005,2,0.01,0.05,0.18,3,0.02,0.005);  # unit in mm
+# my @material = ("G4_Al","SL_gem_mylar","SL_gem_GEMgas","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","G4_Cu","SL_gem_GEMgas","G4_Cu","SL_gem_Kapton","SL_gem_NEMAG10","SL_gem_GEMgas","SL_gem_mylar","G4_Al");
+# my @color = ($color_Al,$color_mylar,$color_gas,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_Copper,$color_gas,$color_Copper,$color_Kapton,$color_NEMAG10,$color_gas,$color_mylar,$color_Al);
+
+# my @hittype = ("no","no","no","no","solid_gem","solid_gem","solid_gem","no","solid_gem","solid_gem","solid_gem","no","no","no","no","no","no","no","solid_gem","no","no","no","no","no");
+
+my $Dz   = 0;
+$Dz += $_ for @layer_thickness;
+$Dz = int($Dz*5000)/10000.0;  # half thickness in mm
 
  for(my $n=1; $n<=$Nplate; $n++)
  {

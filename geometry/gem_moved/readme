@@ -1,30 +1,41 @@
 = Intro ===================
+refer to wiki page
+https://solid.jlab.org/wiki/index.php/GEM_Digitization
+https://solid.jlab.org/wiki/index.php/Solid_Tracking
+
+GEM for longer endcap is modified from shorter endcap in "geometry/gem"
 
 Create the detector by
 ./solid_PVDIS_gem.pl config_solid_PVDIS_gem.dat
 ./solid_SIDIS_gem.pl config_solid_SIDIS_gem.dat
+./solid_SIDIS_DDVCS_gem.pl config_solid_SIDIS_DDVCS_gem.dat
 
 = GEM size and location log =========================
+
+defined in the parameter files
 
 cover PVDIS angle 22-35 degree over full 40cm long target at z=10cm
 
 cover both SIDIS angle 7.5-24 degree over full 40cm long target at z=-350cm and JPsi angle 8-28 degree over center 15cm long target at z=-315cm
 
-= GEM geometry and material log =========================
+GEM size for shorter endcap magnet in 2019 preCDR (PVDIS use 22-35 full target)
+[https://hallaweb.jlab.org/12GeV/SoLID/download/gem/talk/solid_gem_zwzhao_20130913.pdf pdf]
+[https://hallaweb.jlab.org/12GeV/SoLID/download/gem/talk/solid_gem_zwzhao_20130913.pptx pptx]
 
-refer to wiki page
-https://hallaweb.jlab.org/wiki/index.php/Solid_Tracking
+GEM size for longer endcap [https://solid.jlab.org/DocDB/0002/000275/002/SoLID_08032020.pdf PVDIS]
+
+= GEM geometry and material log =========================
 
 ****** initial checkin  2015/10/15 by Zhiwen Zhao ************************
 
 The GEM module construction is borrowed from SBS mc code as described below and converted from  previous file for GEMC 1.x
+SBS code is at http://www.iss.infn.it/cisbani/atmp/sbs/ft/gemc/code/ (a local copy http://hallaweb.jlab.org/12GeV/SoLID/download/tracking/SBS_code)
 
-only first two gas layer is kepted sensitive and use flux as hitprocess
+only first two gas layer is kept sensitive and use flux as hitprocess
 
 hit processing is taken from
 https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/banks/solid_hits_def.txt
 https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/banks/bankdefs/SBSGEM.bank
-
 
  * Describe the single GEM Chamber module (similar to COMPASS)
  * see: "Construction Of GEM Detectors for the COMPASS experiment", CERN Tech Note TA1/00-03
@@ -62,7 +73,6 @@ https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/banks/bankdefs/SBS
  * 21   NEMA G10 120 um
  * 22   NOMEX    3 mm       #should be 3um?
  * 23   NEMA G10 120 um
-#  * 23   NEMA G10 120 um
 
 ****** update 2015/12/30 by Zhiwen Zhao ************************
 
@@ -70,7 +80,7 @@ make several copper layers to be sensitive, similar to
 https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/geometry/solid_CLEO_PVDIS_gem_sbsgem.pl
 https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/geometry/solid_CLEO_SIDIS_gem_sbsgem.pl
 
-SoLID GEM geometry below is similar to the updated SBS GEM geometry except SBS GEM has an addtional bottom Honeycomb {l) Honeycomb l.0)   NEMA G10 120 um l.1)   NOMEX    3 um  l.2)   NEMA G10 120 um} between k and m
+SoLID GEM geometry below is similar to the updated SBS GEM geometry except SBS GEM has an additional bottom Honeycomb {l) Honeycomb l.0)   NEMA G10 120 um l.1)   NOMEX    3 um  l.2)   NEMA G10 120 um} between k and m
 
 a) Entrance window 
  a.0) Al 5um (approx)
@@ -109,3 +119,51 @@ m) Sixth GAP
 n) Closing window
  n.0) Mylar 20um
  n.1) Al 5um (approx)
+
+****** update 2022/08/16 by Zhiwen Zhao ************************
+
+update 2022/08/16 by Zhiwen Zhao
+according to SBS GEM running experience, 
+change Entrance and Closing window from 5 to 50um Al, replace 1st and 6th gap gas with honeycomb
+
+update 2024/01/18 by Zhiwen Zhao
+add a missing G10 layer at top (c.0) according to Xinzhan Bai  
+
+a) Entrance window 
+ a.0) Al 50um (approx)
+b) Honeycomb
+ b.0) G10 125 um
+ b.1) NOMEX 3 mm
+c) Drift Cathode
+ c.0) G10 120 um + 60 um (assume 60 um glue as G10)  (added 2024/01/18)
+ c.1) Kapton 50 um
+ c.2) Copper 5 um 
+d) Second GAP (mainly contributor to the signal)
+ d.0) 70Ar30CO2 3 mm
+e) GEM0
+ e.0) Copper 5 um
+ e.1) Kapton 50 um
+ e.2) Copper 5 um
+f) Third GAP (small contribution to the signal) 
+ f.0) 70Ar30CO2 2 mm
+g) GEM1
+ g.0) Copper 5 um
+ g.1) Kapton 50 um
+ g.2) Copper 5 um
+h) Forth GAP (negligible contribution to the signal)
+ h.0) 70Ar30CO2 2 mm
+i) GEM2
+ i.0)   Copper 5 um
+ i.1)   Kapton 50 um
+ i.2)   Copper 5 um
+j) Fifth GAP
+ j.0) 70Ar30CO2 2 mm 
+k) Readout Board
+ k.0)   Copper 10 um
+ k.1)   Kapton 50 um
+ k.2)   G10 120 um + 60 um (assume 60 um glue as G10)
+m) Honeycomb
+ m.0) NOMEX 3 mm
+ m.1) G10 125 um
+n) Closing window
+ n.0) Al 50um (approx)
