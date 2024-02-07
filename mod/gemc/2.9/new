@@ -1,0 +1,13 @@
+based on gemc 2.9 inside jlabce:2.5 container 
+not based on https://www.jlab.org/12gev_phys/packages/sources/gemc/gemc-2.9.tar.gz, which is slightly different
+
+add some features to gemc
+1. modify physics/PhysicsList.cc to allow hadron physics list only without EM physics list to run
+2. modify fields/symmetries/*.cc,fields/mappedField.h to reduce field map mem use by using float instead of double
+3. add link io to api/perl for perl script backward compatibility
+
+old files are kept as *_bak
+
+compile it by "scons OPT=1 LIBRARY=shared -j8"
+
+by Zhiwen Zhao <zwzhao@jlab.org>
