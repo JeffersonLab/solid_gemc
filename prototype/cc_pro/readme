@@ -1,3 +1,5 @@
+this is simulation of Cherenkov prototype used for 2020 hallC beam test
+
 get ready to run on ifarm
 source /group/solid/solid_github/JeffersonLab/solid_gemc/set_solid 1.3 /group/solid/apps/jlab_root /group/solid/solid_github/JeffersonLab/solid_gemc
 
@@ -22,9 +24,13 @@ analysis result
 root -l -b -q 'analysis_cc_pro.C+("/volatile/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_1.3/  ","trigger",false,"single")'
 
 work dir
+/group/solid/solid_github/JeffersonLab/solid_gemc_test/prototype/cc_pro/analysis/farm_cc_pro_even
+farm job work dir
 /work/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_1.3/
-data dir
-/volatile/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_1.3/
+/work/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_devel/
+farm job data dir
+/mss/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_1.3/
+
 version
 pass1 		commit 2802794, CO2 at LA
 pass2 		commit ???, CO2 at LA, change tube inner diameter from 12.5 to 12.25", PMT to mirror distance from 47cm to 22.75", add C1 C2 C3 target, make Cherenkov front window sensitive
@@ -38,7 +44,7 @@ old/withoutEC	old in 2019, TCD at 4deg and 10m
 old/withECshort	add two SC planes and EC plane,TCD at 4deg and 10m
 
 
-==q3 ===================================
+==q3 report plot ===================================
 
 root [0] 
 Attaching file /work/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_1.3/pass2/output_quad_cutECmodule9EC0.1_QEscale0.6/cc_pro_He3_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root as _file0...
@@ -83,3 +89,4 @@ root [16] Info in <TCanvas::Print>: file ./c1.png has been created
 root [16] npe_nsensor_hgc_0->GetYaxis()->SetLabelSize(0.06);
 root [17] npe_nsensor_hgc_0->GetXaxis()->SetLabelSize(0.06);
 
+==q6 report plot ===================================

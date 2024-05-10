@@ -89,7 +89,7 @@ const double DEG=180./3.1415926;   //rad to degree
 
 //#####################################################################################################################################################
 
-int analysis_cc_pro(string inputfile_name,string runmode, bool Is_tellorig=false,string filetype="",bool Is_new=true){
+int analysis_cc_pro(string inputfile_name,string runmode="trigger", bool Is_tellorig=false,string filetype="",bool Is_new=true){
 
 // gStyle->SetOptStat(11111111);
 // gStyle->SetOptStat("ioue");
@@ -195,8 +195,8 @@ else {
 
 //Cherenkov sensor for 30 sectors
 const int ch_lgc=270;
-const int ch_hgc=480;    	//pmt readout
-// const int ch_hgc=1920;	//quad readout
+// const int ch_hgc=480;    	//pmt readout
+const int ch_hgc=1920;	//quad readout
 // const int ch_hgc=30720;		//pixel readout
 
 const int sensor_hgc = ch_hgc/30;
@@ -391,8 +391,8 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 	tree_header->SetBranchAddress("evn",&evn);      // number 
 	tree_header->SetBranchAddress("evn_type",&evn_type);  // evn_type==-1 for simulated events
 	tree_header->SetBranchAddress("beamPol",&beamPol);   //beam polarization
+	tree_header->SetBranchAddress("runNo",&runNo);  // run number	  	
 	if (!Is_new){	
-	tree_header->SetBranchAddress("runNo",&runNo);  // run number	  
 	tree_header->SetBranchAddress("var1",&var1);     // W+ rate
 	tree_header->SetBranchAddress("var2",&var2);     // W- rate
 	tree_header->SetBranchAddress("var3",&var3);     // target pol

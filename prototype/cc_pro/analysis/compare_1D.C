@@ -254,101 +254,134 @@ gStyle->SetOptStat(0);
 // // double ymin=1e-3,ymax=1e9;
 
 // pass5
-char input_dir[300]="/work/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_1.3/pass5/";
-// char input_dir[300]="/volatile/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_devel/pass5/";
-
-// const int m=11;
-const int m=10;
-
-char* input_filename[m]={
-
+// char input_dir[300]="/work/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_1.3/pass5/";
+// // char input_dir[300]="/volatile/halla/solid/sim/solid_gemc/cc_pro_JLAB_VERSION_devel/pass5/";
+// 
+// // const int m=11;
+// const int m=10;
+// 
+// char* input_filename[m]={
+// 
+// // "cc_pro_NOtarget_Beup_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
+// // "cc_pro_NOtarget_Alup_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
+// // "cc_pro_NOtarget_N2_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
+// // "cc_pro_NOtarget_Bedown_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
+// // "cc_pro_NOtarget_Aldown_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
+// // 
+// // "cc_pro_NOtarget_Beup_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
+// // "cc_pro_NOtarget_Alup_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
+// // "cc_pro_NOtarget_N2_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
+// // "cc_pro_NOtarget_Aldown_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
+// // "cc_pro_NOtarget_Bedown_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
+// // 
+// // "cc_pro_NOtarget_CO2FA_BeamOnTarget_1e10_skim_output.root",
+// 
+// // "cc_pro_NOtarget_CO2FA_BeamOnTarget_1e10_skim_output.root",
+// // "cc_pro_NOtarget_CO2FA_BeamOnTarget_1e10_filter_output.root",
+// // "cc_pro_NOtarget_CO2FA_HBfield_BeamOnTarget_1e10_filter_output.root",
+//   
+// "cc_pro_NOtarget_CO2FA_BeamOnTarget_1e10_skim_output.root",
+// 
 // "cc_pro_NOtarget_Beup_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
-// "cc_pro_NOtarget_Alup_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
 // "cc_pro_NOtarget_N2_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
 // "cc_pro_NOtarget_Bedown_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
-// "cc_pro_NOtarget_Aldown_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
 // 
 // "cc_pro_NOtarget_Beup_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
-// "cc_pro_NOtarget_Alup_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
 // "cc_pro_NOtarget_N2_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
-// "cc_pro_NOtarget_Aldown_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
 // "cc_pro_NOtarget_Bedown_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
 // 
-// "cc_pro_NOtarget_CO2FA_BeamOnTarget_1e10_skim_output.root",
+// "cc_pro_NOtarget_Beup_CO2FA_dirty_normalized_allBggen_filenum300_3e7_skim_output.root",
+// "cc_pro_NOtarget_N2_CO2FA_dirty_normalized_allBggen_filenum300_3e7_skim_output.root",
+// "cc_pro_NOtarget_Bedown_CO2FA_dirty_normalized_allBggen_filenum300_3e7_skim_output.root",
+// 
+// 
+// };
+// // char *title="Cherenkov";
+// // char *title="Signal Sum Distribution";
+// 
+// char *label[m]={
+//   "BeamOnTarget",
+//   
+// // "eDIS (Be up)","eDIS (Al up)","eDIS (N2)","eDIS (Al down)","eDIS (Be down)",
+// 
+// // "pi0Wiser (Be up)","pi0Wiser (Al up)","pi0Wiser (N2)","pi0Wiser (Al down)","pi0Wiser (Be down)",
+// 
+// "eDIS (Be up)","eDIS (N2)","eDIS (Be down)",
+// 
+// "pi0 Wiser (Be up)","pi0 Wiser (N2)","pi0 Wiser (Be down)",
+// 
+// "all Bggen (Be up)","all Bggen (N2)","all Bggen (Be down)",
+// 
+// };
+// 
+// int MarkerStyle[m]={
+// 24,24,24,24,24,
+// 24,24,24,24,24,
+// // 24,
+// };
+// int color[m]={
+// 1,7,3,4,5,6,3,8,9,
+// 2,
+// // 2
+// };
+// int style[m]={
+// 1,1,1,1,1,1,1,1,1,1
+// // 2,2,2,2,2,
+// // 1,
+// };
+// // char *hst[m]={
+// //   "occ_hgc_0","occ_hgc_0","occ_hgc_0","occ_hgc_0","occ_hgc_0",
+// //   "occ_hgc_0","occ_hgc_0","occ_hgc_0","occ_hgc_0","occ_hgc_0",
+// //   "occ_hgc_0",
+// // };
+// char *hst[m]={
+//   "hit_Eec","hit_Eec","hit_Eec",
+//   "hit_Eec","hit_Eec","hit_Eec",
+//   "hit_Eec","hit_Eec","hit_Eec","hit_Eec",
+// //   "hit_Eec",
+// };
+// // char *hst[m]={"npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1",};
+// // double xmin=0,xmax=100;
+// // double ymin=1e-8,ymax=2e1;
+// // double ymin=1e-8,ymax=1e6;
+// // double ymin=1e0,ymax=1e7;
+// // double ymin=1e-8,ymax=1e6;
+// // char *title="SC back;log10(Edep)(GeV);rate (kHz)";
+// // char *title="SC front;log10(Edep)(GeV);rate (kHz)";
+// char *title="EC;log10(Edep)(GeV);rate (kHz)";
 
-// "cc_pro_NOtarget_CO2FA_BeamOnTarget_1e10_skim_output.root",
-// "cc_pro_NOtarget_CO2FA_BeamOnTarget_1e10_filter_output.root",
-// "cc_pro_NOtarget_CO2FA_HBfield_BeamOnTarget_1e10_filter_output.root",
-  
-"cc_pro_NOtarget_CO2FA_BeamOnTarget_1e10_skim_output.root",
+char input_dir[300]="farm_cc_pro_even";
 
-"cc_pro_NOtarget_Beup_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
-"cc_pro_NOtarget_N2_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
-"cc_pro_NOtarget_Bedown_CO2FA_dirty_weighted_eDIS_filenum100_1e8_skim_output.root",
+const int m=3;
 
-"cc_pro_NOtarget_Beup_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
-"cc_pro_NOtarget_N2_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
-"cc_pro_NOtarget_Bedown_CO2FA_dirty_normalized_pi0Wiser_filenum100_1e8_skim_output.root",
-
-"cc_pro_NOtarget_Beup_CO2FA_dirty_normalized_allBggen_filenum300_3e7_skim_output.root",
-"cc_pro_NOtarget_N2_CO2FA_dirty_normalized_allBggen_filenum300_3e7_skim_output.root",
-"cc_pro_NOtarget_Bedown_CO2FA_dirty_normalized_allBggen_filenum300_3e7_skim_output.root",
-
-
+char* input_filename[m]={
+// "cc_pro_CO2LA_tcdonly_even_ecentral_1e3_output_MAPMT.root",
+// "cc_pro_CO2LA_tcdonly_even_ecentral_1e3_output_LAPPD.root",
+// "cc_pro_C4F8LA_tcdonly_even_ecentral_1e3_output_LAPPD.root"
+"cc_pro_CO2LA_tcdonly_even_ecentral_1e3_output_MAPMT_new.root",
+"cc_pro_CO2LA_tcdonly_even_ecentral_1e3_output_LAPPD_new.root",
+"cc_pro_C4F8LA_tcdonly_even_ecentral_1e3_output_LAPPD_new.root"
 };
 // char *title="Cherenkov";
 // char *title="Signal Sum Distribution";
 
 char *label[m]={
-  "BeamOnTarget",
-  
-// "eDIS (Be up)","eDIS (Al up)","eDIS (N2)","eDIS (Al down)","eDIS (Be down)",
-
-// "pi0Wiser (Be up)","pi0Wiser (Al up)","pi0Wiser (N2)","pi0Wiser (Al down)","pi0Wiser (Be down)",
-
-"eDIS (Be up)","eDIS (N2)","eDIS (Be down)",
-
-"pi0 Wiser (Be up)","pi0 Wiser (N2)","pi0 Wiser (Be down)",
-
-"all Bggen (Be up)","all Bggen (N2)","all Bggen (Be down)",
-
+"CO2 MAPMT","CO2 LAPPD","C4F8 LAPPD",
 };
 
 int MarkerStyle[m]={
-24,24,24,24,24,
-24,24,24,24,24,
-// 24,
+24,24,24,
 };
 int color[m]={
-1,7,3,4,5,6,3,8,9,
-2,
-// 2
+1,2,3
 };
 int style[m]={
-1,1,1,1,1,1,1,1,1,1
-// 2,2,2,2,2,
-// 1,
+1,1,1
 };
-// char *hst[m]={
-//   "occ_hgc_0","occ_hgc_0","occ_hgc_0","occ_hgc_0","occ_hgc_0",
-//   "occ_hgc_0","occ_hgc_0","occ_hgc_0","occ_hgc_0","occ_hgc_0",
-//   "occ_hgc_0",
-// };
 char *hst[m]={
-  "hit_Eec","hit_Eec","hit_Eec",
-  "hit_Eec","hit_Eec","hit_Eec",
-  "hit_Eec","hit_Eec","hit_Eec","hit_Eec",
-//   "hit_Eec",
+  "npe_hgc_count_0","npe_hgc_count_0","npe_hgc_count_0",
 };
-// char *hst[m]={"npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1","npe_hgc_1",};
-// double xmin=0,xmax=100;
-// double ymin=1e-8,ymax=2e1;
-// double ymin=1e-8,ymax=1e6;
-// double ymin=1e0,ymax=1e7;
-// double ymin=1e-8,ymax=1e6;
-// char *title="SC back;log10(Edep)(GeV);rate (kHz)";
-// char *title="SC front;log10(Edep)(GeV);rate (kHz)";
-char *title="EC;log10(Edep)(GeV);rate (kHz)";
+char *title=";Npe;";
 
 double occ_threshold_spd_FA=0.5,occ_threshold_spd_LA=3.; 
 // double occ_threshold_ec_preshower=0.8,occ_threshold_ec_shower=12; //in MeV
