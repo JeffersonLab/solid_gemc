@@ -51,9 +51,9 @@ our %parameters    = get_parameters(%configuration);
 # $configuration{"detector_name"} = "solid_PVDIS";
 
 #Geometry definition
-require "solid_SIDIS_gem_geometry.pl";
+require "./solid_SIDIS_gem_geometry.pl";
 solid_SIDIS_gem_geometry();
-require "solid_SIDIS_gem_virtualplane.pl";
+require "./solid_SIDIS_gem_virtualplane.pl";
 solid_SIDIS_gem_virtualplane();
 
 #materials definition 
