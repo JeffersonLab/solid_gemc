@@ -1,8 +1,23 @@
-From the drawing and tables from engineers, we got the EC hexagon module center coordinate in lab frame and save as txt file
+= Intro and howto ========================
+From the drawing and tables by engineers, we got the EC hexagon module center coordinate in lab frame and save as txt file
 
-EC_map.C script is used to 
-1. convert the EC coordinate map into GEMC parameter file
-2. get the fired module and its surrounded 6 module ID with hit position hit_x hit_y in cm
+EC_map.C script tool
+1. root 'EC_map.C("find",100,100)'
+   get the fired module and its surrounded 6 module ID with hit position hit_x hit_y in cm
+2. root EC_map.C("convert") 
+   convert the EC coordinate map "map_FAEC_ANL_20130628.txt" into GEMC parameter file "map_FAEC_ANL_20130628_PVDIS_parameters.txt"
+   
+ec_layout.h lib tool can be used as follows and an example in analysis/ml/analysis_aiml.C
+*********************
+#include "../ec_layout/ec_layout.h"
+LoadEC_map("../ec_layout");
+int ecal_hitblockID=GetECALBlock_id(hit_x,hit_y); //get ec id from hit position
+const int Nneighbor=19; //hexagon has 6+1 or 18+1 layout
+Int_t cluster_edep_blockid[Nneighbor]={0};      
+int block_count = GetECALCluserAll(Nneighbor,ecal_hitblockID,cluster_edep_blockid);             
+*********************
+
+= details ===============================
 
 the SoLID lab frame
 *********************
@@ -11,7 +26,7 @@ electron beam and solenoid central line are along +z axis
 y axis is vertical and +y pointing up relative to the ground
 x axis is horizontal and +x pointing left relative to the electron beam
 *********************
-refer to https://hallaweb.jlab.org/wiki/index.php/Solid_Software#Coordinate_System
+refer to https://solid.jlab.org/wiki/index.php/Solid_Software#Coordinate_System
 
 Imaging we are riding along the beam and facing EC from front
 EC module ID consist of idx,idy,id,sector
@@ -31,13 +46,13 @@ idx direction: 1-46 coll. in maximum row
 status can be 1 (default) or 0, which can be used to enable or disable a particular module
 
 SIDIS FAEC and LAEC are using the PVDIS FAEC module layout with certain modules removed when not in the right radius range.
-To remove module, we can just use raius from x y info instead of keyword status
+To remove module, we can just use radius from x y info instead of keyword status
 
-One hidden information in ANL layout is the angle of hexgon module.
-It has two side parellel to y-axis, no side parellel to x-axis
+One hidden information in ANL layout is the angle of hexagon module.
+It has two side parallel to y-axis, no side parallel to x-axis
 
-= log ==========
+= log ====================================================
 
 written by Yuxiang Zhao (yxzhao@jlab.org)  2014/08
 
-Update by Zhiwen Zhao  (zwzhao@jlab.org)  2015/11
+Updated by Zhiwen Zhao  (zwzhao@jlab.org) and Ye Tian (tianye@jlab.org)
