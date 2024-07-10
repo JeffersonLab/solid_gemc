@@ -22,10 +22,11 @@ graph::graph(QWidget *parent) : QGraphicsView(parent)
         pcolors[211]  = QPen(Qt::magenta,           2);   // pi+: magenta
         pcolors[-211] = QPen(Qt::yellow,            2);   // pi-: yellow
         pcolors[2212] = QPen(QColor(219, 117, 41),  2);   // protons: orange
-        pcolors[-11]  = QPen(Qt::red,               2);   // positrons: positive - red
-        pcolors[MHit::OPTICALPHOTONPID]  = QPen(Qt::white,             2);   // optical photons: white
-        pcolors[13  ] = QPen(Qt::cyan,    2);       // Muon+ - dark green
-        pcolors[-13 ] = QPen(Qt::green,   2);       // Muon- - light green
+        pcolors[-11]  = QPen(Qt::darkRed,               2);   // positrons: positive - red
+//         pcolors[MHit::OPTICALPHOTONPID]  = QPen(Qt::white,             2);   // optical photons: white
+        pcolors[-22]  = QPen(Qt::white,             2);   // optical photons: white        
+//         pcolors[13  ] = QPen(Qt::cyan,    2);       // Muon+ - dark green
+//         pcolors[-13 ] = QPen(Qt::green,   2);       // Muon- - light green
         pcolors[1000] = QPen(Qt::gray,              2);   // neutrals: black
         pcolors[-99]  = QPen(Qt::red,               3);   // ion
 

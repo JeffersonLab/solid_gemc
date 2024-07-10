@@ -154,11 +154,14 @@ vector<string> init_dvmesg(goptions gemcOpt, G4VisManager *VM)
 	gemcColorIDModel->Set("neutron", "black");
 	gemcColorIDModel->Set("gamma",   "blue");
 	gemcColorIDModel->Set("e-",      "red");
+        gemcColorIDModel->Set("e+",      "yellow");        
 	gemcColorIDModel->Set("pi+",     "magenta");
-	gemcColorIDModel->Set("pi-",     "yellow");
+	gemcColorIDModel->Set("pi-",     "magenta");
+        gemcColorIDModel->Set("mu+",     "brown");
+        gemcColorIDModel->Set("mu-",     "brown");
 	gemcColorIDModel->Set("proton",  G4Colour(0.95, 0.6, 0.3));  // orange
-        gemcColorIDModel->Set("opticalphoton", "white");        
-	
+        gemcColorIDModel->Set("opticalphoton", "white");  
+        
 	G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
 	for(int i=0; i<particleTable->entries(); i++)
 	{
@@ -168,14 +171,18 @@ vector<string> init_dvmesg(goptions gemcOpt, G4VisManager *VM)
 		if(pname !=  "neutron" &&
 		   pname !=  "gamma"   &&
 		   pname !=  "e-"      &&
+                   pname !=  "e+"      &&		   
 		   pname !=  "pi+"     &&
 		   pname !=  "pi-"     &&
-		   pname !=  "proton"    )
+                   pname !=  "mu+"     &&
+                   pname !=  "mu-"     &&
+		   pname !=  "proton"  &&
+                   pname !=  "opticalphoton"     )
 		{
 			if(charge>0)
 				gemcColorIDModel->Set(pname,  "cyan");
 			if(charge==0)
-				gemcColorIDModel->Set(pname,  "blue");
+				gemcColorIDModel->Set(pname,  "gray");
 			if(charge<0)
 				gemcColorIDModel->Set(pname,  "green");
 		}
