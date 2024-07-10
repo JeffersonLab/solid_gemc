@@ -5,6 +5,7 @@ add some features to gemc
 1. modify physics/PhysicsList.cc to allow hadron physics list only without EM physics list to run
 2. modify fields/symmetries/*.cc,fields/mappedField.h to reduce field map mem use by using float instead of double
 3. add link io to api/perl for perl script backward compatibility
+4. modify src/dmesg_init.cc,gui/src/docs/particles_color.h,utilities/graph.cc,utilities/graph.h to fix particle colors
 
 old files are kept as *_bak
 
