@@ -90,7 +90,7 @@ const double DEG=180./3.1415926;   //rad to degree
 int analysis(string inputfile_name,string runmode="trigger", bool Is_tellorig=false,string filetype="",bool Is_new=true){
 
 // gStyle->SetOptStat(11111111);
-gStyle->SetOptStat("ioue");
+// gStyle->SetOptStat("ioue");
 // gStyle->SetOptStat(0);
 
 // gStyle->SetPalette(57);
@@ -447,7 +447,8 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 		  hhit_xy[hit_id]->Fill(hit_x,hit_y,rate);
 		  hhit_rz[hit_id]->Fill(hit_z,hit_r,rate);
 		  
-		  if (flux_tid->at(j) == 1){
+		  if (flux_tid->at(j) == 1){ // hit is from original particle
+//                       cout << hit_x << " " << hit_y << endl;
 		    hhit_xy_orig[hit_id]->Fill(hit_x,hit_y,rate);
 		    hhit_rz_orig[hit_id]->Fill(hit_z,hit_r,rate);
 		  }
@@ -477,7 +478,7 @@ TCanvas *c_hit_xy_orig = new TCanvas("hit_xy_orig", "hit_xy_orig",1900,900);
 c_hit_xy_orig->Divide(5,2);
 for(int i=0;i<n;i++){
 c_hit_xy_orig->cd(i+1);
-hhit_xy_orig[i]->Draw("colz");
+hhit_xy_orig[i]->Draw("colz box");
 }
 
 TCanvas *c_hit_rz_orig = new TCanvas("hit_rz_orig", "hit_rz_orig",1900,900);

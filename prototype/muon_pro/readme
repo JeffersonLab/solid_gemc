@@ -1,26 +1,35 @@
 = run simulation =====
-#get ready to run simulation
-follow "run official solid_gemc installation on ifarm" at https://github.com/JeffersonLab/solid_release/blob/master/howto.md
+#general reference 
+gemc note
+https://solid.jlab.org/wiki/index.php/Gemc_simulation_general_note
+vnc note
+https://hallaweb.jlab.org/wiki/index.php/Ifarm_graphic_mode
 
-create or update geometry 
+#get ready to run simulation
+follow "run official solid_gemc binary with your installation on ifarm" at https://github.com/JeffersonLab/solid_release/blob/master/howto.md
+Once you are inside container and in your_work_dir, 
+cd solid_gemc/prototype/muon_pro
+
+#create or update geometry which are those text files
 ./solid_DDVCS_muon_forwardangle.pl config.dat
 ./solid_DDVCS_muon_largeangle.pl config.dat
 ./solid_DDVCS_muon_barrel.pl config.dat
 
 #run with graphic 
-solid_gemc muon.gcard
+solid_gemc muon.gcard (magnet with muon detector only)
+solid_gemc solid_JPsi_DDVCS_LH2_moved_full.gcard (full geometry)
 
 #run with batch
 solid_gemc muon.gcard -USE_GUI=0 -OUTPUT="evio,out.evio" -BEAM_P="mu-,5.5*GeV,45*deg,0*deg" -SPREAD_P="5.5*GeV,45*deg,180*deg" -BEAM_V="(0,0,-315)cm" -SPREAD_V="(0.2,7.5)cm" -N=1e4
 
 #convert to root file
-evio2root -INPUTF=out.evio -R="flux"
+evio2root -INPUTF=out.evio -R="flux" (convert evio with muon detector only to root)
 
 #exit container
 ctrl-d or exit
 
 = analysis result =====
-(do this outside of the container)
+(open a new terminal on ifarm and do the following outside of the container, because root in container has graphic problem)
 module use /group/halla/modulefiles
 module load root
 root 'analysis.C+("out.root")'
