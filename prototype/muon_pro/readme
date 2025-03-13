@@ -33,3 +33,8 @@ ctrl-d or exit
 module use /group/halla/modulefiles
 module load root
 root 'analysis.C+("out.root")'
+
+here is example to read twopeg background simiulation output 
+root 'analysis_physics.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/pass1/solid_JPsi_DDVCS_LH2_moved_full_twopeg_1e5.root")'
+root 'analysis_physics.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/pass1/solid_JPsi_DDVCS_LH2_moved_full_twopeg_1e6.root")'
+
