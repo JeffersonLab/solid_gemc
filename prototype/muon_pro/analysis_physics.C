@@ -388,10 +388,19 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
     double effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(N_events);
     
 //       effxsec=effxsec/10; //because only processing 1e5 events out of 1e6 generated
-                
-//    generator output unit ub = 1e-30 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
+      
+      double rate_convert=0;
+  if(evgen=="grape"){
+//  grape generator output unit pb = 1e-36 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
+//       rate_convert = 1e-36*1.2e37*0.85;  
+      rate_convert = 1e-36*1.2e37*0.7;        
+  }
+  else if(evgen=="twopeg"){
+// twopeg generator output unit ub = 1e-30 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
 //       rate_convert = 1e-30*1.2e37*0.85;
-      double rate_convert = 1e-30*1.2e37*0.7;    
+      rate_convert = 1e-30*1.2e37*0.7;    
+  }
+      
       double count_convert = rate_convert*3600*24*50;
       double rate=effxsec*rate_convert;
 
