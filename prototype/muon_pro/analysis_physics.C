@@ -377,6 +377,18 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                 double weight_tmp=userVar010->at(0);
 //                 if (i<10) cout << i << " " << W_tmp << " " << Q2_tmp << " " << weight_tmp << endl;
                 
+
+      double rate_convert=0;
+      double effxsec=0;
+  if(evgen=="grape"){
+//     effxsec=weight_tmp/double(N_events);
+    effxsec=weight_tmp;      //before fixing weight_tmp has nevent already
+    
+//  grape generator output unit pb = 1e-36 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
+//       rate_convert = 1e-36*1.2e37*0.85;  
+      rate_convert = 1e-36*1.2e37*0.7;          
+  }
+  else if(evgen=="twopeg"){
                 double Ebeam=11.;
 // from twopeg generator, this is max allowed W and Q2 range for Ebeam=11 and no limit on scattered e-
 // Minimum W  has been changed to 1.2375
@@ -385,17 +397,8 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 // W^2=M^2+2M(E-E')-Q2
     double W_min=1.2375,W_max=sqrt(0.938*0.938+2*0.938*Ebeam-Q2_tmp);
     double Q2_min=5e-5,Q2_max=0.938*0.938+2*0.938*Ebeam-W_tmp*W_tmp;
-    double effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(N_events);
-    
-//       effxsec=effxsec/10; //because only processing 1e5 events out of 1e6 generated
-      
-      double rate_convert=0;
-  if(evgen=="grape"){
-//  grape generator output unit pb = 1e-36 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
-//       rate_convert = 1e-36*1.2e37*0.85;  
-      rate_convert = 1e-36*1.2e37*0.7;        
-  }
-  else if(evgen=="twopeg"){
+    effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(N_events);
+          
 // twopeg generator output unit ub = 1e-30 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
 //       rate_convert = 1e-30*1.2e37*0.85;
       rate_convert = 1e-30*1.2e37*0.7;    
