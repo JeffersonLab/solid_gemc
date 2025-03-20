@@ -381,8 +381,8 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
       double rate_convert=0;
       double effxsec=0;
   if(evgen=="grape"){
-//     effxsec=weight_tmp/double(N_events);
-    effxsec=weight_tmp;      //before fixing weight_tmp has nevent already
+    effxsec=weight_tmp/double(N_events);
+//     effxsec=weight_tmp;      //before fixing old weight_tmp=crosssection/nevent
     
 //  grape generator output unit pb = 1e-36 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
 //       rate_convert = 1e-36*1.2e37*0.85;  
