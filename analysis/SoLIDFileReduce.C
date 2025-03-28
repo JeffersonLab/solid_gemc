@@ -157,6 +157,7 @@ void SoLIDFileReduce(string setup, string input_filename, string format="1")
 	output_solid_hgc = solid_hgc->CloneTree(0);
 	}	
 
+//!!! have to use double instead of int, otherwise output tree will have weird vector out_of_range error	
 vector<double> *flux_hitn=0;
 vector<double> *allraws_hitn=0,*solid_gem_hitn=0,*solid_ec_hitn=0,*solid_ec_ps_hitn=0,*solid_lgc_hitn=0,*solid_mrpc_hitn=0,*solid_spd_hitn=0,*solid_hgc_hitn=0;
 
