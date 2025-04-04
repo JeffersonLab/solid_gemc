@@ -90,7 +90,7 @@ const double DEG=180./3.1415926;   //rad to degree
 int analysis(string inputfile_name,string runmode="trigger", bool Is_tellorig=false,string filetype="",bool Is_new=true){
 
 // gStyle->SetOptStat(11111111);
-// gStyle->SetOptStat("ioue");
+gStyle->SetOptStat("ioue");
 // gStyle->SetOptStat(0);
 
 // gStyle->SetPalette(57);
@@ -249,7 +249,12 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 	  sprintf(hstname,"hit_Edep_%i",i);
 	  hhit_Edep[i]=new TH1F(hstname,detname[i].c_str(),1000,0,0.1);	  
 	}
-		
+	
+        TH2F *hhit_EdepP_P_FAMD=new TH2F("hhit_EdepP_P_FAMD","hhit_EdepP_P_FAMD;P(GeV);Edep_FAMD/P(GeV)",110,0,22,100,0,0.1);
+        TH2F *hhit_Edep_P_FAMD=new TH2F("hhit_Edep_P_FAMD","hhit_Edep_P_FAMD;P(GeV);Edep_FAMD(GeV)",110,0,22,100,0,0.1);
+        TH1F *hhit_Edep_FAMD=new TH1F("hhit_Edep_FAMD","hhit_Edep_FAMD;Edep_FAMD(GeV);count",100,0,0.1);
+        TH2F *hhit_Edep_hitr_FAMD=new TH2F("hhit_Edep_hitr_FAMD","hhit_Edep_hitr_FAMD;hitr_FAMD(cm);Edep_FAMD(GeV)",100,0,1e5,100,0,0.1);
+
 	//-------------------------
 	//   get trees in the data file
 	//-------------------------
@@ -351,7 +356,7 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 	//----------------------------
 	//      loop trees
 	//---------------------------
-	for(long int i=0;i<N_events;i++){	  		
+	for(long int i=0;i<N_events/100;i++){
 // 	for(long int i=1;i<N_events-1;i++){	  				
 // 	for(long int i=0;i<N_events/100;i++){	  
 // 	for(long int i=N_events/2;i<N_events;i++){	  		
@@ -416,6 +421,15 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 		tree_flux->GetEntry(i);		  
 		  	
 // 		 cout << "flux_hitn  " << flux_hitn->size() << endl;
+                
+		bool Is_reachlast=true;
+// 		bool Is_reachlast=false;
+		for (Int_t j=0;j<flux_hitn->size();j++) {
+			if(flux_tid->at(j)==1 && flux_id->at(j)==6103000) Is_reachlast=true;
+		}
+
+		int count_layer=0;
+		double Edep_FAMD=0,hit_r_FAMD=0;
 		double Eec=0,Eec_photonele=0,Eec_ele=0,Edepsc1=0,Edepsc2=0;
 		for (Int_t j=0;j<flux_hitn->size();j++) {
 // 	          cout << "flux " << " !!! " << flux_hitn->at(j) << " " << flux_id->at(j) << " " << flux_pid->at(j) << " " << flux_mpid->at(j) << " " << flux_tid->at(j) << " " << flux_mtid->at(j) << " " << flux_trackE->at(j) << " " << flux_totEdep->at(j) << " " << flux_avg_x->at(j) << " " << flux_avg_y->at(j) << " " << flux_avg_z->at(j) << " " << flux_avg_lx->at(j) << " " << flux_avg_ly->at(j) << " " << flux_avg_lz->at(j) << " " << flux_px->at(j) << " " << flux_py->at(j) << " " << flux_pz->at(j) << " " << flux_vx->at(j) << " " << flux_vy->at(j) << " " << flux_vz->at(j) << " " << flux_mvx->at(j) << " " << flux_mvy->at(j) << " " << flux_mvz->at(j) << " " << flux_avg_t->at(j) << endl;  
@@ -460,8 +474,19 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 		  if (abs(flux_pid->at(j)) == 11 || flux_pid->at(j)==22) hhit_E_photonele[hit_id]->Fill(E,rate);
 		  if (abs(flux_pid->at(j)) == 11) hhit_E_ele[hit_id]->Fill(E,rate);  
 		  
+// 		  if(flux_tid->at(j)==1 && (hit_id==5||hit_id==6||hit_id==7)) {count_layer++;Edep_FAMD += Edep;}
+		  if(Is_reachlast && (hit_id==5||hit_id==6||hit_id==7)) {hit_r_FAMD += hit_r;Edep_FAMD += Edep;}
+
 		}	// end of flux		
-	      
+		
+// 		if (Edep_FAMD>0){
+		if (Is_reachlast && Edep_FAMD>0){
+				hhit_EdepP_P_FAMD->Fill(p_gen/1e3,Edep_FAMD/(p_gen/1e3));
+				hhit_Edep_P_FAMD->Fill(p_gen/1e3,Edep_FAMD);
+				hhit_Edep_FAMD->Fill(Edep_FAMD);
+				hhit_Edep_hitr_FAMD->Fill(hit_r_FAMD,Edep_FAMD);
+		}
+
 } //end loop
 	
 
@@ -501,4 +526,16 @@ gPad->SetLogy(1);
 hhit_Edep[i]->Draw("colz");
 }
 
+TCanvas *c_Edep_FAMD = new TCanvas("Edep_FAMD", "Edep_FAMD",1900,1000);
+c_Edep_FAMD->Divide(2,2);
+c_Edep_FAMD->cd(1);
+hhit_EdepP_P_FAMD->Draw("colz");
+c_Edep_FAMD->cd(2);
+hhit_Edep_P_FAMD->Draw("colz");
+c_Edep_FAMD->cd(3);
+hhit_Edep_FAMD->Draw();
+c_Edep_FAMD->cd(4);
+hhit_Edep_hitr_FAMD->Draw("colz");
+
+// exit(0);
 }

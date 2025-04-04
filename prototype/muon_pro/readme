@@ -1,16 +1,24 @@
 = run simulation =====
-#general reference 
+solid_gemc is built on top of gemc which is based on Geant4
+#general reference
 gemc note
 https://solid.jlab.org/wiki/index.php/Gemc_simulation_general_note
 vnc note
 https://hallaweb.jlab.org/wiki/index.php/Ifarm_graphic_mode
+solid simulation Coordinate System
+https://solid.jlab.org/wiki/index.php/Software#Coordinate_System
 
 #get ready to run simulation
 follow "run official solid_gemc binary with your installation on ifarm" at https://github.com/JeffersonLab/solid_release/blob/master/howto.md
-Once you are inside container and in your_work_dir, 
+(no need to compile your own solid_gemc if you don't plan to change hit processing)
+Once you are inside container and in your_work_dir,
 cd solid_gemc/prototype/muon_pro
 
-#create or update geometry which are those text files
+#edit detector
+modify solid_DDVCS_muon_forwardangle_geometry.pl using vi or nedit
+(geometry,materials,detector id are all defined here. both virtual and scintilator plane using flux hit procesing)
+
+#update detector to output those txt files which gemc takes as input
 ./solid_DDVCS_muon_forwardangle.pl config.dat
 ./solid_DDVCS_muon_largeangle.pl config.dat
 ./solid_DDVCS_muon_barrel.pl config.dat
@@ -28,14 +36,37 @@ evio2root -INPUTF=out.evio -R="flux" (convert evio with muon detector only to ro
 #exit container
 ctrl-d or exit
 
-= analysis result =====
+example to analyze muon detector simulation output
 (open a new terminal on ifarm and do the following outside of the container, because root in container has graphic problem)
 module use /group/halla/modulefiles
 module load root
 root 'analysis.C+("out.root")'
+(using flux tree, virtual plane recording particle passing through, scintitlator plane recording energy deposition Edep)
 
-here is example to read twopeg background and grape signal simulation output 
-root 'analysis_physics.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/pass1/solid_JPsi_DDVCS_LH2_moved_full_twopeg_flux_1e6.root","twopeg)'
-root 'analysis_physics.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/pass1/solid_JPsi_DDVCS_LH2_moved_full_twopeg_flux_1e7.root","twopeg)'
+= example of muon detector only simulation =====
+Use jlab farm jobs to simulate large number of events
+
+my farm job submission working dir at 
+/work/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/test_layer
+
+root 'analysis.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/test_layer/solid_JPsi_DDVCS_LH2_moved_full_even_mum_theta12_phi0_1e6.root")'
+root 'analysis.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/test_layer/solid_JPsi_DDVCS_LH2_moved_full_even_pim_theta12_phi0_1e6.root")'
+
+= example of muon detector only simulation =====
+run and read full simulation output of twopeg background and grape signal
+
+For full simulation, I don't use the test geometry in this dir, but the official geometry at  "geometry/muon_moved/solid_DDVCS_muon_forwardangle_virtualplane.pl" of the repo. so flux_id is defined there instead
+
+my farm job submission working dir at /work/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/pass1/
+farm_solid_JPsi_DDVCS_LH2_moved_full_twopeg
+farm_solid_JPsi_DDVCS_LH2_moved_full_grape
+
+(latest twopeg file with flux tree and requiring hit on muon detector)
+root 'analysis_physics.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/pass1/solid_JPsi_DDVCS_LH2_moved_full_twopeg_flux_FAMD_1.1e8.root","twopeg")'
+
+(twopeg file with flux tree, without requiring hit on muon detector)
+root 'analysis_physics.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/pass1/solid_JPsi_DDVCS_LH2_moved_full_twopeg_flux_1e7.root","twopeg")'
+
+(grape file with flux tree)
 root 'analysis_physics.C+("/volatile/halla/solid/sim/solid_gemc/JPsi_DDVCS_JLAB_VERSION_2.5/pass1/solid_JPsi_DDVCS_LH2_moved_full_grape_flux_2.5e6.root","grape")'
 

@@ -254,6 +254,10 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
         TH2F *hhit_mup_coin=new TH2F("hhit_mup_coin","mup coin rate(khz);x(cm);y(cm)",600,-300,300,600,-300,300);
         TH2F *hhit_mu_single=new TH2F("hhit_mu_single","mu single rate(khz);x(cm);y(cm)",600,-300,300,600,-300,300);
                                 
+        TH1F *hcount_InvM_raw=new TH1F("hcount_InvM_raw","e,mu+,mu- raw count;InvM(GeV);count/50MeV",80,0,4);
+        TH1F *hcount_InvM=new TH1F("hcount_InvM","e,mu+,mu- event count;InvM(GeV);count/50MeV",80,0,4);        
+        
+        
         //-------------------------
         //   get trees in the data file
         //-------------------------
@@ -375,7 +379,7 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                 double W_tmp=userVar008->at(0);
                 double Q2_tmp=userVar009->at(0); 
                 double weight_tmp=userVar010->at(0);
-//                 if (i<10) cout << i << " " << W_tmp << " " << Q2_tmp << " " << weight_tmp << endl;
+                if (i<10) cout << i << " " << W_tmp << " " << Q2_tmp << " " << weight_tmp << endl;
                 
 
       double rate_convert=0;
@@ -389,7 +393,7 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
       rate_convert = 1e-36*1.2e37*0.7;          
   }
   else if(evgen=="twopeg"){
-                double Ebeam=11.;
+    double Ebeam=11.;
 // from twopeg generator, this is max allowed W and Q2 range for Ebeam=11 and no limit on scattered e-
 // Minimum W  has been changed to 1.2375
 // Minimum Q2 has been changed to 5e-05
@@ -397,7 +401,8 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 // W^2=M^2+2M(E-E')-Q2
     double W_min=1.2375,W_max=sqrt(0.938*0.938+2*0.938*Ebeam-Q2_tmp);
     double Q2_min=5e-5,Q2_max=0.938*0.938+2*0.938*Ebeam-W_tmp*W_tmp;
-    effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(N_events);
+//     effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(N_events);
+    effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(1.1e8);    // have to use actual event number
           
 // twopeg generator output unit ub = 1e-30 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
 //       rate_convert = 1e-30*1.2e37*0.85;
@@ -406,13 +411,16 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
       
       double count_convert = rate_convert*3600*24*50;
       double rate=effxsec*rate_convert;
+      double count=effxsec*count_convert;
 
                 //---
                 //---generated tree
                 //---
                 tree_generated->GetEntry(i);
                 int n_gen=gen_pid->size();
-                //cout<<"generated : "<<n_gen<<endl;
+//                 cout<<"generated : "<<n_gen<<endl;
+                
+                TLorentzVector mum_gen,mup_gen;
                 int pid_gen=0;
                 double theta_gen=0,phi_gen=0,p_gen=0,px_gen=0,py_gen=0,pz_gen=0,vx_gen=0,vy_gen=0,vz_gen=0;      
               //       cout << "gen_pid->size() " << gen_pid->size() << endl;        
@@ -429,6 +437,9 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                     theta_gen=acos(pz_gen/p_gen)*DEG;
                     phi_gen=atan2(py_gen,px_gen)*DEG;
 //                  cout << "p_gen " << p_gen << endl; 
+                    
+                    if (pid_gen==13 || pid_gen==-211) mum_gen.SetXYZM(px_gen/1e3,py_gen/1e3,pz_gen/1e3,0.105658);
+                    if (pid_gen==-13 || pid_gen==211) mup_gen.SetXYZM(px_gen/1e3,py_gen/1e3,pz_gen/1e3,0.105658);
                     
                 }               
 //              TVector3 *vec_p_gen(px_gen,py_gen,pz_gen),*vec_v_gen(vx_gen,vy_gen,vz_gen);
@@ -447,8 +458,13 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                 //---flux tree
                 //---
                 tree_flux->GetEntry(i);           
+//                 cout<<"flux: "<<flux_hitn->size()<<endl;
                         
-                bool Is_mum=false,Is_mup=false;
+                bool Is_mum_gem1=false,Is_mum_gem2=false,Is_mum_gem3=false,Is_mum_gem4=false,Is_mum_gem5=false,Is_mum_gem6=false;
+                bool Is_mup_gem1=false,Is_mup_gem2=false,Is_mup_gem3=false,Is_mup_gem4=false,Is_mup_gem5=false,Is_mup_gem6=false;
+                bool Is_e_gem1=false,Is_e_gem2=false,Is_e_gem3=false,Is_e_gem4=false,Is_e_gem5=false,Is_e_gem6=false;
+                bool Is_mum_FAMD=false,Is_mup_FAMD=false,Is_e_FAEC=false,Is_e_LAEC=false;
+                bool Is_mum=false,Is_mup=false,Is_e=false;
                 int flux_index_mum=0,flux_index_mup=0;
 //               cout << "flux_hitn  " << flux_hitn->size() << endl;
                 double Eec=0,Eec_photonele=0,Eec_ele=0,Edepsc1=0,Edepsc2=0;
@@ -465,55 +481,59 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 //              TVector3 *vec_hit(hit_x,hit_y,hit_z), *vec_v(hit_vx,hit_vy,hit_vz),*vec_p(flux_px->at(j),flux_py->at(j),flux_pz->at(j));
 //              TVector3 *vec_path=vec_hit-vec_v_gen;
 
-                   //find two muon at the last muon detector virtual plane
-                  if(flux_id->at(j)==6140000){ 
-                    if (flux_pid->at(j) == 13) {
-                        Is_mum=true; flux_index_mum=j;
-//                         cout << "mum" << endl;
-                    }
-                    if (flux_pid->at(j) == -13) {
-                        Is_mup=true; flux_index_mup=j;                        
-//                         cout << "mup" << endl;
-                    } 
-                  }
-                  
-                  int hit_id=-1;
-                  if(flux_id->at(j)==6110000) hit_id=0; 
-                  else if(flux_id->at(j)==6120000) hit_id=1;
-                  else if(flux_id->at(j)==6130000) hit_id=2;
-                  else if(flux_id->at(j)==6210000) hit_id=3;
-                  else if(flux_id->at(j)==6310000) hit_id=4;
-                  else if(flux_id->at(j)==6101000) hit_id=5; 
-                  else if(flux_id->at(j)==6102000) hit_id=6;
-                  else if(flux_id->at(j)==6103000) hit_id=7;
-                  else if(flux_id->at(j)==6201000) hit_id=8;
-                  else if(flux_id->at(j)==6301000) hit_id=9;
-                  else continue;
-//                   else cout << "wrong flux_id " << flux_id->at(j) << endl;
-//                if (hit_id==-1) {/cout << flux_id->at(j) << " " << flux_avg_z->at(j) << endl; 
-              
-                  hhit_xy[hit_id]->Fill(hit_x,hit_y,rate);
-                  hhit_rz[hit_id]->Fill(hit_z,hit_r,rate);
-                  
-                  if (flux_tid->at(j) == 1){ // hit is from original particle
-//                       cout << hit_x << " " << hit_y << endl;
-                    hhit_xy_orig[hit_id]->Fill(hit_x,hit_y,rate);
-                    hhit_rz_orig[hit_id]->Fill(hit_z,hit_r,rate);
-                  }
-                  
 
-                  double E=flux_trackE->at(j)/1e3,Edep=flux_totEdep->at(j)/1e3;           
-                  hhit_Edep[hit_id]->Fill(Edep,rate);
-                  hhit_E[hit_id]->Fill(E,rate);
-                  if (abs(flux_pid->at(j)) == 211 || flux_pid->at(j)==2212|| flux_pid->at(j)==13) hhit_E_mip[hit_id]->Fill(E,rate);
-                  if (abs(flux_pid->at(j)) == 11 || flux_pid->at(j)==22) hhit_E_photonele[hit_id]->Fill(E,rate);
-                  if (abs(flux_pid->at(j)) == 11) hhit_E_ele[hit_id]->Fill(E,rate);  
+                   //find two muon and one electron
+//                    if (flux_pid->at(j) == 13 && flux_mpid->at(j) == 0) {                   
+//                    if (flux_pid->at(j) == 13) {                   
+                   if (flux_pid->at(j) == 13 || flux_pid->at(j) == -211) {                   
+                    if (flux_id->at(j)==1110000) Is_mum_gem1=true;
+                    else if (flux_id->at(j)==1210000) Is_mum_gem2=true;
+                    else if (flux_id->at(j)==1310000) Is_mum_gem3=true;
+                    else if (flux_id->at(j)==1410000) Is_mum_gem4=true;
+                    else if (flux_id->at(j)==1510000) Is_mum_gem5=true;
+                    else if (flux_id->at(j)==1610000) Is_mum_gem6=true;            
+                    else if (flux_id->at(j)==6140000) {Is_mum_FAMD=true;flux_index_mum=j;}
+                    else{};
+                   }
+//                    else if (flux_pid->at(j) == -13 && flux_mpid->at(j) == 0) {                                      
+//                    else if (flux_pid->at(j) == -13) {
+                   if (flux_pid->at(j) == -13 || flux_pid->at(j) == 211) {                   
+                    if (flux_id->at(j)==1110000) Is_mup_gem1=true;
+                    else if (flux_id->at(j)==1210000) Is_mup_gem2=true;
+                    else if (flux_id->at(j)==1310000) Is_mup_gem3=true;
+                    else if (flux_id->at(j)==1410000) Is_mup_gem4=true;
+                    else if (flux_id->at(j)==1510000) Is_mup_gem5=true;
+                    else if (flux_id->at(j)==1610000) Is_mup_gem6=true;            
+                    else if (flux_id->at(j)==6140000) {Is_mup_FAMD=true;flux_index_mup=j;}
+                    else{};
+                   }
+                   else if (flux_pid->at(j) == 11 && flux_mpid->at(j) == 0) {                                      
+                    if (flux_id->at(j)==1110000) Is_mup_gem1=true;
+                    else if (flux_id->at(j)==1210000) Is_e_gem2=true;
+                    else if (flux_id->at(j)==1310000) Is_e_gem3=true;
+                    else if (flux_id->at(j)==1410000) Is_e_gem4=true;
+                    else if (flux_id->at(j)==1510000) Is_e_gem5=true;
+                    else if (flux_id->at(j)==1610000) Is_e_gem6=true;            
+                    else if (flux_id->at(j)==3110000) Is_e_FAEC=true;
+                    else if (flux_id->at(j)==3210000) Is_e_LAEC=true;                    
+                    else{};
+                   }
+                   else{};
                   
                 }       // end of flux   
                 
-                if (Is_mum && Is_mup){
+                if (Is_mum_gem2 && Is_mum_gem3 && Is_mum_gem4 && Is_mum_gem5 && Is_mum_gem6 && Is_mum_FAMD) Is_mum=true;
+                if (Is_mup_gem2 && Is_mup_gem3 && Is_mup_gem4 && Is_mup_gem5 && Is_mup_gem6 && Is_mup_FAMD) Is_mup=true;
+                if (Is_e_gem2 && Is_e_gem3 && Is_e_gem4 && Is_e_gem5 && Is_e_gem6 && Is_e_FAEC) Is_e=true;
+                if (Is_e_gem1 && Is_e_gem2 && Is_e_gem3 && Is_e_gem4 && Is_e_LAEC) Is_e=true;                
+                
+                if (Is_mum && Is_mup && Is_e){                
+//                 if (Is_mum && Is_mup){
                     hhit_mum_coin->Fill(flux_avg_x->at(flux_index_mum)/1e1,flux_avg_y->at(flux_index_mum)/1e1,rate/1e3);     
                     hhit_mup_coin->Fill(flux_avg_x->at(flux_index_mup)/1e1,flux_avg_y->at(flux_index_mup)/1e1,rate/1e3);                    
+                    
+                    hcount_InvM->Fill((mum_gen+mup_gen).M(),count);
+                    hcount_InvM_raw->Fill((mum_gen+mup_gen).M());
                 }
                 else if(Is_mum) hhit_mu_single->Fill(flux_avg_x->at(flux_index_mum)/1e1,flux_avg_y->at(flux_index_mum)/1e1,rate/1e3); 
                 else if(Is_mup) hhit_mu_single->Fill(flux_avg_x->at(flux_index_mup)/1e1,flux_avg_y->at(flux_index_mup)/1e1,rate/1e3);
@@ -532,33 +552,6 @@ cout <<" event_trig_good " << event_trig_good << endl;
 outputfile->Write();    
 outputfile->Flush();
 
-TCanvas *c_hit_xy_orig = new TCanvas("hit_xy_orig", "hit_xy_orig",1900,900);
-c_hit_xy_orig->Divide(5,2);
-for(int i=0;i<n;i++){
-c_hit_xy_orig->cd(i+1);
-hhit_xy_orig[i]->Draw("colz box");
-}
-
-TCanvas *c_hit_rz_orig = new TCanvas("hit_rz_orig", "hit_rz_orig",1900,900);
-c_hit_rz_orig->Divide(5,2);
-for(int i=0;i<n;i++){
-c_hit_rz_orig->cd(i+1);
-hhit_rz_orig[i]->Draw("colz");
-}
-
-TCanvas *c_Edep = new TCanvas("Edep", "Edep",1900,900);
-c_Edep->Divide(5,2);
-for(int i=0;i<5;i++){
-c_Edep->cd(i+1);
-gPad->SetLogy(1);
-hhit_E[i]->Draw("colz");
-}
-for(int i=5;i<n;i++){
-c_Edep->cd(i+1);
-gPad->SetLogy(1);
-hhit_Edep[i]->Draw("colz");
-}
-
 TCanvas *c_muon = new TCanvas("c_muon", "c_muon",1900,900);
 c_muon->Divide(3,1);
 c_muon->cd(1);
@@ -567,4 +560,15 @@ c_muon->cd(2);
 hhit_mup_coin->Draw("colz");
 c_muon->cd(3);
 hhit_mu_single->Draw("colz");
+
+TCanvas *c_mass = new TCanvas("c_mass", "c_mass",1000,900);
+c_mass->Divide(1,1);
+c_mass->cd(1);
+hcount_InvM->Draw();
+
+TCanvas *c_mass_raw = new TCanvas("c_mass_raw", "c_mass_raw",1000,900);
+c_mass_raw->Divide(1,1);
+c_mass_raw->cd(1);
+hcount_InvM_raw->Draw();
+
 }
