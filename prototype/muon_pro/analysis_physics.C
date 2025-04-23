@@ -87,9 +87,9 @@ const double DEG=180./3.1415926;   //rad to degree
 
 //#####################################################################################################################################################
 
-int analysis_physics(string inputfile_name,string evgen="twopeg",string runmode="trigger", bool Is_tellorig=false,string filetype="",bool Is_new=true){
+int analysis_physics(string inputfile_name,string evgen="grape",string runmode="trigger", bool Is_tellorig=false,string filetype="",bool Is_new=true){
 
-// gStyle->SetOptStat(11111111);
+gStyle->SetOptStat(11111111);
 // gStyle->SetOptStat("ioue");
 // gStyle->SetOptStat(0);
 
@@ -129,6 +129,28 @@ if (inputfile_name.find("pi0",0) != string::npos) {
   cout << "this is a pi0 file" << endl;  
 }
 else {cout << "this is NOT a pi0 file" << endl;}
+}
+
+bool Is_fluxonly=false;
+if (inputfile_name.find("flux")!=std::string::npos) {
+ Is_fluxonly=true;
+ cout << "root file has flux tree only" << endl;
+}
+
+double Nevent_actual=0;
+if (inputfile_name.rfind("flux_FAMD")!=std::string::npos){
+    std::size_t end = inputfile_name.rfind(".root");
+    std::size_t begin = inputfile_name.rfind("_")+1;
+    int length=end-begin;
+//     cout << "Nevent_actual " << inputfile_name.substr(begin,length).c_str() << endl;
+    Nevent_actual=atof(inputfile_name.substr(begin,length).c_str());
+    cout << "for flux_FAMD skim, Nevent_actual " << Nevent_actual << endl;
+}
+
+double filenum=0;
+if (inputfile_name.find("_filenum",0) != string::npos) {
+   filenum=atof(inputfile_name.substr(inputfile_name.find("_filenum")+8,inputfile_name.find("_")).c_str());
+    cout << "filenum " << filenum << " for additional normalization, YOU Need to Make Sure It's CORRECT!" <<  endl;    
 }
 
 // string filemode;
@@ -218,16 +240,24 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
         
         TH3F *hgen_ThetaPhiP=new TH3F("gen_ThetaPhiP","gen_ThetaPhiP",50,0,50,180,-180,180,55,0,11);   
         
-        const int n=10;
+        const int n=12;
         string detname[n]={
           "muon_FA_1_virt","muon_FA_2_virt","muon_FA_3_virt","muon_LA_1_virt","muon_barrel_1_virt",
           "muon_FA_1_scint","muon_FA_2_scint","muon_FA_3_scint","muon_LA_1_scint","muon_barrel_1_scint",
+          "muon_FA_0_virt","muon_FA_5_virt"          
         };
+        TH1F *hhit_pid[n],*hhit_r_neutron[n],*hhit_r_charge[n];
         TH2F *hhit_rz[n],*hhit_rz_orig[n];
         TH2F *hhit_xy[n],*hhit_xy_orig[n],*hhit_PhiR[n];
         TH1F *hhit_E[n],*hhit_E_mip[n],*hhit_E_photonele[n],*hhit_E_ele[n],*hhit_Edep[n];                       
         for(int i=0;i<n;i++){
-          char hstname[100];
+          char hstname[100];          
+          sprintf(hstname,"hit_pid_%i",i);
+          hhit_pid[i]=new TH1F(hstname,detname[i].c_str(),3000,-500,2500);
+          sprintf(hstname,"hit_r_neutron_%i",i);
+          hhit_r_neutron[i]=new TH1F(hstname,detname[i].c_str(),300,0,300);
+          sprintf(hstname,"hit_r_charge_%i",i);
+          hhit_r_charge[i]=new TH1F(hstname,detname[i].c_str(),300,0,300);
           sprintf(hstname,"hit_rz_%i",i);
           hhit_rz[i]=new TH2F(hstname,detname[i].c_str(),1200,-400,800,300,0,300);
           sprintf(hstname,"hit_rz_orig_%i",i);
@@ -257,6 +287,10 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
         TH1F *hcount_InvM_raw=new TH1F("hcount_InvM_raw","e,mu+,mu- raw count;InvM(GeV);count/50MeV",80,0,4);
         TH1F *hcount_InvM=new TH1F("hcount_InvM","e,mu+,mu- event count;InvM(GeV);count/50MeV",80,0,4);        
         
+        TH2F *hhit_EdepP_P_FAEC=new TH2F("hhit_EdepP_P_FAEC","hhit_EdepP_P_FAEC;P(GeV);Edep_FAEC/P(GeV)",110,0,22,100,0,0.2);
+        TH2F *hhit_Edep_P_FAEC=new TH2F("hhit_Edep_P_FAEC","hhit_Edep_P_FAEC;P(GeV);Edep_FAEC(GeV)",110,0,22,100,0,1);
+        TH1F *hhit_Edep_FAEC=new TH1F("hhit_Edep_FAEC","hhit_Edep_FAEC;Edep_FAEC(GeV);count",100,0,1);
+        TH2F *hhit_Edep_hitr_FAEC=new TH2F("hhit_Edep_hitr_FAEC","hhit_Edep_hitr_FAEC;hitr_FAEC(cm);Edep_FAEC(GeV)",100,0,1e5,100,0,1);
         
         //-------------------------
         //   get trees in the data file
@@ -312,7 +346,7 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
         tree_generated->SetBranchAddress("vz",&gen_vz);
 
         //--- flux
-        //the real deal output from the GEMC simulation
+        //the flux output from the GEMC simulation
         TTree *tree_flux = (TTree*) file->Get("flux");
         vector<int> *flux_id=0,*flux_hitn=0;
         vector<int> *flux_pid=0,*flux_mpid=0,*flux_tid=0,*flux_mtid=0,*flux_otid=0,*flux_procID=0;
@@ -344,6 +378,74 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
         tree_flux->SetBranchAddress("avg_t",&flux_avg_t);     //average time stamp
         tree_flux->SetBranchAddress("procID",&flux_procID);     // process id
 
+
+        //add ec
+        TTree *tree_solid_ec;
+        vector<int> *solid_ec_id=0,*solid_ec_hitn=0;
+        vector<int> *solid_ec_pid=0,*solid_ec_mpid=0,*solid_ec_tid=0,*solid_ec_mtid=0,*solid_ec_otid=0;
+        vector<double> *solid_ec_trackE=0,*solid_ec_totEdep=0,*solid_ec_avg_x=0,*solid_ec_avg_y=0,*solid_ec_avg_z=0,*solid_ec_avg_lx=0,*solid_ec_avg_ly=0,*solid_ec_avg_lz=0,*solid_ec_px=0,*solid_ec_py=0,*solid_ec_pz=0,*solid_ec_vx=0,*solid_ec_vy=0,*solid_ec_vz=0,*solid_ec_mvx=0,*solid_ec_mvy=0,*solid_ec_mvz=0,*solid_ec_avg_t=0;
+        if(!Is_fluxonly){
+        tree_solid_ec = (TTree*) file->Get("solid_ec");        
+        tree_solid_ec->SetBranchAddress("hitn",&solid_ec_hitn);
+        tree_solid_ec->SetBranchAddress("id",&solid_ec_id);
+        tree_solid_ec->SetBranchAddress("pid",&solid_ec_pid);
+        tree_solid_ec->SetBranchAddress("mpid",&solid_ec_mpid);
+        tree_solid_ec->SetBranchAddress("tid",&solid_ec_tid);
+        tree_solid_ec->SetBranchAddress("mtid",&solid_ec_mtid);
+        tree_solid_ec->SetBranchAddress("otid",&solid_ec_otid);
+        tree_solid_ec->SetBranchAddress("trackE",&solid_ec_trackE);
+        tree_solid_ec->SetBranchAddress("totEdep",&solid_ec_totEdep);
+        tree_solid_ec->SetBranchAddress("avg_x",&solid_ec_avg_x);
+        tree_solid_ec->SetBranchAddress("avg_y",&solid_ec_avg_y);
+        tree_solid_ec->SetBranchAddress("avg_z",&solid_ec_avg_z);
+        tree_solid_ec->SetBranchAddress("avg_lx",&solid_ec_avg_lx);
+        tree_solid_ec->SetBranchAddress("avg_ly",&solid_ec_avg_ly);
+        tree_solid_ec->SetBranchAddress("avg_lz",&solid_ec_avg_lz);
+        tree_solid_ec->SetBranchAddress("px",&solid_ec_px);
+        tree_solid_ec->SetBranchAddress("py",&solid_ec_py);
+        tree_solid_ec->SetBranchAddress("pz",&solid_ec_pz);
+        tree_solid_ec->SetBranchAddress("vx",&solid_ec_vx);
+        tree_solid_ec->SetBranchAddress("vy",&solid_ec_vy);
+        tree_solid_ec->SetBranchAddress("vz",&solid_ec_vz);
+        tree_solid_ec->SetBranchAddress("mvx",&solid_ec_mvx);
+        tree_solid_ec->SetBranchAddress("mvy",&solid_ec_mvy);
+        tree_solid_ec->SetBranchAddress("mvz",&solid_ec_mvz);
+        tree_solid_ec->SetBranchAddress("avg_t",&solid_ec_avg_t); 
+        }
+        
+        //add ec_ps
+        TTree *tree_solid_ec_ps;                
+        vector<int> *solid_ec_ps_id=0,*solid_ec_ps_hitn=0;
+        vector<int> *solid_ec_ps_pid=0,*solid_ec_ps_mpid=0,*solid_ec_ps_tid=0,*solid_ec_ps_mtid=0,*solid_ec_ps_otid=0;
+        vector<double> *solid_ec_ps_trackE=0,*solid_ec_ps_totEdep=0,*solid_ec_ps_avg_x=0,*solid_ec_ps_avg_y=0,*solid_ec_ps_avg_z=0,*solid_ec_ps_avg_lx=0,*solid_ec_ps_avg_ly=0,*solid_ec_ps_avg_lz=0,*solid_ec_ps_px=0,*solid_ec_ps_py=0,*solid_ec_ps_pz=0,*solid_ec_ps_vx=0,*solid_ec_ps_vy=0,*solid_ec_ps_vz=0,*solid_ec_ps_mvx=0,*solid_ec_ps_mvy=0,*solid_ec_ps_mvz=0,*solid_ec_ps_avg_t=0;
+        if(!Is_fluxonly){
+        tree_solid_ec_ps = (TTree*) file->Get("solid_ec_ps");                
+        tree_solid_ec_ps->SetBranchAddress("hitn",&solid_ec_ps_hitn);
+        tree_solid_ec_ps->SetBranchAddress("id",&solid_ec_ps_id);
+        tree_solid_ec_ps->SetBranchAddress("pid",&solid_ec_ps_pid);
+        tree_solid_ec_ps->SetBranchAddress("mpid",&solid_ec_ps_mpid);
+        tree_solid_ec_ps->SetBranchAddress("tid",&solid_ec_ps_tid);
+        tree_solid_ec_ps->SetBranchAddress("mtid",&solid_ec_ps_mtid);
+        tree_solid_ec_ps->SetBranchAddress("otid",&solid_ec_ps_otid);
+        tree_solid_ec_ps->SetBranchAddress("trackE",&solid_ec_ps_trackE);
+        tree_solid_ec_ps->SetBranchAddress("totEdep",&solid_ec_ps_totEdep);
+        tree_solid_ec_ps->SetBranchAddress("avg_x",&solid_ec_ps_avg_x);
+        tree_solid_ec_ps->SetBranchAddress("avg_y",&solid_ec_ps_avg_y);
+        tree_solid_ec_ps->SetBranchAddress("avg_z",&solid_ec_ps_avg_z);
+        tree_solid_ec_ps->SetBranchAddress("avg_lx",&solid_ec_ps_avg_lx);
+        tree_solid_ec_ps->SetBranchAddress("avg_ly",&solid_ec_ps_avg_ly);
+        tree_solid_ec_ps->SetBranchAddress("avg_lz",&solid_ec_ps_avg_lz);
+        tree_solid_ec_ps->SetBranchAddress("px",&solid_ec_ps_px);
+        tree_solid_ec_ps->SetBranchAddress("py",&solid_ec_ps_py);
+        tree_solid_ec_ps->SetBranchAddress("pz",&solid_ec_ps_pz);
+        tree_solid_ec_ps->SetBranchAddress("vx",&solid_ec_ps_vx);
+        tree_solid_ec_ps->SetBranchAddress("vy",&solid_ec_ps_vy);
+        tree_solid_ec_ps->SetBranchAddress("vz",&solid_ec_ps_vz);
+        tree_solid_ec_ps->SetBranchAddress("mvx",&solid_ec_ps_mvx);
+        tree_solid_ec_ps->SetBranchAddress("mvy",&solid_ec_ps_mvy);
+        tree_solid_ec_ps->SetBranchAddress("mvz",&solid_ec_ps_mvz);
+        tree_solid_ec_ps->SetBranchAddress("avg_t",&solid_ec_ps_avg_t);         
+        }
         
         TRandom3 rand;
         rand.SetSeed(0);
@@ -359,8 +461,7 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
         //----------------------------
         //      loop trees
         //---------------------------
-        for(long int i=0;i<N_events;i++){                       
-//      for(long int i=1;i<N_events-1;i++){                                     
+        for(long int i=0;i<N_events;i++){  
 //      for(long int i=0;i<N_events/100;i++){     
 //      for(long int i=N_events/2;i<N_events;i++){                      
 //      for(long int i=520;i<521;i++){  //pip event
@@ -382,10 +483,12 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                 if (i<10) cout << i << " " << W_tmp << " " << Q2_tmp << " " << weight_tmp << endl;
                 
 
+  if (Nevent_actual==0) Nevent_actual=N_events;
+  
       double rate_convert=0;
-      double effxsec=0;
+      double effxsec=0;      
   if(evgen=="grape"){
-    effxsec=weight_tmp/double(N_events);
+    effxsec=weight_tmp/double(Nevent_actual);
 //     effxsec=weight_tmp;      //before fixing old weight_tmp=crosssection/nevent
     
 //  grape generator output unit pb = 1e-36 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
@@ -401,13 +504,18 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 // W^2=M^2+2M(E-E')-Q2
     double W_min=1.2375,W_max=sqrt(0.938*0.938+2*0.938*Ebeam-Q2_tmp);
     double Q2_min=5e-5,Q2_max=0.938*0.938+2*0.938*Ebeam-W_tmp*W_tmp;
-//     effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(N_events);
-    effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(1.1e8);    // have to use actual event number
+    effxsec=(W_max-W_min)*(Q2_max-Q2_min)*weight_tmp/double(Nevent_actual);
           
 // twopeg generator output unit ub = 1e-30 cm2, lumi 1.2e37/cm2/s, 50 days, 0.85 eff
 //       rate_convert = 1e-30*1.2e37*0.85;
       rate_convert = 1e-30*1.2e37*0.7;    
   }
+  else if(evgen=="bggen"){
+      if(filenum==0) {cout << "bggen filenum wrong" << endl; return 0;}
+      effxsec=weight_tmp/double(filenum);
+      rate_convert = 1; //bggen output Hz directly
+  }
+  else {cout << "unknown evgen" << endl; return 0;}
       
       double count_convert = rate_convert*3600*24*50;
       double rate=effxsec*rate_convert;
@@ -459,7 +567,7 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                 //---
                 tree_flux->GetEntry(i);           
 //                 cout<<"flux: "<<flux_hitn->size()<<endl;
-                        
+                     
                 bool Is_mum_gem1=false,Is_mum_gem2=false,Is_mum_gem3=false,Is_mum_gem4=false,Is_mum_gem5=false,Is_mum_gem6=false;
                 bool Is_mup_gem1=false,Is_mup_gem2=false,Is_mup_gem3=false,Is_mup_gem4=false,Is_mup_gem5=false,Is_mup_gem6=false;
                 bool Is_e_gem1=false,Is_e_gem2=false,Is_e_gem3=false,Is_e_gem4=false,Is_e_gem5=false,Is_e_gem6=false;
@@ -470,7 +578,7 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                 double Eec=0,Eec_photonele=0,Eec_ele=0,Edepsc1=0,Edepsc2=0;
                 for (Int_t j=0;j<flux_hitn->size();j++) {
 //                 if(flux_id->at(j)==6140000) cout << "flux " << " !!! " << flux_hitn->at(j) << " " << flux_id->at(j) << " " << flux_pid->at(j) << " " << flux_mpid->at(j) << " " << flux_tid->at(j) << " " << flux_mtid->at(j) << " " << flux_trackE->at(j) << " " << flux_totEdep->at(j) << " " << flux_avg_x->at(j) << " " << flux_avg_y->at(j) << " " << flux_avg_z->at(j) << " " << flux_avg_lx->at(j) << " " << flux_avg_ly->at(j) << " " << flux_avg_lz->at(j) << " " << flux_px->at(j) << " " << flux_py->at(j) << " " << flux_pz->at(j) << " " << flux_vx->at(j) << " " << flux_vy->at(j) << " " << flux_vz->at(j) << " " << flux_mvx->at(j) << " " << flux_mvy->at(j) << " " << flux_mvz->at(j) << " " << flux_avg_t->at(j) << endl;  
-
+              
                 double hit_vr=sqrt(pow(flux_vx->at(j),2)+pow(flux_vy->at(j),2))/1e1; //mm to cm
                 double hit_vy=flux_vy->at(j)/1e1,hit_vx=flux_vx->at(j)/1e1,hit_vz=flux_vz->at(j)/1e1;           //mm to cm                
                 double hit_r=sqrt(pow(flux_avg_x->at(j),2)+pow(flux_avg_y->at(j),2))/1e1; //mm to cm
@@ -480,7 +588,6 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                 
 //              TVector3 *vec_hit(hit_x,hit_y,hit_z), *vec_v(hit_vx,hit_vy,hit_vz),*vec_p(flux_px->at(j),flux_py->at(j),flux_pz->at(j));
 //              TVector3 *vec_path=vec_hit-vec_v_gen;
-
 
                    //find two muon and one electron
 //                    if (flux_pid->at(j) == 13 && flux_mpid->at(j) == 0) {                   
@@ -519,9 +626,43 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                     else{};
                    }
                    else{};
+                   
+                   //for bggen only
+                    int hit_id=-1;
+                    if (flux_id->at(j)==6100000) hit_id=10;
+                    else if (flux_id->at(j)==6110000) hit_id=0;
+                    else if (flux_id->at(j)==6120000) hit_id=1;
+                    else if (flux_id->at(j)==6130000) hit_id=2;
+                    else if (flux_id->at(j)==6140000) hit_id=11;
+                    else if (flux_id->at(j)==6101000) hit_id=5;            
+                    else if (flux_id->at(j)==6102000) hit_id=6; 
+                    else if (flux_id->at(j)==6103000) hit_id=7; 
+                    else if(flux_id->at(j)==6210000) hit_id=3;
+                    else if(flux_id->at(j)==6310000) hit_id=4;
+                    else if(flux_id->at(j)==6201000) hit_id=8;
+                    else if(flux_id->at(j)==6301000) hit_id=9;
+                    else{};
+                    
+                    if (hit_id !=-1){                        
+                       hhit_pid[hit_id]->Fill(flux_pid->at(j));
+                       
+                       if (flux_pid->at(j)==2112) hhit_r_neutron[hit_id]->Fill(hit_r,rate/(2*3.1416*hit_r*1)); //neutron
+                       
+                       if (flux_pid->at(j)== 2212 || abs(flux_pid->at(j))== 211 && abs(flux_pid->at(j))== 13 && abs(flux_pid->at(j))== 321 && abs(flux_pid->at(j))== 11 ){  //all charge
+                       hhit_r_charge[hit_id]->Fill(hit_r,rate/(2*3.1416*hit_r*1));
+                       hhit_xy[hit_id]->Fill(hit_x,hit_y,rate);
+                       hhit_rz[hit_id]->Fill(hit_z,hit_r,rate);
+                       }
+                  
+                        if (flux_tid->at(j) == 1){ // hit is from original particle
+                            hhit_xy_orig[hit_id]->Fill(hit_x,hit_y,rate);
+                            hhit_rz_orig[hit_id]->Fill(hit_z,hit_r,rate);
+                        }                                                
+                    }                  
                   
                 }       // end of flux   
                 
+                // check hit on FAMD
                 if (Is_mum_gem2 && Is_mum_gem3 && Is_mum_gem4 && Is_mum_gem5 && Is_mum_gem6 && Is_mum_FAMD) Is_mum=true;
                 if (Is_mup_gem2 && Is_mup_gem3 && Is_mup_gem4 && Is_mup_gem5 && Is_mup_gem6 && Is_mup_FAMD) Is_mup=true;
                 if (Is_e_gem2 && Is_e_gem3 && Is_e_gem4 && Is_e_gem5 && Is_e_gem6 && Is_e_FAEC) Is_e=true;
@@ -539,7 +680,61 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
                 else if(Is_mup) hhit_mu_single->Fill(flux_avg_x->at(flux_index_mup)/1e1,flux_avg_y->at(flux_index_mup)/1e1,rate/1e3);
                 else{}
                 
-              
+                //check FAEC Edep
+                if(!Is_fluxonly){
+                
+                bool Is_passFAEC=false;    
+                bool Is_reachlast=false;
+                for (Int_t j=0;j<flux_hitn->size();j++) {
+                    if(abs(flux_pid->at(j))==211 && flux_id->at(j)==6140000) Is_reachlast=true;                                                            
+//                     if(flux_tid->at(j)==1 && flux_id->at(j)==6140000) Is_reachlast=true;                                        
+//                     if(flux_pid->at(j)==13 && flux_mtid->at(j)==1 && flux_id->at(j)==6140000) Is_reachlast=true;
+                        
+                    if(abs(flux_pid->at(j))==211 && flux_id->at(j)==3140000) Is_passFAEC=true;                                            
+//                     if(flux_tid->at(j)==1 && flux_id->at(j)==3140000) Is_passFAEC=true;                        
+//                     if(flux_pid->at(j)==13 && flux_mtid->at(j)==1 && flux_id->at(j)==3140000) Is_passFAEC=true; 
+                }
+                    
+                tree_solid_ec->GetEntry(i);  
+                double Edep_ec=0,hit_r_ec=0;
+                for (Int_t j=0;j<solid_ec_hitn->size();j++) {
+                  int detector_ID=solid_ec_id->at(j)/1000000;
+                  int subdetector_ID=(solid_ec_id->at(j)%1000000)/100000;
+                  int subsubdetector_ID=((solid_ec_id->at(j)%1000000)%100000)/10000;                  
+                  int component_ID=solid_ec_id->at(j)%10000;                         
+                  if (detector_ID==3 && subdetector_ID == 1 && subsubdetector_ID == 0){
+                      hit_r_ec+=sqrt(pow(solid_ec_avg_x->at(j),2)+pow(solid_ec_avg_y->at(j),2))/1e1;
+                      Edep_ec+=solid_ec_totEdep->at(j)/1e3;
+                  }
+                }
+                tree_solid_ec_ps->GetEntry(i);  
+                double Edep_ec_ps=0,hit_r_ec_ps=0;
+                for (Int_t j=0;j<solid_ec_ps_hitn->size();j++) {
+                  int detector_ID=solid_ec_ps_id->at(j)/1000000;
+                  int subdetector_ID=(solid_ec_ps_id->at(j)%1000000)/100000;
+                  int subsubdetector_ID=((solid_ec_ps_id->at(j)%1000000)%100000)/10000;                  
+                  int component_ID=solid_ec_ps_id->at(j)%10000;                         
+                  if (detector_ID==3 && subdetector_ID == 1 && subsubdetector_ID == 0){
+                      hit_r_ec_ps+=sqrt(pow(solid_ec_ps_avg_x->at(j),2)+pow(solid_ec_ps_avg_y->at(j),2))/1e1;
+                      Edep_ec_ps+=solid_ec_ps_totEdep->at(j)/1e3;
+                  }
+                }          
+                double hit_r_FAEC=hit_r_ec+hit_r_ec_ps;
+                double Edep_FAEC=Edep_ec+Edep_ec_ps;             
+//                 cout << Edep_ec << " " << Edep_ec_ps << " " << p_gen/1e3 <<  endl;
+                
+//                 if (Edep_FAEC>0){                                
+//                 if (Is_reachlast && Edep_FAEC>0){                
+                if (Is_passFAEC && Edep_FAEC>0){
+                    hhit_EdepP_P_FAEC->Fill(p_gen/1e3,Edep_FAEC/(p_gen/1e3));
+                    hhit_Edep_P_FAEC->Fill(p_gen/1e3,Edep_FAEC);
+                    hhit_Edep_FAEC->Fill(Edep_FAEC);
+                    hhit_Edep_hitr_FAEC->Fill(hit_r_FAEC,Edep_FAEC);
+                }
+                
+                }//check FAEC
+                
+                
 } //end loop
         
 
@@ -571,4 +766,73 @@ c_mass_raw->Divide(1,1);
 c_mass_raw->cd(1);
 hcount_InvM_raw->Draw();
 
+TCanvas *c_Edep_FAEC = new TCanvas("Edep_FAEC", "Edep_FAEC",1900,1000);
+c_Edep_FAEC->Divide(2,2);
+c_Edep_FAEC->cd(1);
+hhit_EdepP_P_FAEC->Draw("colz");
+c_Edep_FAEC->cd(2);
+hhit_Edep_P_FAEC->Draw("colz");
+c_Edep_FAEC->cd(3);
+hhit_Edep_FAEC->Draw();
+c_Edep_FAEC->cd(4);
+hhit_Edep_hitr_FAEC->Draw("colz");
+// c_Edep_FAEC->SaveAs("Edep_FAEC.png");
+
+
+TCanvas *c_hit_xy = new TCanvas("hit_xy", "hit_xy",1900,900);
+c_hit_xy->Divide(6,2);
+for(int i=0;i<n;i++){
+c_hit_xy->cd(i+1);
+hhit_xy[i]->Draw("colz box");
+cout << "integral " << hhit_xy[i]->Integral() << endl;
+}
+
+TCanvas *c_hit_rz = new TCanvas("hit_rz", "hit_rz",1900,900);
+c_hit_rz->Divide(6,2);
+for(int i=0;i<n;i++){
+c_hit_rz->cd(i+1);
+hhit_rz[i]->Draw("colz");
+}
+
+TCanvas *c_hit_xy_orig = new TCanvas("hit_xy_orig", "hit_xy_orig",1900,900);
+c_hit_xy_orig->Divide(6,2);
+for(int i=0;i<n;i++){
+c_hit_xy_orig->cd(i+1);
+hhit_xy_orig[i]->Draw("colz box");
+}
+
+TCanvas *c_hit_rz_orig = new TCanvas("hit_rz_orig", "hit_rz_orig",1900,900);
+c_hit_rz_orig->Divide(6,2);
+for(int i=0;i<n;i++){
+c_hit_rz_orig->cd(i+1);
+hhit_rz_orig[i]->Draw("colz");
+}
+
+TCanvas *c_hit_r_neutron = new TCanvas("hit_r_neutron", "hit_r_neutron",1900,900);
+hhit_r_neutron[10]->SetLineColor(1);
+hhit_r_neutron[0]->SetLineColor(2);
+hhit_r_neutron[1]->SetLineColor(3);
+hhit_r_neutron[2]->SetLineColor(4);
+hhit_r_neutron[11]->SetLineColor(5);
+hhit_r_neutron[10]->Draw("H"); 
+hhit_r_neutron[0]->Draw("H same");
+hhit_r_neutron[1]->Draw("H same");
+hhit_r_neutron[2]->Draw("H same");
+hhit_r_neutron[11]->Draw("H same");
+hhit_r_neutron[10]->SetTitle("neutron at 5 layers of FAMD;radius (cm); rate/area (Hz/cm^{2})");
+
+TCanvas *c_hit_r_charge = new TCanvas("hit_r_charge", "hit_r_charge",1900,900);
+hhit_r_charge[10]->SetLineColor(1);
+hhit_r_charge[0]->SetLineColor(2);
+hhit_r_charge[1]->SetLineColor(3);
+hhit_r_charge[2]->SetLineColor(4);
+hhit_r_charge[11]->SetLineColor(5);
+hhit_r_charge[10]->Draw("H"); 
+hhit_r_charge[0]->Draw("H same");
+hhit_r_charge[1]->Draw("H same");
+hhit_r_charge[2]->Draw("H same");
+hhit_r_charge[11]->Draw("H same");
+hhit_r_charge[10]->SetTitle("charged particles at 5 layers of FAMD;radius (cm); rate/area (Hz/cm^{2})");
+
+// exit(0);
 }

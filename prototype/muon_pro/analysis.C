@@ -254,7 +254,7 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
         TH2F *hhit_Edep_P_FAMD=new TH2F("hhit_Edep_P_FAMD","hhit_Edep_P_FAMD;P(GeV);Edep_FAMD(GeV)",110,0,22,100,0,0.1);
         TH1F *hhit_Edep_FAMD=new TH1F("hhit_Edep_FAMD","hhit_Edep_FAMD;Edep_FAMD(GeV);count",100,0,0.1);
         TH2F *hhit_Edep_hitr_FAMD=new TH2F("hhit_Edep_hitr_FAMD","hhit_Edep_hitr_FAMD;hitr_FAMD(cm);Edep_FAMD(GeV)",100,0,1e5,100,0,0.1);
-
+        
 	//-------------------------
 	//   get trees in the data file
 	//-------------------------
@@ -341,7 +341,6 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 	tree_flux->SetBranchAddress("avg_t",&flux_avg_t);     //average time stamp
 	tree_flux->SetBranchAddress("procID",&flux_procID);     // process id
 
-	
 	TRandom3 rand;
 	rand.SetSeed(0);
 
@@ -356,10 +355,9 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 	//----------------------------
 	//      loop trees
 	//---------------------------
-	for(long int i=0;i<N_events/100;i++){
-// 	for(long int i=1;i<N_events-1;i++){	  				
-// 	for(long int i=0;i<N_events/100;i++){	  
-// 	for(long int i=N_events/2;i<N_events;i++){	  		
+// 	for(long int i=0;i<N_events;i++){
+	for(long int i=0;i<N_events/10;i++){	  
+// 	for(long int i=0;i<1e4;i++){	  		
 // 	for(long int i=520;i<521;i++){  //pip event
 // 	for(long int i=5289;i<5290;i++){	  // background event			  
 // 			cout<<"" << i<<endl;
@@ -422,11 +420,13 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 		  	
 // 		 cout << "flux_hitn  " << flux_hitn->size() << endl;
                 
-		bool Is_reachlast=true;
-// 		bool Is_reachlast=false;
+		bool Is_reachlast=false;
 		for (Int_t j=0;j<flux_hitn->size();j++) {
-			if(flux_tid->at(j)==1 && flux_id->at(j)==6103000) Is_reachlast=true;
-		}
+//                     if(abs(flux_pid->at(j))==211 && flux_tid->at(j)!=1 && flux_id->at(j)==6103000) Is_reachlast=true;                                        
+//                     if(abs(flux_pid->at(j))==211 && flux_id->at(j)==6103000) Is_reachlast=true;                                        
+                    if(flux_tid->at(j)==1 && flux_id->at(j)==6103000) Is_reachlast=true;                                        
+//                     if(flux_pid->at(j)==13 && flux_mtid->at(j)==1 && flux_id->at(j)==6103000)  Is_reachlast=true;
+                }
 
 		int count_layer=0;
 		double Edep_FAMD=0,hit_r_FAMD=0;
@@ -455,7 +455,10 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 		  else if(flux_id->at(j)==6103000) hit_id=7;
 		  else if(flux_id->at(j)==6201000) hit_id=8;
 		  else if(flux_id->at(j)==6301000) hit_id=9;
-		  else cout << "wrong flux_id" << flux_id->at(j) << endl;
+		  else {
+//                       cout << "wrong flux_id " << flux_id->at(j) << endl;
+                      continue;
+                  }
 // 		  if (hit_id==-1) {/cout << flux_id->at(j) << " " << flux_avg_z->at(j) << endl;
 		  
 		  hhit_xy[hit_id]->Fill(hit_x,hit_y,rate);
@@ -475,17 +478,18 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 		  if (abs(flux_pid->at(j)) == 11) hhit_E_ele[hit_id]->Fill(E,rate);  
 		  
 // 		  if(flux_tid->at(j)==1 && (hit_id==5||hit_id==6||hit_id==7)) {count_layer++;Edep_FAMD += Edep;}
-		  if(Is_reachlast && (hit_id==5||hit_id==6||hit_id==7)) {hit_r_FAMD += hit_r;Edep_FAMD += Edep;}
-
+// 		  if(Is_reachlast && (hit_id==5||hit_id==6||hit_id==7)) {hit_r_FAMD += hit_r;Edep_FAMD += Edep;}
+                  if(hit_id==5||hit_id==6||hit_id==7) {hit_r_FAMD += hit_r;Edep_FAMD += Edep;}
 		}	// end of flux		
 		
 // 		if (Edep_FAMD>0){
 		if (Is_reachlast && Edep_FAMD>0){
-				hhit_EdepP_P_FAMD->Fill(p_gen/1e3,Edep_FAMD/(p_gen/1e3));
-				hhit_Edep_P_FAMD->Fill(p_gen/1e3,Edep_FAMD);
-				hhit_Edep_FAMD->Fill(Edep_FAMD);
-				hhit_Edep_hitr_FAMD->Fill(hit_r_FAMD,Edep_FAMD);
+                    hhit_EdepP_P_FAMD->Fill(p_gen/1e3,Edep_FAMD/(p_gen/1e3));
+                    hhit_Edep_P_FAMD->Fill(p_gen/1e3,Edep_FAMD);
+                    hhit_Edep_FAMD->Fill(Edep_FAMD);
+                    hhit_Edep_hitr_FAMD->Fill(hit_r_FAMD,Edep_FAMD);
 		}
+		
 
 } //end loop
 	
@@ -536,6 +540,7 @@ c_Edep_FAMD->cd(3);
 hhit_Edep_FAMD->Draw();
 c_Edep_FAMD->cd(4);
 hhit_Edep_hitr_FAMD->Draw("colz");
+// c_Edep_FAMD->SaveAs("Edep_FAMD.png");
 
 // exit(0);
 }
