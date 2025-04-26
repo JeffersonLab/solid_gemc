@@ -1,3 +1,3 @@
 <gxml>
-	<volume name="solid_layout7_steel_v4.stl"       mother="root" color="F63BFF"  material="G4_Fe"   position="0*mm 0*mm 0*mm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="solid_layout7_steel_v4"       mother="root" color="F63BFF"  material="G4_Fe"   position="0*mm 0*mm 0*mm"  rotation="0*deg 0*deg 0*deg"/>
 </gxml>
