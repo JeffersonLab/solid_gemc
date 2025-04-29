@@ -86,13 +86,21 @@ sub make_beam_exit
 #  my @Rmin2  = (0.,0.,0.,0.);
 #  my @Rmax2 = (40.,39.,38.,1.7);
 #  my @Dz   = (310.,310.,1.,0.0125);
-# to avoid overlap with downsteam yoke
- my @z    = (-302.5+412.5,0.,412.4,-412.4875);
+# # to avoid overlap with downsteam yoke
+#  my @z    = (-302.5+412.5,0.,412.4,-412.4875);
+#  my @Rmin1  = (0.,0.,0.,0.);
+#  my @Rmax1 = (1.80,1.70,28.9,1.7);
+#  my @Rmin2  = (0.,0.,0.,0.);
+#  my @Rmax2 = (29.,28.9,28.9,1.7);
+#  my @Dz   = (412.5,412.5,0.1,0.0125);
+# to avoid overlap with downsteam yoke and muon detector
+ my @z    = (-302.5+552.5,0.,552.4,-552.4875);
  my @Rmin1  = (0.,0.,0.,0.);
  my @Rmax1 = (1.80,1.70,28.9,1.7);
  my @Rmin2  = (0.,0.,0.,0.);
  my @Rmax2 = (29.,28.9,28.9,1.7);
- my @Dz   = (412.5,412.5,0.1,0.0125);
+ my @Dz   = (552.5,552.5,0.1,0.0125);
+
  my @name = ("B3PP","B3PV","B3DM","B3W1"); 
  my @mother=("$DetectorMother","$DetectorName\_B3PP","$DetectorName\_B3PV","$DetectorName\_B3PV");
  my @mat  = ("G4_Al","G4_Galactic","G4_Galactic","G4_Be");
