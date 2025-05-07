@@ -1,0 +1,63 @@
+copied from https://jlabsvn.jlab.org/svnroot/solid/subsystem/ec/CaloSimShashlik/response/
+
+--------------------------------------------------------------
+EC response 
+
+Example to get three shower response to a 0.1 GeV electron is
+
+response> root
+root [0] .L FastResponse.C+
+root [1] FastResponse("e",.1)
+FastResponse - INFO - openned Elec.10.11.12.root_DrawLowEBgd_EDepShowerOverE_Dist_Read.root
+(double)1.23274493483970113e-01
+root [2] FastResponse("e",.1)
+(double)3.97026899205772110e-02
+root [3] FastResponse("e",.1)
+(double)4.74758643658717353e-02
+
+Each call return a shower energy reading which is stochastically generated. Note it can be larger than the input
+particle energy due to the sample fluctuation, i.e. the calorimeter energy resolution.
+
+PS: for PVDIS there are two species of local calorimeter triggers :
+1. 2.5 GeV electron trigger: trigger on sum of 70cm^2 shower energy deposition > 2.1 GeV
+2. 2.0 GeV electron trigger: trigger on sum of 70cm^2 shower energy deposition > 1.6 GeV 
+Note, the pre-shower information is not summed to the trigger algorithm. 
+
+root files which record the response of the calorimeter to wide energy range of electron, pion and
+photons. They are used in, e.g. rate and pile up studies. The default calorimeter was used in this simulation (2X0
+Pb + 2cm Scint preshower + 18X0 Shashlyk(0.5mm Pb+1.5mm Scint/layer)).
+
+In each root file, there are three objects: 
+======================================
+KEY: TH2F     EDepPreshower_Dist;
+======================================
+x axis : scintillator energy deposition in preshower. 
+         Preshower calibrated energy (MeV) = x-bin-center*3.81493+97.9701
+y axis : kinematic energy of incoming particle, expressed in log scale
+z axis : probability for given particle in y-axis bin to deposit energy in one x-bin 
+======================================
+KEY: TH2F     EDepShowerOverE_Dist;
+======================================
+x axis : scintillator energy deposition in shower, divided by total energy of incoming particle. 
+         Shower calibrated energy/E_total = 3.91047 * x-bin-center
+y axis : kinematic energy of incoming particle, expressed in log scale
+z axis : probability for given particle in y-axis bin to deposit energy in one x-bin 
+======================================
+KEY: TCanvas  DrawLowEBgd_EDepShowerOverE_Dist_Read;
+======================================
+
+Draw this object should reproduce the attached plots with the above two histograms
+
+refer 
+https://hallaweb.jlab.org/dvcslog/SoLID/68
+https://hallaweb.jlab.org/dvcslog/SoLID/30
+
+created by Jin Huang, 2013/08
+minor updated by Zhiwen Zhao, 2014/04
+
+----------------------------------------------------
+EC response in lateral distribution
+refer to 
+https://hallaweb.jlab.org/dvcslog/SoLID/71
+
+created by Jin Huang, 2013/08
