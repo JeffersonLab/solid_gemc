@@ -57,6 +57,22 @@ minor updated by Zhiwen Zhao, 2014/04
 
 ----------------------------------------------------
 EC response in lateral distribution
+
+In addition to the last Elog, the lateral distribution of calorimeter response is parametrized for fast trigger
+simulations. 
+
+*The data file contain the distributions are in the 2nd attachment. 
+*A example macro to read this data file is shown in the 3rd attachment. 
+*Example to use this macro shown in the first attachment, generated using the following commands:
+
+[jinhuang@mitnig CaloSim_Srv]$ root
+root [0] .L ECLateralDistribution.C
+root [1] gStyle->SetPalette(1)
+root [2] ECLateralDistribution(kSIDIS_FORWARD,kElectron,3.5)->Draw("colz")
+
+In this example, ECLateralDistribution returns a TH2D histogram of a 3.5-GeV electron shower energy distribution
+in R-phi plane. For more information, please check the documentation in ECLateralDistribution.C
+
 refer to 
 https://hallaweb.jlab.org/dvcslog/SoLID/71
 
