@@ -1,0 +1,33 @@
+           solid_gem  |              bankid  |                                 solid_gem bank ID  |  100   |                  Di  
+           solid_gem  |                hitn  |                                        hit number  |   99   |                  Di  
+           solid_gem  |                ETot  |                            Total Energy Deposited  |    1   |                  Dd  
+           solid_gem  |                   x  |                         Average global x position  |    2   |                  Dd  
+           solid_gem  |                   y  |                         Average global y position  |    3   |                  Dd  
+           solid_gem  |                   z  |                         Average global z position  |    4   |                  Dd  
+           solid_gem  |                lxin  |                         local x entrance position  |    5   |                  Dd  
+           solid_gem  |                lyin  |                         local y entrance position  |    6   |                  Dd  
+           solid_gem  |                lzin  |                         local z entrance position  |    7   |                  Dd  
+           solid_gem  |                 tin  |                                     entrance time  |    8   |                  Dd  
+           solid_gem  |               lxout  |                             local x exit position  |    9   |                  Dd  
+           solid_gem  |               lyout  |                             local y exit position  |   10   |                  Dd  
+           solid_gem  |               lzout  |                             local z exit position  |   11   |                  Dd  
+           solid_gem  |                tout  |                                         exit time  |   12   |                  Dd  
+           solid_gem  |                 pid  |                                       Particle ID  |   13   |                  Di  
+           solid_gem  |                  vx  |                    y coordinate of primary vertex  |   14   |                  Dd  
+           solid_gem  |                  vy  |                    z coordinate of primary vertex  |   15   |                  Dd  
+           solid_gem  |                  vz  |                    x coordinate of primary vertex  |   16   |                  Dd  
+           solid_gem  |                 trE  |         Energy of the track at the entrance point  |   17   |                  Dd  
+           solid_gem  |                trid  |                                          Track ID  |   18   |                  Di  
+           solid_gem  |              weight  |                            Event weight(not used)  |   19   |                  Dd  
+           solid_gem  |                  px  |                                        Momentum x  |   20   |                  Dd  
+           solid_gem  |                  py  |                                        Momentum y  |   21   |                  Dd  
+           solid_gem  |                  pz  |                                        Momentum z  |   22   |                  Dd  
+           solid_gem  |                  id  |                                         Volume ID  |   23   |                  Di  
+           solid_gem  |                mpid  |ID of the mother of the first particle entering the sensitive volume  |   24   |                  Di  
+           solid_gem  |                mtid  |Track ID of the mother of the first particle entering the sensitive volume  |   25   |                  Di  
+           solid_gem  |                otid  |Track ID of the original track that generated the first particle entering the sensitive volume  |   26   |                  Di  
+           solid_gem  |                 mvx  |x component of primary vertex of the mother of the particle entering the sensitive volume  |   27   |                  Dd  
+           solid_gem  |                 mvy  |y component of primary vertex of the mother of the particle entering the sensitive volume  |   28   |                  Dd  
+           solid_gem  |                 mvz  |z component of primary vertex of the mother of the particle entering the sensitive volume  |   29   |                  Dd  
+           solid_gem  |              nsteps  |                            Number of geant4 steps  |   30   |                  Di  
+           solid_gem  |              procID  |           Process that created the first particle  |   31   |                  Di  
