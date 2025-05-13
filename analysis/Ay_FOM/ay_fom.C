@@ -131,8 +131,8 @@ gr->SetMarkerStyle(21);
 // gr->Draw("P");
 
 TLegend* leg = new TLegend(0.6, 0.8, 0.9, 0.9);
-leg->AddEntry(h_Ay,Form("LD only"),"l");
-leg->AddEntry(h_Ay_proposal,Form("FD+LD proposal"),"l");
+leg->AddEntry(h_Ay,Form("LD with full trigger"),"l");
+leg->AddEntry(h_Ay_proposal,Form("FD+LD with prescaled trigger in proposal"),"l");
 // leg->AddEntry(gr,Form("PRL"),"l");
 leg->Draw();
 
