@@ -1,0 +1,4 @@
+A simple script and output to compare to Ay projection in the proposal at
+https://www.jlab.org/exp_prog/proposals/14/E12-11-108A_E12-10-006A.pdf
+
+just run it as "root ay_fom.C"
