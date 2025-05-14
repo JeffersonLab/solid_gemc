@@ -77,7 +77,7 @@ for(int i=0;i<n;i++){
    
    for(int j=0;j<12;j++){
     double Aut=Ay*sin(3.1416*2/12*(j+0.5)); // with simple sin form
-    double Aut_error_stat=1/sqrt(count[i]/12.)/Pt/Pn/dhe3/dn; //abs stat error, average in 12 phi bins
+    double Aut_error_stat=1/sqrt(count[i]/12.)/Pt/Pn/dhe3/dn; //abs stat error, average in 12 phi_s bins, note SoLID acceptance is roughly symmetric in phi_s with some theta dependence.
     double Aut_error_sys=0.07*Aut+1e-4+1e-3; //abs sys error according to proposal
     double Aut_error_total=Aut_error_stat; // not using sys error yet
     double Aut_smeared=gRandom->Gaus(Aut,Aut_error_total); // smearing to prevent overfitting
