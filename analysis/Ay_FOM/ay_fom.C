@@ -66,25 +66,38 @@ double dn=0.2; //neutron dilution in He3
 
 TCanvas *c_Aut = new TCanvas("c_Aut","c_Aut",1900,800);
 c_Aut->Divide(n/2,2);
+TCanvas *c_Aut_error_abs_stat = new TCanvas("c_Aut_error_abs_stat","c_Aut_error_abs_stat",1900,800);
+c_Aut_error_abs_stat->Divide(n/2,2);
+TCanvas *c_Aut_error_rel_stat = new TCanvas("c_Aut_error_rel_stat","c_Aut_error_rel_stat",1900,800);
+c_Aut_error_rel_stat->Divide(n/2,2);
 
-TH1F* h_Ay=new TH1F("Ay","SoLID He3 projection;Q^{2} (GeV^{2});A_{y} (neutron)",10,0,10);
+TH1F *h_Ay=new TH1F("Ay","SoLID He3 projection;Q^{2} (GeV^{2});A_{y} (neutron)",10,0,10);
 
-TH1F* h_Aut[n];
+TH1F *h_Aut[n],*h_Aut_error_abs_stat[n],*h_Aut_error_rel_stat[n];
 for(int i=0;i<n;i++){
    char hstname[100];   
    sprintf(hstname,"Aut_%i",i);
    h_Aut[i]=new TH1F(hstname,Form("Q^{2}=%sGeV^{2};#phi (rad);A_{UT}",Q2_center[i]),12,0,3.1416*2);
+   sprintf(hstname,"Aut_error_abs_stat_%i",i);
+   h_Aut_error_abs_stat[i]=new TH1F(hstname,Form("Q^{2}=%sGeV^{2};#phi (rad);A_{UT} absolute stat error",Q2_center[i]),12,0,3.1416*2);
+   sprintf(hstname,"Aut_error_rel_stat_%i",i);
+   h_Aut_error_rel_stat[i]=new TH1F(hstname,Form("Q^{2}=%sGeV^{2};#phi (rad);A_{UT} relative stat error",Q2_center[i]),12,0,3.1416*2);
    
    for(int j=0;j<12;j++){
     double Aut=Ay*sin(3.1416*2/12*(j+0.5)); // with simple sin form
-    double Aut_error_stat=1/sqrt(count[i]/12.)/Pt/Pn/dhe3/dn; //abs stat error, average in 12 phi_s bins, note SoLID acceptance is roughly symmetric in phi_s with some theta dependence.
-    double Aut_error_sys=0.07*Aut+1e-4+1e-3; //abs sys error according to proposal
-    double Aut_error_total=Aut_error_stat; // not using sys error yet
-    double Aut_smeared=gRandom->Gaus(Aut,Aut_error_total); // smearing to prevent overfitting
-   
+    double Aut_error_abs_stat=1/sqrt(count[i]/12.)/Pt/Pn/dhe3/dn; //abs stat error, average in 12 phi_s bins, note SoLID acceptance is roughly symmetric in phi_s with some theta dependence.
+    double Aut_error_abs_sys=0.065*Aut-3e-4-4e-4; //abs sys error according to proposal
+//     double Aut_error_abs_total=Aut_error_abs_stat; // not using sys error yet
+    double Aut_error_abs_total=sqrt(Aut_error_abs_stat*Aut_error_abs_stat+Aut_error_abs_sys*Aut_error_abs_sys); 
+    double Aut_smeared=gRandom->Gaus(Aut,Aut_error_abs_total); // smearing to prevent overfitting
+//     cout << "Aut_error_stat,abs " << Aut_error_abs_stat << ",rel " << Aut_error_abs_stat/abs(Aut) << endl;
+    
 //     h_Aut[i]->SetBinContent(j+1,Aut); 
     h_Aut[i]->SetBinContent(j+1,Aut_smeared);
-    h_Aut[i]->SetBinError(j+1,Aut_error_total); 
+    h_Aut[i]->SetBinError(j+1,Aut_error_abs_total);
+    
+    h_Aut_error_abs_stat[i]->SetBinContent(j+1,Aut_error_abs_stat);    
+    h_Aut_error_rel_stat[i]->SetBinContent(j+1,Aut_error_abs_stat/abs(Aut));
    }
    
    c_Aut->cd(i+1);
@@ -101,6 +114,16 @@ for(int i=0;i<n;i++){
    TPaveText *pt = new TPaveText(.5, .8, .95, .9,"NDC");
    pt->AddText(Form("Ay %f #pm %f",Ay_fit,Ay_error));
    pt->Draw();
+   
+   c_Aut_error_abs_stat->cd(i+1);
+//    h_Aut_error_abs_stat[i]->SetMaximum(0.1);
+//    h_Aut_error_abs_stat[i]->SetMinimum(0);   
+   h_Aut_error_abs_stat[i]->Draw("H");
+
+   c_Aut_error_rel_stat->cd(i+1);
+//    h_Aut_error_rel_stat[i]->SetMaximum(0.1);
+   h_Aut_error_rel_stat[i]->SetMinimum(0);   
+   h_Aut_error_rel_stat[i]->Draw("H");
    
    if (i!=7){
     h_Ay->SetBinContent(i+3,Ay);
