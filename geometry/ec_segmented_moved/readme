@@ -7,13 +7,14 @@ We use one standard config.dat, then specify detector name as option as follow
 layout according to ANL design for ec_forwardangle in "analysis/ec_layout"
 each module is according to ANL drawing "200318"
 
-ANL ec_layout has 1749 modules
-Actual layout is determined by choosing only modules with Rmin and Rmax according to acceptance.
+ANL ec_layout has 1748 modules
+Actual layout is determined by choosing only modules with Rmin and Rmax according to nominal acceptance.
 The resulting number of modules are as follows
                                 N of modules    Rmin(cm)     Rmax(cm)
 solid_PVDIS_ec_forwardangle     1697            95           240
 solid_SIDIS_ec_forwardangle     1413            100          265
 solid_SIDIS_ec_largeangle       307             83           137
+Note this is only a rough way to choose modules, more careful physics performance study to determine the final numbers.
 
 == log =======
 
