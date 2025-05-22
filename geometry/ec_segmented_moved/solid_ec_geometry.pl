@@ -71,6 +71,7 @@ my $total_module 	= $parameters{"total_module"};
 my $total_module_active	= $parameters{"total_module_active"};
 my $thismodule		= $parameters{"thismodule"};
 
+my $counter=0;
 
 my @status;
 my @idy;
@@ -109,6 +110,7 @@ sub solid_ec_geometry()
 {
 make_ec_shield(); # preshower lead
 make_ec_module();
+print "Number of EC modules built is $counter\n";
 }
 
 sub make_ec_shield
@@ -149,7 +151,7 @@ sub make_ec_module
 #    for(my $i=$thismodule; $i<=$thismodule; $i++)   
    for(my $i=1; $i<=$total_module; $i++)   
     {
-      if($i== $thismodule) {next;}
+      if($i== $thismodule) {$counter++; next;}
       if($status[$i-1] eq 1) {      
 	my $R=sqrt($x[$i-1]*$x[$i-1]+$y[$i-1]*$y[$i-1]);
 # 	if (130<$R && $R<140 ){
@@ -157,6 +159,7 @@ sub make_ec_module
 # 	}
 	if (($Rmin)<$R && $R<($Rmax)){
 # 	if (($Rmin)<$R){
+          $counter++;
 	  make_ec_module_shower($i);
 	  make_ec_module_prescint($i);
 	  make_ec_module_support($i);
