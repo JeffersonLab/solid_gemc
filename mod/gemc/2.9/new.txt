@@ -6,6 +6,7 @@ add some features to gemc
 2. modify fields/symmetries/*.cc,fields/mappedField.h to reduce field map mem use by using float instead of double
 3. add link io to api/perl for perl script backward compatibility
 4. modify src/dmesg_init.cc,gui/src/docs/particles_color.h,utilities/graph.cc,utilities/graph.h to fix particle colors
+5. add perl/VectorReal_mine.pm
 
 old files are kept as *_bak
 
