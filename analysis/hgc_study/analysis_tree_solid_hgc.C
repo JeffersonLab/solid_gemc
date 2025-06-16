@@ -208,7 +208,7 @@ return;
 // 
 // }
 
-Bool_t process_tree_solid_hgc(TTree *tree_solid_hgc,bool Is_simsafe,double *hit_hgc_pmt,double *hit_hgc_quad,double *hit_hgc_pixel,Int_t *trigger_hgc, Int_t &ntrigsecs_hgc, Int_t PMTthresh_hgc, Int_t PEthresh_hgc)
+Bool_t process_tree_solid_hgc(TTree *tree_solid_hgc,bool Is_simsafe,double *hit_hgc_pmt,double *hit_hgc_quad,double *hit_hgc_pixel,Int_t *trigger_hgc, Int_t &ntrigsecs_hgc, Int_t PMTthresh_hgc, Int_t PEthresh_hgc,int pid_opticalphoton=-22)
 { 
   TRandom3 rand;
   rand.SetSeed(0);
@@ -221,12 +221,13 @@ Bool_t process_tree_solid_hgc(TTree *tree_solid_hgc,bool Is_simsafe,double *hit_
   
   int counter_in=0,counter_good=0, counter_out=0;  
   double count_photon=0;  
+//   cout << "   " << solid_hgc_hitn->size() << endl;
     for (Int_t j=0;j<solid_hgc_hitn->size();j++) {
 //       cout << "solid_hgc " << " !!! " << solid_hgc_hitn->at(j) << " " << solid_hgc_id->at(j) << " " << solid_hgc_pid->at(j) << " " << solid_hgc_mpid->at(j) << " " << solid_hgc_tid->at(j) << " " << solid_hgc_mtid->at(j) << " " << solid_hgc_trackE->at(j) << " " << solid_hgc_totEdep->at(j) << " " << solid_hgc_avg_x->at(j) << " " << solid_hgc_avg_y->at(j) << " " << solid_hgc_avg_z->at(j) << " " << solid_hgc_avg_lx->at(j) << " " << solid_hgc_avg_ly->at(j) << " " << solid_hgc_avg_lz->at(j) << " " << solid_hgc_px->at(j) << " " << solid_hgc_py->at(j) << " " << solid_hgc_pz->at(j) << " " << solid_hgc_vx->at(j) << " " << solid_hgc_vy->at(j) << " " << solid_hgc_vz->at(j) << " " << solid_hgc_mvx->at(j) << " " << solid_hgc_mvy->at(j) << " " << solid_hgc_mvz->at(j) << " " << solid_hgc_avg_t->at(j) << endl;  
 // 	  cout << j << " " << solid_hgc_hitn->at(j) << " " << solid_hgc_pid->at(j) << endl;
       
 //       if (solid_hgc_pid->at(j)==0) {count_photon++;} // old gemc
-      if (solid_hgc_pid->at(j)==-22) {count_photon++;} //gemc 2.9
+      if (solid_hgc_pid->at(j)==pid_opticalphoton) {count_photon++;} //-22 for geant4.10.7, 0 for older
       else {
 // 	cout << "pid not optical photon " << solid_hgc_pid->at(j) << endl;  //there are many
 	continue;

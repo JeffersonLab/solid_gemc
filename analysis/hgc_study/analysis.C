@@ -26,14 +26,14 @@
 
 using namespace std;
 
-void analysis(string input_filename,string cherenkov,bool Is_simsafe=false,bool Is_textfile=false, bool Is_decaycut=false, int factor_background=0,string the_dir=".")
+void analysis(string input_filename,string cherenkov,bool Is_decaycut=false,bool Is_simsafe=false,int pid_opticalphoton=-22)
 {
 gROOT->Reset();
 // gStyle->SetPalette(57);
 // gStyle->SetOptStat(0);
 // gStyle->SetOptStat(1);
-gStyle->SetOptStat("ioue");
-// gStyle->SetOptStat(11111111);
+// gStyle->SetOptStat("ioue");
+gStyle->SetOptStat(11111111);
 gStyle->SetOptFit(111111);
 gStyle->SetPadRightMargin(0.15); 
 
@@ -81,90 +81,22 @@ double PMTthresh=2; // pmt threshold, at least 2pmts are fired in each sector
 
 char the_filename[400];
 sprintf(the_filename, "%s",input_filename.substr(0,input_filename.rfind(".")).c_str());
-sprintf(the_filename, "%s",input_filename.substr(input_filename.rfind("/")+1,input_filename.rfind(".")).c_str());
-sprintf(the_filename,Form("%s/%s",the_dir.c_str(),the_filename));
+// sprintf(the_filename, "%s",input_filename.substr(input_filename.rfind("/")+1,input_filename.rfind(".")).c_str());
+// sprintf(the_filename,Form("%s/%s",the_dir.c_str(),the_filename));
 
 cout << " the_filename " << the_filename << endl;
 
-ofstream textfile_row_npe,textfile_row_pmt,textfile_row_quad,textfile_row_pixel;
-char textfile_name[100];
-sprintf(textfile_name,"%s_row_npe.csv",the_filename);
-if (Is_textfile) textfile_row_npe.open(textfile_name,std::ofstream::trunc);
-sprintf(textfile_name,"%s_row_pmt.csv",the_filename);
-if (Is_textfile) textfile_row_pmt.open(textfile_name,std::ofstream::trunc);
-sprintf(textfile_name,"%s_row_quad.csv",the_filename);
-if (Is_textfile) textfile_row_quad.open(textfile_name,std::ofstream::trunc);
-sprintf(textfile_name,"%s_row_pixel.csv",the_filename);
-if (Is_textfile) textfile_row_pixel.open(textfile_name,std::ofstream::trunc);
-
 int Ngood=0,Nrand=0;
-TFile *file_bg;
-TH2F *hevent_hit_npe_bg, *hevent_hit_pmt_bg, *hevent_hit_quad_bg, *hevent_hit_pixel_bg;
-if(factor_background){
-  
-// here is an example what I think how to merge signal and background
-// 1.assume beam current 15ua and 50ns time window. we have 15e-6/1.6e-19*50e-9=4.7e6 beam e- within 50ns time window
-// 2.assume beamontarget file is from 1e10 e- with 100x actual target density and it has 1e5 number of events with hits in at least one detector.
-// 3.beamontarget file has 1e10/4.7e6 = 2127 number of time window.
-// for each signal particle, we should add 1e5/100/2127=0.5 background event from beamontarget file randomly for every 4.detector channel, then output in csv.
-// 5.for GEM, we need to use 300ns time window. all other detector use 50ns. so GEM needs to add 6 time more background events for each signal event
-  
-  cout << "add background" << endl;
-  if (cherenkov=="lgc"){
-// //     file_bg=new TFile("solid_SIDIS_He3_moved_full_BeamOnTarget_5e9_filter_output_lgc.root");
-// // /cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_BeamOnTarget_5e10_filter.root    
-//     file_bg=new TFile("solid_SIDIS_He3_moved_full_BeamOnTarget_5e10_filter_output_lgc.root");    
-//     Ngood=9992; //for lgc background
-//     Nrand=int(1*factor_background); //for lgc background within 50ns
-// // 9992/(5e10/(15e-6/1.6e-19*50e-9))=0.94
-    
-// /cache/halla/solid/sim/solid_gemc/PVDIS_JLAB_VERSION_2.5/pass3/solid_PVDIS_LD2_moved_full_BeamOnTarget_1e10_filter.root        
-    file_bg=new TFile("solid_PVDIS_LD2_moved_full_BeamOnTarget_1e10_filter_output_lgc.root");    
-    Ngood=3557; //for lgc background
-    Nrand=int(6*factor_background); 
-//     3557/(1e10/(50e-6/1.6e-19*50e-9))=5.6
-  }
-  else if (cherenkov=="hgc") {
-//     file_bg=new TFile("solid_SIDIS_He3_moved_full_BeamOnTarget_5e9_filter_output_hgc.root");    
-// /cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_1.3/pass8/farm_solid_SIDIS_He3_moved_BeamOnTarget_0.561e10_skim_HGCwinCF1.root    
-    file_bg=new TFile("farm_solid_SIDIS_He3_moved_BeamOnTarget_0.561e10_skim_HGCwinCF1_output.root");
-    Ngood=9000; //for hgc background
-    Nrand=int(7.5*factor_background); //for hgc background within 50ns
-//     9000/(0.561e10/(15e-6/1.6e-19*50e-9))=0.75
-    
-  }
-  else {cout << "bad Cherenkov name" << endl; return; }
- 
-  hevent_hit_npe_bg=(TH2F*) file_bg->Get("hevent_hit_npe");
-  hevent_hit_pmt_bg=(TH2F*) file_bg->Get("hevent_hit_pmt");	
-  hevent_hit_quad_bg=(TH2F*) file_bg->Get("hevent_hit_quad");	
-  hevent_hit_pixel_bg=(TH2F*) file_bg->Get("hevent_hit_pixel");	  
-}
 
 char output_filename[200];
 sprintf(output_filename, "%s_output.root",the_filename);
 TFile *outputfile=new TFile(output_filename, "recreate");
-
-// TH2F *hevent_hit_npe=new TH2F("hevent_hit_npe","Npe of all events; npe; event",1,0,1,100000,0,100000);
-// TH2F *hevent_hit_pmt=new TH2F("hevent_hit_pmt","Npe of all events; pmt; event",ch_pmt,0,ch_pmt,100000,0,100000);
-// TH2F *hevent_hit_quad=new TH2F("hevent_hit_quad","Npe of all events; quad; event",ch_quad,0,ch_quad,100000,0,100000);
-// TH2F *hevent_hit_pixel=new TH2F("hevent_hit_pixel","Npe of all events; pixel; event",ch_pixel,0,ch_pixel,100000,0,100000);
-
-TH2F *hevent_hit_npe=new TH2F("hevent_hit_npe","Npe of all events; npe; event",1,0,1,5000,0,5000);
-TH2F *hevent_hit_pmt=new TH2F("hevent_hit_pmt","Npe of all events; pmt; event",ch_pmt,0,ch_pmt,5000,0,5000);
-TH2F *hevent_hit_quad=new TH2F("hevent_hit_quad","Npe of all events; quad; event",ch_quad,0,ch_quad,5000,0,5000);
-TH2F *hevent_hit_pixel=new TH2F("hevent_hit_pixel","Npe of all events; pixel; event",ch_pixel,0,ch_pixel,5000,0,5000);
 
 TH1F *hnpe_no0=new TH1F("hnpe_no0",";Npe;event count",200,0,200);
 
 TH1F *hnpe=new TH1F("hnpe",";Npe;event count",200,0,200);
 
 TH1F *hnpe_QE=new TH1F("hnpe_QE",";Npe/Nphoton;event count",100,0,1);
-
-TH1F *hnpe_3secratio=new TH1F("hnpe_3secratio",";ratio;percent",120,0,1.2);
-TH1F *hnpe_2secratioleft=new TH1F("hnpe_2secratioleft",";ratio;percent",120,0,1.2);
-TH1F *hnpe_2secratioright=new TH1F("hnpe_2secratioright",";ratio;percent",120,0,1.2);
-TH1F *hnpe_1secratio=new TH1F("hnpe_1secratio",";ratio;percent",120,0,1.2);
 
 TH2F *hnpe_pmt_2D=new TH2F("hnpe_pmt_2D","Npe; sensor_x; sensor_y",3*sentrans_pmt,0,3*sentrans_pmt,sentrans_pmt,0,sentrans_pmt);
 TH2F *hnpe_quad_2D=new TH2F("hnpe_quad_2D","Npe; sensor_x; sensor_y",3*sentrans_quad,0,3*sentrans_quad,sentrans_quad,0,sentrans_quad);
@@ -304,8 +236,8 @@ int sensor_good=0;
 int event_good=0;
 int decay_no=0,decay_first=0,decay_lost=0;
 
-// for (Int_t i=0;i<nevent;i++) { 
-for (Int_t i=0;i<nevent/100;i++) {
+for (Int_t i=0;i<nevent;i++) { 
+// for (Int_t i=0;i<nevent/100;i++) {
 // for (Int_t i=0;i<10;i++) { 
   cout << "event " << i << "\r";
 //   cout << "event " << i << "\n";
@@ -405,9 +337,10 @@ for (Int_t i=0;i<nevent/100;i++) {
 		int trigger[30]={0};
 		int ntrigsecs=0;
 		int photon_mtid=0;
+		int nphoton=0;
 		
-		if (cherenkov=="lgc") process_tree_solid_lgc(tree_solid_cc,Is_simsafe,hit_pmt,hit_quad,hit_pixel,trigger,ntrigsecs,PMTthresh,PEthresh);		
-		else if (cherenkov=="hgc") process_tree_solid_hgc(tree_solid_cc,Is_simsafe,hit_pmt,hit_quad,hit_pixel,trigger,ntrigsecs,PMTthresh,PEthresh);
+		if (cherenkov=="lgc") process_tree_solid_lgc(tree_solid_cc,Is_simsafe,hit_pmt,hit_quad,hit_pixel,trigger,ntrigsecs,nphoton,PMTthresh,PEthresh);		
+		else if (cherenkov=="hgc") process_tree_solid_hgc(tree_solid_cc,Is_simsafe,hit_pmt,hit_quad,hit_pixel,trigger,ntrigsecs,PMTthresh,PEthresh,pid_opticalphoton);
 		else {cout << "bad Cherenkov name" << endl; return;}
 		
 		npe_total=0;
@@ -442,63 +375,14 @@ for (Int_t i=0;i<nevent/100;i++) {
 // 		cout << " npe_total " << npe_total << endl;
 // 		<<  hit_sec[sec_left]+hit_sec[sec]+hit_sec[sec_right]  << " " <<  hit_sec[sec_left] << " " <<  hit_sec[sec]  << " " <<  hit_sec[sec_right] << endl;
 			
-		//add background
-		if(factor_background){
-		  //add npe_total
-// 		  cout << "npe_total before " << npe_total << endl;
-// 		  if (rand.Uniform(0,1)<0.25){  // the chance to have a good lgc event in 1 sector within 50ns
-// 		  if (rand.Uniform(0,1)<0.5){  // the chance to have a good lgc event in 2 sector within 50ns
-// 		  if (rand.Uniform(0,1)<0.75){  // the chance to have a good lgc event in 3 sector within 50ns	    	    
-// 		    int ibgevent=int(rand.Uniform(0,1)*9000);
-// // 		    cout<< "ibgevent " << ibgevent << " npe_bg " << hevent_hit_npe_bg->GetBinContent(1,ibgevent) << endl;	
-// 		    npe_total += hevent_hit_npe_bg->GetBinContent(1,ibgevent);
-// 		  }
-		  		  
-		  //add pmt,quad,pixel	  
-		  for(int ibgcount=0;ibgcount<Nrand;ibgcount++){
-		    int ibgevent=int(rand.Uniform(0,1)*Ngood);
-		    for(int index=0;index<ch_pmt;index++) hit_pmt[index] += hevent_hit_pmt_bg->GetBinContent(index+1,ibgevent);
-		    for(int index=0;index<ch_quad;index++) hit_quad[index] += hevent_hit_quad_bg->GetBinContent(index+1,ibgevent);
-		    for(int index=0;index<ch_pixel;index++) hit_pixel[index] += hevent_hit_pixel_bg->GetBinContent(index+1,ibgevent);
-		  }		  
-		  
-		  //add npe for 3 sectors
-		  int Nsensor=sen_pmt;
-		  int npe_tmp=0;
-		  for(int index=0;index<Nsensor;index++) npe_tmp += hit_pmt[Nsensor*sec_left+index];
-		  for(int index=0;index<Nsensor;index++) npe_tmp += hit_pmt[Nsensor*sec+index];
-		  for(int index=0;index<Nsensor;index++) npe_tmp += hit_pmt[Nsensor*sec_right+index]; 		  
-		  npe_total=npe_tmp;
-		}
-
-		int Nsensor=sen_pmt;
-		int npe_tmp_left=0,npe_tmp=0,npe_tmp_right=0;
-		for(int index=0;index<Nsensor;index++) npe_tmp_left += hit_pmt[Nsensor*sec_left+index];
-		for(int index=0;index<Nsensor;index++) npe_tmp += hit_pmt[Nsensor*sec+index];
-		for(int index=0;index<Nsensor;index++) npe_tmp_right += hit_pmt[Nsensor*sec_right+index]; 		  
-		
-		hnpe_3secratio->Fill(double(npe_tmp_left+npe_tmp+npe_tmp_right)/double(npe_total));
-		hnpe_2secratioleft->Fill(double(npe_tmp_left+npe_tmp)/double(npe_total));		  hnpe_2secratioright->Fill(double(npe_tmp+npe_tmp_right)/double(npe_total));
-		hnpe_1secratio->Fill(double(npe_tmp)/double(npe_total));		
-		
 		if (npe_total>0) hnpe_no0->Fill(npe_total);
 				
 		hnpe->Fill(npe_total);	
 		
-		hnpe_QE->Fill(double(npe_total)/double(ntrigsecs)); //use ntrigsecs as Nphoton temp
+		hnpe_QE->Fill(double(npe_total)/double(nphoton));
 		
 		//tdc for pixel
 		for(int index=0;index<ch_pixel;index++) if(hit_pixel[index]>0) hit_pixel[index]=1;  
-		
-		//save background
-		if (npe_total>0){
-		  event_good++;
-// 		  cout<< " ok " << endl;
-		  hevent_hit_npe->Fill(0.5,event_good,npe_total);		  
-		  for(int index=0;index<ch_pmt;index++)	hevent_hit_pmt->Fill(index,event_good,hit_pmt[index]);		
-		  for(int index=0;index<ch_quad;index++) hevent_hit_quad->Fill(index,event_good,hit_quad[index]);	
-		  for(int index=0;index<ch_pixel;index++) hevent_hit_pixel->Fill(index,event_good,hit_pixel[index]);  
-		}
 
 		//fill 2D plot
 		{
@@ -539,77 +423,6 @@ for (Int_t i=0;i<nevent/100;i++) {
 		    hnpe_pixel_2D_phi[bin_phi]->Fill(index/int(sqrt(Nsensor))+int(sqrt(Nsensor)),index%int(sqrt(Nsensor)),hit_pixel[Nsensor*sec+index]);
 		    hnpe_pixel_2D_phi[bin_phi]->Fill(index/int(sqrt(Nsensor))+2*int(sqrt(Nsensor)),index%int(sqrt(Nsensor)),hit_pixel[Nsensor*sec_right+index]);			    
 		  }
-		}
-		
-		//output textfile
-		if (Is_textfile){		  
-		  //output 3 sectors	
-		  int Nsensor=ch_pmt/30;
-		  int npe_tmp=0;
-		  for(int index=0;index<Nsensor;index++) npe_tmp += hit_pmt[Nsensor*sec_left+index];
-		  for(int index=0;index<Nsensor;index++) npe_tmp += hit_pmt[Nsensor*sec+index];
-		  for(int index=0;index<Nsensor;index++) npe_tmp += hit_pmt[Nsensor*sec_right+index]; 
-		  textfile_row_npe << npe_tmp << ",";
-		  textfile_row_npe << hit_px << ","<< hit_py<< ","<<hit_pz<< ","<<hit_x<< ","<<hit_y<< ","<<hit_z<< ",";	
-		  if (Is_simsafe) textfile_row_npe << 1 << endl;
-		  else 	textfile_row_npe << 0 << endl;
-// 		  if (Is_simsafe) {
-// 		    if (Is_decay)	textfile_row_npe << 2 << endl;
-// 		    else 	textfile_row_npe << 1 << endl;
-// 		  }
-// 		  else {
-// 		    if (Is_decay)	textfile_row_npe << -1 << endl;
-// 		    else 	textfile_row_npe << 0 << endl;
-// 		  }
-		  
-		  Nsensor=ch_pmt/30;
-		  for(int index=0;index<Nsensor;index++) textfile_row_pmt << hit_pmt[Nsensor*sec_left+index] << ",";
-		  for(int index=0;index<Nsensor;index++) textfile_row_pmt << hit_pmt[Nsensor*sec+index] << ",";
-		  for(int index=0;index<Nsensor;index++) textfile_row_pmt << hit_pmt[Nsensor*sec_right+index] << ","; 
-		  textfile_row_pmt << hit_px << ","<< hit_py<< ","<<hit_pz<< ","<<hit_x<< ","<<hit_y<< ","<<hit_z<< ",";
-		  if (Is_simsafe) textfile_row_pmt << 1 << endl;
-		  else 	textfile_row_pmt << 0 << endl;
-// 		  if (Is_simsafe) {
-// 		    if (Is_decay)	textfile_row_pmt << 2 << endl;
-// 		    else 	textfile_row_pmt << 1 << endl;
-// 		  }
-// 		  else {
-// 		    if (Is_decay)	textfile_row_pmt << -1 << endl;
-// 		    else 	textfile_row_pmt << 0 << endl;
-// 		  }
-
-		  Nsensor=ch_quad/30;
-		  for(int index=0;index<Nsensor;index++) textfile_row_quad << hit_quad[Nsensor*sec_left+index] << ",";
-		  for(int index=0;index<Nsensor;index++) textfile_row_quad << hit_quad[Nsensor*sec+index] << ",";
-		  for(int index=0;index<Nsensor;index++) textfile_row_quad << hit_quad[Nsensor*sec_right+index] << ","; 
-		  textfile_row_quad << hit_px << ","<< hit_py<< ","<<hit_pz<< ","<<hit_x<< ","<<hit_y<< ","<<hit_z<< ",";	
-		  if (Is_simsafe) textfile_row_quad << 1 << endl;
-		  else 	textfile_row_quad << 0 << endl;		  
-// 		  if (Is_simsafe) {
-// 		    if (Is_decay)	textfile_row_quad << 2 << endl;
-// 		    else 	textfile_row_quad << 1 << endl;
-// 		  }
-// 		  else {
-// 		    if (Is_decay)	textfile_row_quad << -1 << endl;
-// 		    else 	textfile_row_quad << 0 << endl;
-// 		  }
-
-		  Nsensor=ch_pixel/30;
-		  for(int index=0;index<Nsensor;index++) textfile_row_pixel << hit_pixel[Nsensor*sec_left+index] << ",";
-		  for(int index=0;index<Nsensor;index++) textfile_row_pixel << hit_pixel[Nsensor*sec+index] << ",";
-		  for(int index=0;index<Nsensor;index++) textfile_row_pixel << hit_pixel[Nsensor*sec_right+index] << ","; 
-		  textfile_row_pixel << hit_px << ","<< hit_py<< ","<<hit_pz<< ","<<hit_x<< ","<<hit_y<< ","<<hit_z<< ",";	
-		  if (Is_simsafe) textfile_row_pixel << 1 << endl;
-		  else 	textfile_row_pixel << 0 << endl;
-// 		  if (Is_simsafe) {
-// 		    if (Is_decay)	textfile_row_pixel << 2 << endl;
-// 		    else 	textfile_row_pixel << 1 << endl;
-// 		  }
-// 		  else {
-// 		    if (Is_decay)	textfile_row_pixel << -1 << endl;
-// 		    else 	textfile_row_pixel << 0 << endl;
-// 		  }
-		  
 		}
 		
 // 		if (2.5<p_gen && p_gen <3.0 && 8<theta_gen && theta_gen<9) hnpe[0]->Fill(npe_total);
@@ -682,12 +495,6 @@ cout <<" decay_no " << decay_no <<" decay_first " << decay_first << " decay_lost
 // havg_pe->Draw("colz");
 // c_havg_pe->SaveAs(Form("%s_avg_pe.png",the_filename));
 
-
-if (Is_textfile) textfile_row_npe.close();
-if (Is_textfile) textfile_row_pmt.close();
-if (Is_textfile) textfile_row_quad.close();
-if (Is_textfile) textfile_row_pixel.close();
-
 TCanvas *c_check = new TCanvas("check","check",1600,1000);
 c_check->Divide(3,2);
 c_check->cd(1);
@@ -706,32 +513,6 @@ hwl_photon->Draw();
 
 TCanvas *c_npe_QE = new TCanvas("c_npe_QE","c_npe_QE",1600,1000);
 hnpe_QE->Draw();
-
-TLegend* leg= new TLegend(0.85, 0.75, 0.95, 0.9);
-TCanvas *c_npe_secratio = new TCanvas("c_npe_secratio","c_npe_secratio",1600,1000);
-hnpe_3secratio->SetLineColor(1);
-// hnpe_3secratio->SetMarkerStyle(24);
-hnpe_3secratio->Scale(1./hnpe_3secratio->GetEntries());
-hnpe_3secratio->Draw("E");
-leg->AddEntry(hnpe_3secratio,"hnpe_3secratio","l");  
-hnpe_2secratioleft->SetLineColor(2);
-// hnpe_2secratioleft->SetMarkerStyle(25);
-hnpe_2secratioleft->Scale(1./hnpe_2secratioleft->GetEntries());
-hnpe_2secratioleft->Draw("E same");
-leg->AddEntry(hnpe_2secratioleft,"hnpe_2secratioleft","l");  
-hnpe_2secratioright->SetLineColor(3);
-// hnpe_2secratioright->SetMarkerStyle(26);
-hnpe_2secratioright->Scale(1./hnpe_2secratioright->GetEntries());
-hnpe_2secratioright->Draw("E same");
-leg->AddEntry(hnpe_2secratioright,"hnpe_2secratioright","l");  
-hnpe_1secratio->SetLineColor(4);
-// hnpe_1secratio->SetMarkerStyle(27);
-hnpe_1secratio->Scale(1./hnpe_1secratio->GetEntries());
-hnpe_1secratio->Draw("E same");
-leg->AddEntry(hnpe_1secratio,"hnpe_1secratio","l");  
-leg->Draw();
-hnpe_1secratio->SetMaximum(1);
-
 
 // TCanvas *c_npe = new TCanvas("npe","npe",1600,1000);
 // c_npe->Divide(2,2);

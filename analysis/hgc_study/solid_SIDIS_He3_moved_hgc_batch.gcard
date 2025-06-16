@@ -1,5 +1,4 @@
 <gcard>
-
 <detector name="../../geometry/magnet_moved/solid_solenoid" factory="TEXT" variation="v4"/>
 <detector name="../../geometry/magnet_moved/solid_solenoid_cryo" factory="TEXT" variation="Original"/>
 <detector name="../../geometry/hgc_moved/solid_SIDIS_hgc" factory="TEXT" variation="Original"/>
@@ -12,10 +11,8 @@
 <option name="PHYSICS" value="QGSP_BERT+STD+Optical"/>
 <option name="HALL_MATERIAL" value="G4_Galactic"/>
 
-
-<option name="FIELD_DIR" value="/group/solid/www/solid/html/files/field"/>
-<option name="HALL_FIELD" value="solenoid_v4"/>
-<option name="FIELD_PROPERTIES" value="solenoid_v4, 1*mm, G4ClassicalRK4,linear"/>
+<option name="FIELD_DIR" value="../../field"/>
+<option name="HALL_FIELD" value="solenoid_CLEOv9"/>
 
 <option name="MAX_X_POS" value="20000"/>
 <option name="MAX_Y_POS" value="20000"/>
@@ -43,6 +40,9 @@
 <option name="CHECK_OVERLAPS"  value="1"/>
 <option name="USE_GUI"  value="0"/>
 
+<option name="FIELD_DIR" value="/group/solid/www/solid/html/files/field"/>
+<option name="HALL_FIELD" value="solenoid_v4"/>
+<option name="FIELD_PROPERTIES" value="solenoid_v4, 1*mm, G4ClassicalRK4,linear"/>
 
 <option name="N" value="1e4"/>
 <option name="OUTPUT" value="evio,output_theta8_z0_blockon_fieldoff_1e4.evio"/>

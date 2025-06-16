@@ -285,8 +285,8 @@ gStyle->SetOptStat(0);
 // "alone,#pi-,z=0cm,#theta=14.8deg old",    
 // };
 
-const int m=11;  
-char* var[m]={"2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5","7.0","7.5"};    
+// const int m=11;  
+// char* var[m]={"2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5","7.0","7.5"};    
 
 // const int n=6;
 // string input_filename[n][m];
@@ -324,7 +324,6 @@ char* var[m]={"2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5","7.0","7.5"}
 // string input_filename[n][m];
 // for(int i=0;i<m;i++) {
 //   char name[200]; 
-// 
 //   sprintf(name,Form("data/JLAB_VERSION_1.2/pmtmove10cm_cone10cmtilt65deg/QE_H12700_03/output_pim_z0_p%s_theta7.5_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
 //   input_filename[0][i]=name;  
 //   sprintf(name,Form("data/JLAB_VERSION_1.2/pmtmove10cm_cone10cmtilt65deg/QE_H12700_03/output_pim_z0_p%s_theta8.0_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
@@ -350,46 +349,109 @@ char* var[m]={"2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5","7.0","7.5"}
 // int MarkerStyle[n]={4,4,4,26,26,26};
 // int color[n]={1,2,3,1,2,3};
 
-const int n=6;
+// const int n=6;
+// const int m=13;  
+// char* var[m]={"2.0","2.5","3.0","3.5","4.0","4.5","5.0","5.5","6.0","6.5","7.0","7.5","8.0"};    
+// string input_filename[n][m];
+// for(int i=0;i<m;i++) {
+//   char name[200]; 
+// // pmtmove10cm_cone10cmtilt65deg
+//   
+//   sprintf(name,Form("data/JLAB_VERSION_1.3/He3_shift20cmdown_new/output_pim_z0_p%s_theta7.5_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
+//   input_filename[0][i]=name;  
+//   sprintf(name,Form("data/JLAB_VERSION_1.3/He3_shift20cmdown_new/output_pim_z0_p%s_theta8.0_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
+//   input_filename[1][i]=name;
+//   sprintf(name,Form("data/JLAB_VERSION_1.3/He3_shift20cmdown_new/output_pim_z0_p%s_theta14.8_phi0_blockoff_fieldoff_1e3_output.root",var[i]));   
+//   input_filename[2][i]=name; 
+//   
+//   sprintf(name,Form("data/JLAB_VERSION_1.3/He3_what/output_pim_z0_p%s_theta7.5_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
+//   input_filename[3][i]=name;  
+//   sprintf(name,Form("data/JLAB_VERSION_1.3/He3_what/output_pim_z0_p%s_theta8.0_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
+//   input_filename[4][i]=name;
+//   sprintf(name,Form("data/JLAB_VERSION_1.3/He3_what/output_pim_z0_p%s_theta14.8_phi0_blockoff_fieldoff_1e3_output.root",var[i]));   
+//   input_filename[5][i]=name;    
+// }
+// char* label[n]={
+// "(new) alone,#pi-,field off,block off,z=0cm,#theta=7.5deg,#phi=0deg",  
+// "(new) alone,#pi-,field off,block off,z=0cm,#theta=8.0deg,#phi=0deg",
+// "(new) alone,#pi-,field off,block off,z=0cm,#theta=14.8deg,#phi=0deg",  
+// "(NH3_shift20cmdown) alone,#pi-,field off,block off,z=0cm,#theta=7.5deg,#phi=0deg",
+// "(NH3_shift20cmdown) alone,#pi-,field off,block off,z=0cm,#theta=8.0deg,#phi=0deg",
+// "(NH3_shift20cmdown) alone,#pi-,field off,block off,z=0cm,#theta=14.8deg,#phi=0deg",  
+// };
+// int MarkerStyle[n]={4,4,4,26,26,26};
+// int color[n]={1,2,3,1,2,3};
+
+// const int n=4;
+// const int m=2;
+// char* var[m]={"2.5","7.5"};
+// string input_filename[n][m];
+// for(int i=0;i<m;i++) {
+//   char name[1000];
+//   sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p%s_theta8.0_phi45-145_noblock_1e3_output.root",var[i]));  
+//   input_filename[0][i]=name;
+//   sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p%s_theta14.8_phi45-145_noblock_1e3_output.root",var[i]));  
+//   input_filename[1][i]=name;
+//   
+//   sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p%s_theta8.0_phi45-145_yesblock_1e3_output.root",var[i]));  
+//   input_filename[2][i]=name;
+//   sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p%s_theta14.8_phi45-145_yesblock_1e3_output.root",var[i]));  
+//   input_filename[3][i]=name;  
+// }
+// char* label[n]={
+// "(no) alone,#pi-,field on,z=0cm,#theta=8.0deg,#phi=0deg",  
+// "(nu) alone,#pi-,field on,z=0cm,#theta=14.8deg,#phi=0deg",
+// "(yes) alone,#pi-,field on,z=0cm,#theta=8.0deg,#phi=0deg",  
+// "(yes) alone,#pi-,field on,z=0cm,#theta=14.8deg,#phi=0deg",
+// };
+// int MarkerStyle[n]={4,4,26,26};
+// int color[n]={1,2,1,2};
+
+const int n=3;
+const int m=2;
 string input_filename[n][m];
-for(int i=0;i<m;i++) {
-  char name[200]; 
-// pmtmove10cm_cone10cmtilt65deg
+
+  char name[1000];
+  sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta8.0_phi45-145_noblock_1e3_output.root"));  
+  input_filename[0][0]=name;
   
-  sprintf(name,Form("data/JLAB_VERSION_1.3/He3_shift20cmdown_new/output_pim_z0_p%s_theta7.5_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
-  input_filename[0][i]=name;  
-  sprintf(name,Form("data/JLAB_VERSION_1.3/He3_shift20cmdown_new/output_pim_z0_p%s_theta8.0_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
-  input_filename[1][i]=name;
-  sprintf(name,Form("data/JLAB_VERSION_1.3/He3_shift20cmdown_new/output_pim_z0_p%s_theta14.8_phi0_blockoff_fieldoff_1e3_output.root",var[i]));   
-  input_filename[2][i]=name; 
+  sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta14.8_phi45-145_noblock_1e3_output.root"));  
+  input_filename[0][1]=name;
   
-  sprintf(name,Form("data/JLAB_VERSION_1.3/He3_what/output_pim_z0_p%s_theta7.5_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
-  input_filename[3][i]=name;  
-  sprintf(name,Form("data/JLAB_VERSION_1.3/He3_what/output_pim_z0_p%s_theta8.0_phi0_blockoff_fieldoff_1e3_output.root",var[i]));  
-  input_filename[4][i]=name;
-  sprintf(name,Form("data/JLAB_VERSION_1.3/He3_what/output_pim_z0_p%s_theta14.8_phi0_blockoff_fieldoff_1e3_output.root",var[i]));   
-  input_filename[5][i]=name;   
- 
-}
+//   sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta8.0_phi55-65_yesblock_1e3_output.root"));  
+//   input_filename[1][0]=name;
+//   sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta14.8_phi65-75_yesblock_1e3_output.root"));  
+//   input_filename[1][1]=name;  
+// 
+//   sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta8.0_phi55-65_yesblockmirror1_1e3_output.root"));  
+//   input_filename[2][0]=name;
+//   sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta14.8_phi65-75_yesblockmirror1_1e3_output.root"));  
+//   input_filename[2][1]=name;  
+
+  sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta8.0_phi57-63_yesblock_1e4_output.root"));  
+  input_filename[1][0]=name;
+  sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta14.8_phi67-73_yesblock_1e4_output.root"));  
+  input_filename[1][1]=name;  
+
+  sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta8.0_phi57-63_yesblockmirror1_1e4_output.root"));  
+  input_filename[2][0]=name;
+  sprintf(name,Form("/work/halla/solid/zwzhao/solid/hgc_sim/JLAB_VERSION_1.3/testblock/hgc_SIDIS_He3_pim_z350_p2.5_theta14.8_phi67-73_yesblockmirror1_1e4_output.root"));  
+  input_filename[2][1]=name;  
+
 char* label[n]={
-"(new) alone,#pi-,field off,block off,z=0cm,#theta=7.5deg,#phi=0deg",  
-"(new) alone,#pi-,field off,block off,z=0cm,#theta=8.0deg,#phi=0deg",
-"(new) alone,#pi-,field off,block off,z=0cm,#theta=14.8deg,#phi=0deg",  
-"(NH3_shift20cmdown) alone,#pi-,field off,block off,z=0cm,#theta=7.5deg,#phi=0deg",
-"(NH3_shift20cmdown) alone,#pi-,field off,block off,z=0cm,#theta=8.0deg,#phi=0deg",
-"(NH3_shift20cmdown) alone,#pi-,field off,block off,z=0cm,#theta=14.8deg,#phi=0deg",  
+"(no) alone,#pi-,field on,z=0cm,#theta=8.0deg,#phi=0deg",  
+"(yes) alone,#pi-,field on,z=0cm,#theta=14.8deg,#phi=0deg",
+"(mirror1) alone,#pi-,field on,z=0cm,#theta=14.8deg,#phi=0deg",
 };
-int MarkerStyle[n]={4,4,4,26,26,26};
-int color[n]={1,2,3,1,2,3};
-
-
+int MarkerStyle[n]={4,26,27};
+int color[n]={1,2,3};
 
 TH1F *hcount_total_p[n];
 for(int j=0;j<n;j++){
-// hcount_total_p[j]=new TH1F(Form("hcount_total_p_%i",j),"photoelectron;P (GeV);count",m,1.75,8.25);
-hcount_total_p[j]=new TH1F(Form("hcount_total_p_%i",j),";P (GeV);photoelectron count (sim*0.5)",m,2.25,7.75);  
+hcount_total_p[j]=new TH1F(Form("hcount_total_p_%i",j),"photoelectron;P (GeV);count",m,1.75,8.25);
+// hcount_total_p[j]=new TH1F(Form("hcount_total_p_%i",j),";P (GeV);photoelectron count (sim*0.5)",m,2.25,7.75);  
 // hcount_total_p->SetAxisRange(2,8,"X");
-hcount_total_p[j]->SetAxisRange(0,50,"Y");   
+hcount_total_p[j]->SetAxisRange(0,150,"Y");   
 hcount_total_p[j]->SetMarkerStyle(MarkerStyle[j]);
 hcount_total_p[j]->SetMarkerSize(2);
 hcount_total_p[j]->SetMarkerColor(color[j]);
@@ -420,11 +482,13 @@ for(int i=0;i<m;i++){
 //   char hstname[100];
 //   sprintf(hstname,"%s_%i_%i",hst[i],hit_id[i],pid[i]);    
 //   cout << hstname << endl;
-  h[j][i]=(TH1F*) input[j][i]->Get("hcount");
+//   h[j][i]=(TH1F*) input[j][i]->Get("hcount");
+  h[j][i]=(TH1F*) input[j][i]->Get("hnpe_no0");  
 //   h[i]->SetAxisRange(ymin,ymax,"Y");    
 //   h[i]->SetAxisRange(xmin,xmax,"X");  
 //   h[i]->SetTitle(Form("%s %s",title,label[i]));
-  h[j][i]->SetLineColor(i);  
+//   h[j][i]->Rebin(2);    
+  h[j][i]->SetLineColor(i+1);  
   if (i==0) h[j][i]->Draw();  
   else h[j][i]->Draw("same");
 //   h[i]->SetMarkerStyle(8);
@@ -438,7 +502,7 @@ for(int i=0;i<m;i++){
 //   cout << h[i]->Integral() << endl;
 //     input.Close();
 //   leg->AddEntry(h[i], Form("%s   %02f",input_filename[i],h[i]->GetMean()),"l");  
-  leg[j]->AddEntry(h[j][i], Form("%02f %02f",h[j][i]->GetMean(),h[j][i]->GetRMS()),"l");    
+  leg[j]->AddEntry(h[j][i], Form("%0.1f %0.1f",h[j][i]->GetMean(),h[j][i]->GetRMS()),"l");    
 //   leg->AddEntry(g[i], label[i],"l");    
   
 }

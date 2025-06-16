@@ -5,18 +5,20 @@ It can work as standalone, but also test with other subsystems and full SoLID si
 == run == 
 
 #run simulation standalone in gui mode
-solid_gemc solid_SIDIS_hgc.gcard
-solid_gemc solid_SIDIS_hgc_moved.gcard
+solid_gemc solid_SIDIS_He3_hgc.gcard
+solid_gemc solid_SIDIS_He3_moved_hgc.gcard
+solid_gemc solid_SIDIS_NH3_hgc.gcard
+solid_gemc solid_SIDIS_NH3_moved_hgc.gcard
 
 #run simulation standalone in batch mode
 solid_gemc solid_SIDIS_He3_hgc_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3 -NO_FIELD="all"
 solid_gemc solid_SIDIS_NH3_hgc_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3 -NO_FIELD="all"
-solid_gemc solid_SIDIS_He3_hgc_moved_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3
-solid_gemc solid_SIDIS_NH3_hgc_moved_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3
+solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3
+solid_gemc solid_SIDIS_NH3_moved_hgc_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3
 
 #convert evio file in standalone simulation to root file
-evio2root -INPUTF=output.evio -B="../hgc_solid_gemc/solid_SIDIS_hgc"
-evio2root -INPUTF=output.evio -B="../hgc_moved_solid_gemc/solid_SIDIS_hgc"
+evio2root -INPUTF=output.evio -B="../../geometry/hgc/solid_SIDIS_hgc"
+evio2root -INPUTF=output.evio -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
 
 #run simulation with other subsystems
 solid_gemc solid_SIDIS_He3_full.gcard

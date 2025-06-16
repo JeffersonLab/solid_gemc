@@ -1,0 +1,176 @@
+#!/bin/sh
+
+# nevt="1e1"
+
+#cherenkov
+# # for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# for mom in 5.0
+# do
+# #     solid_gemc cherenkov_batch.gcard -BEAM_P="pi-,$mom*GeV,0*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=txt,output_pim_p$mom\_1e3.txt -N=1 -HIT_VERBOSITY=100
+# 
+# # gemc 2.3
+#     solid_gemc cherenkov_batch.gcard -BEAM_P="e-,$mom*GeV,0*deg,0*deg" -BEAM_V="(0,0,-100)cm" -OUTPUT=evio,output/cherenkov/cherenkov_C4F8_e_p$mom\_$nevt.evio -N=1e3 
+#     evio2root -INPUTF=output/cherenkov/cherenkov_C4F8_e_p$mom\_$nevt.evio  -B="cherenkov"
+# 
+# #gemc > 2.8
+# #     solid_gemc cherenkov_batch.gcard -BEAM_P="e-,$mom*GeV,0*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,cherenkov_CO2_e_p$mom\_1e3.evio -N=1e3 -RECORD_OPTICALPHOTONS=1
+# #     evio2root -INPUTF=cherenkov_CO2_e_p$mom\_1e3.evio  -B="cherenkov"
+#     
+# done
+
+# <option name="RECORD_OPTICALPHOTONS" value="1"/>
+
+#hgc
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# for mom in 7.5
+# for mom in 2.5
+# do
+# #    for theta in 7.5 8.0 14.8
+#    for theta in 14.5
+# #    for theta in 8.0
+#    do
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,0*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -OUTPUT=evio,output/hgc_moved/output_pim_z350_p$mom\_theta$theta\_phi0_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/output_pim_z350_p$mom\_theta$theta\_phi0_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# # 
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="kaon-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,0*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -OUTPUT=evio,output/hgc_moved/output_km_z350_p$mom\_theta$theta\_phi0_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/output_km_z350_p$mom\_theta$theta\_phi0_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,96*deg" -BEAM_V="(0,0,-350)cm" -NO_FIELD="all" -OUTPUT=evio,output/hgc_moved/output_pim_z350_p$mom\_theta$theta\_phi96_fieldoff_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/output_pim_z350_p$mom\_theta$theta\_phi96_fieldoff_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+#     
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -NO_FIELD="all" -OUTPUT=evio,output/hgc_moved/output_pim_z350_p$mom\_theta$theta\_fieldoff_$nevt.evio -N=$nevt
+# # #     evio2root -INPUTF=output/hgc_moved/output_pim_z350_p$mom\_theta$theta\_fieldoff_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# # 
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -OUTPUT=evio,output/hgc_moved/output_pim_z350_p$mom\_theta$theta\_$nevt.evio -N=$nevt
+#     
+# #     evio2root -INPUTF=output/hgc_moved/output_pim_z350_p$mom\_theta$theta\_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,3.5*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -OUTPUT=evio,output/hgc_moved/output_pim_z350_p$mom\_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/output_pim_z350_p$mom\_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="2.5*GeV,3.5*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -OUTPUT=evio,output/hgc_moved/output_pim_z350_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/output_pim_z350_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="2.5*GeV,3.5*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,20)cm" -OUTPUT=evio,output/hgc_moved/output_pim_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/output_pim_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -OUTPUT=evio,output/hgc_moved/solid_SIDIS_He3_hgc_moved_pim_z350_p$mom\_theta$theta\_$nevt.evio -N=$nevt
+#     evio2root -INPUTF=output/hgc_moved/solid_SIDIS_He3_hgc_moved_pim_z350_p$mom\_theta$theta\_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="kaon-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -OUTPUT=evio,output/hgc_moved/solid_SIDIS_He3_hgc_moved_km_z350_p$mom\_theta$theta\_$nevt.evio -N=$nevt
+#     evio2root -INPUTF=output/hgc_moved/solid_SIDIS_He3_hgc_moved_km_z350_p$mom\_theta$theta\_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,5*GeV,11.5*deg,0*deg" -SPREAD_P="2.5*GeV,3.5*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,20)cm" -OUTPUT=evio,output/hgc_moved/solid_SIDIS_He3_hgc_moved_pim_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/solid_SIDIS_He3_hgc_moved_pim_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="kaon-,5*GeV,11.5*deg,0*deg" -SPREAD_P="2.5*GeV,3.5*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,20)cm" -OUTPUT=evio,output/hgc_moved/solid_SIDIS_He3_hgc_moved_km_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/solid_SIDIS_He3_hgc_moved_km_$nevt.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+# #     solid_gemc solid_SIDIS_He3_full_moved_batch.gcard -BEAM_P="kaon-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,0)cm" -OUTPUT=evio,output/hgc_moved/solid_SIDIS_He3_hgc_moved_full_km_z350_p$mom\_theta$theta\_$nevt.evio -N=$nevt
+# #     evio2root -INPUTF=output/hgc_moved/solid_SIDIS_He3_hgc_moved_full_km_z350_p$mom\_theta$theta\_$nevt.evio -B="/group/solid/solid_github/JeffersonLab/solid_gemc/geometry/ec_segmented_moved/solid_SIDIS_ec_forwardangle /group/solid/solid_github/JeffersonLab/solid_gemc/geometry/ec_segmented_moved/solid_SIDIS_ec_largeangle /group/solid/solid_github/JeffersonLab/solid_gemc/geometry/hgc_moved/solid_SIDIS_hgc /group/solid/solid_github/JeffersonLab/solid_gemc/geometry/lgc_moved/lg_cherenkov  /group/solid/solid_github/JeffersonLab/solid_gemc/geometry/gem_moved/solid_SIDIS_gem /group/solid/solid_github/JeffersonLab/solid_gemc/geometry/mrpc_moved/solid_SIDIS_mrpc_forwardangle /group/solid/solid_github/JeffersonLab/solid_gemc/geometry/spd_moved/solid_SIDIS_spd_forwardangle /group/solid/solid_github/JeffersonLab/solid_gemc/geometry/spd_moved/solid_SIDIS_spd_largeangle" -R="flux"
+# 
+#   done
+# done
+
+#He3 fixed angle
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# do
+#    for theta in 7.5 8.0 14.8
+#    do
+#     solid_gemc solid_SIDIS_He3_hgc_moved_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -BEAM_V="(0,0,-350)cm" -NO_FIELD="all" -OUTPUT=evio,output/output_pim_z350_p$mom\_theta$theta\_phi0_blockoff_fieldoff_1e3.evio -N=1e3
+#     evio2root -INPUTF=output/output_pim_z350_p$mom\_theta$theta\_phi0_blockoff_fieldoff_1e3.evio  -B="../hgc_moved_solid_gemc/solid_SIDIS_hgc"
+#    done
+# done
+
+# He3 all angle
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# for mom in 5
+# do
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,11*deg,0*deg" -SPREAD_P="0*GeV,6*deg,0*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,20)cm" -N=1e3 -OUTPUT=evio,output_pim_z0_p$mom.evio -RECORD_OPTICALPHOTONS=1 -RECORD_MIRRORS=1 -INTEGRATEDRAW="mirror,flux" -NO_FIELD="all"
+#     evio2root -INPUTF=output_pim_z0_p$mom.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc" -R="flux,mirror"
+#     rm -f output/output_pim_z0_p$mom.evio
+# done
+
+#NH3 all angle
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# do
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,25*deg,0*deg" -SPREAD_P="0*GeV,25*deg,180*deg" -BEAM_V="(0,0,-350)cm" -N=1e6 -OUTPUT=evio,output/output_pim_z0_p$mom\_blockoff.evio 
+#     evio2root -INPUTF=output/output_pim_z0_p$mom\_blockoff.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+#     rm -f output/output_pim_z0_p$mom\_blockoff.evio
+# done
+
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,5*GeV,11*deg,0*deg" -SPREAD_P="0*GeV,6*deg,0*deg" -BEAM_V="(0,0,-330)cm" -SPREAD_V="(0,0)cm" -N=1e3 -OUTPUT=evio,mirrorhit_SIDIS_He3_pim_z330_p5_ws.evio -RECORD_OPTICALPHOTONS=1 -RECORD_MIRRORS=1 -INTEGRATEDRAW="mirror,flux" 
+#     evio2root -INPUTF=mirrorhit_SIDIS_He3_pim_z330_p5_ws.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc" -R="mirror"
+
+#     solid_gemc solid_SIDIS_NH3_moved_hgc_batch.gcard -BEAM_P="pi-,5*GeV,11*deg,0*deg" -SPREAD_P="2.5*GeV,6*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,1.5)cm" -N=1e4 -OUTPUT=evio,mirrorhit_SIDIS_NH3_pim.evio -RECORD_OPTICALPHOTONS=1 -RECORD_MIRRORS=1 -INTEGRATEDRAW="mirror,flux" 
+#     evio2root -INPUTF=mirrorhit_SIDIS_NH3_pim.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc" -R="mirror"
+
+#     solid_gemc solid_SIDIS_NH3_moved_hgc_batch.gcard -BEAM_P="pi+,5*GeV,11*deg,0*deg" -SPREAD_P="2.5*GeV,6*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(0,1.5)cm" -N=1e4 -OUTPUT=evio,mirrorhit_SIDIS_NH3_pip.evio -RECORD_OPTICALPHOTONS=1 -RECORD_MIRRORS=1 -INTEGRATEDRAW="mirror,flux" 
+#     evio2root -INPUTF=mirrorhit_SIDIS_NH3_pip.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc" -R="mirror"
+
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# for mom in 2.5 7.5
+# do
+#    for theta in 7.5 8.0 14.8
+#    do
+# #     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -BEAM_V="(0,0,-350)cm" -NO_FIELD="all" -OUTPUT=evio,output/hgc_SIDIS_He3_pim_z350_p$mom\_theta$theta\_phi0_blockoff_fieldoff_1e3.evio -N=1e3
+# #     evio2root -INPUTF=output/hgc_SIDIS_He3_pim_z350_p$mom\_theta$theta\_phi0_blockoff_fieldoff_1e3.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,60*deg" -SPREAD_P="0*GeV,0*deg,5*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output/out.evio -N=1e3
+#     evio2root -INPUTF=output/out.evio -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+#     rm -f output/out.evio
+#     mv output/out.root output/testblock/hgc_SIDIS_He3_pim_z350_p$mom\_theta$theta\_phi55-65_yesblock_1e3.root
+# 
+#    done
+# done
+
+# for mom in 2.5
+# do
+#    for theta in 8.0
+#    do
+# 
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,60*deg" -SPREAD_P="0*GeV,0*deg,3*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output/out.evio -N=1e4
+#     evio2root -INPUTF=output/out.evio -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+#     rm -f output/out.evio
+#     mv output/out.root output/testblock/hgc_SIDIS_He3_pim_z350_p$mom\_theta$theta\_phi57-63_yesblock_1e4.root
+# 
+#    done
+# done
+# 
+# for mom in 2.5
+# do
+#    for theta in 14.8
+#    do
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,70*deg" -SPREAD_P="0*GeV,0*deg,3*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output/out.evio -N=1e4
+#     evio2root -INPUTF=output/out.evio -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+#     rm -f output/out.evio
+#     mv output/out.root output/testblock/hgc_SIDIS_He3_pim_z350_p$mom\_theta$theta\_phi67-73_yesblock_1e4.root
+#     
+#    done
+# done
+
+# for mom in 2.5
+# do
+#    for theta in 8.0
+#    do
+#     solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,180*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output/out.evio -N=1e3
+#     evio2root -INPUTF=output/out.evio -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+#     rm -f output/out.evio
+#     mv output/out.root output/testmirror/hgc_SIDIS_He3_pim_z350_p$mom\_theta$theta\_phi360_row-15cm_1e3.root
+#     
+#    done
+# done
+
+# for gemc 2.9
+for mom in 2.5
+do
+   for theta in 8.0
+   do
+    solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,$theta*deg,0*deg" -SPREAD_P="0*GeV,0*deg,180*deg" -BEAM_V="(0,0,-350)cm" -RECORD_OPTICALPHOTONS=1 -OUTPUT=evio,output/out.evio -N=1e3
+    evio2root -INPUTF=output/out.evio -B="../../geometry/hgc_moved/solid_SIDIS_hgc" -R="flux"
+    rm -f output/out.evio
+    mv output/out.root output/testmirror/hgc_SIDIS_He3_pim_z350_p$mom\_theta$theta\_phi360_1e3.root
+    
+   done
+done
+

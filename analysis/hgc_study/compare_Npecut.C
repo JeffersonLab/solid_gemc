@@ -66,48 +66,52 @@ gStyle->SetPadColor(0);
 // "#pi^{-}",
 // "K^{-}",    
 // };
-
-// // char* dir1="/volatile/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/";
 // char* dir1="solid_SIDIS_He3_full_lgc/";
-// 
-// // char* dir2="backgroundno_nodecaytrack/";
-// // char* dir2="background3sector_nodecaytrack/";
-// char* dir2="background3sectordouble_nodecaytrack/";
-// 
-// const int n=6;
-// char* input_filename[n]={
+//   char* dir1="solid_SIDIS_He3_full_lgcec/";
+char* dir1="solid_PVDIS_LD2_full_lgcec/";
+
+// char* dir2="backgroundno_nodecaytrack/";
+// char* dir2="background3sector_nodecaytrack/";
+char* dir2="background3sectordouble_nodecaytrack/";
+
+const int n=2;
+char* input_filename[n]={
 // "solid_SIDIS_He3_moved_full_ele_z350_p2.5_theta8.0_1e6_output.root",
 // "solid_SIDIS_He3_moved_full_pim_z350_p2.5_theta8.0_1e6_output.root",
-// "solid_SIDIS_He3_moved_full_ele_z350_p3.0_theta12.0_1e6_output.root",
-// "solid_SIDIS_He3_moved_full_pim_z350_p3.0_theta12.0_1e6_output.root",
 // "solid_SIDIS_He3_moved_full_ele_z350_p4.5_theta14.5_1e6_output.root",
 // "solid_SIDIS_He3_moved_full_pim_z350_p4.5_theta14.5_1e6_output.root",
-// };
-// char* label[2]={
-// "e^{-}",
-// "#pi^{-}",    
-// };
 
-char* dir1="solid_PVDIS_LD2_full_lgc/";
+// "solid_SIDIS_He3_moved_full_ele_z350_p3.0_theta12.0_1e6_output.root",
+// "solid_SIDIS_He3_moved_full_pim_z350_p3.0_theta12.0_1e6_output.root",
 
-char* dir2="backgroundno_nodecaytrack/";
-// char* dir2="background3sector_nodecaytrack/";
-// char* dir2="background3sectordouble_nodecaytrack/";
-
-const int n=4;
-char* input_filename[n]={
 "solid_PVDIS_LD2_moved_full_ele_z10_p2.5_theta22_1e6_output.root",
-"solid_PVDIS_LD2_moved_full_pim_z10_p2.5_theta22_1e6_output.root",
-"solid_PVDIS_LD2_moved_full_ele_z10_p4.5_theta34_1e6_output.root",
-"solid_PVDIS_LD2_moved_full_pim_z10_p4.5_theta34_1e6_output.root",
+"solid_PVDIS_LD2_moved_full_pim_z10_p2.5_theta22_1e6_output.root",    
 };
 char* label[2]={
 "e^{-}",
 "#pi^{-}",    
 };
 
+// char* dir1="solid_PVDIS_LD2_full_lgc/";
+// 
+// char* dir2="backgroundno_nodecaytrack/";
+// // char* dir2="background3sector_nodecaytrack/";
+// // char* dir2="background3sectordouble_nodecaytrack/";
+// 
+// const int n=4;
+// char* input_filename[n]={
+// "solid_PVDIS_LD2_moved_full_ele_z10_p2.5_theta22_1e6_output.root",
+// "solid_PVDIS_LD2_moved_full_pim_z10_p2.5_theta22_1e6_output.root",
+// "solid_PVDIS_LD2_moved_full_ele_z10_p4.5_theta34_1e6_output.root",
+// "solid_PVDIS_LD2_moved_full_pim_z10_p4.5_theta34_1e6_output.root",
+// };
+// char* label[2]={
+// "e^{-}",
+// "#pi^{-}",    
+// };
 
-TCanvas *c = new TCanvas("compare","compare",1600,800);
+
+TCanvas *c = new TCanvas("compare","compare",n/2*800,800);
 c->Divide(n/2,2);
 TFile *input[n];
 TH1F *h[n];
@@ -116,7 +120,7 @@ TLegend* leg[n];
 for(int j=0;j<n/2;j++){
   c->cd(j+1); 
   gPad->SetLogy(1);
-  leg[j]= new TLegend(0.85, 0.75, 0.95, 0.9);  
+  leg[j]= new TLegend(0.75, 0.75, 0.85, 0.9);  
 for(int i=0;i<2;i++){
 //     if(i==3 || i>6) continue;
   input[2*j+i]=new TFile(Form("%s%s%s",dir1,dir2,input_filename[2*j+i]));
@@ -160,6 +164,7 @@ for(int i=0;i<2;i++){
   leg[j]->AddEntry(h[2*j+i], label[i],"l");    
 
   h_cut[2*j+i]=(TH1F*) h[2*j+i]->Clone();
+  h_cut[2*j+i]->Reset("ICESM");  
   int Nbin=h[2*j+i]->GetNbinsX();
 //   int Ntotal=h[2*j+i]->GetEntries();
   int Ntotal=h[2*j+i]->GetEntries();  

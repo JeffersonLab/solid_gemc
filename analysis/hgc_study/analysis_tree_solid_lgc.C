@@ -44,10 +44,9 @@ return;
 //Must imput the lgc_tree, the event number, and the PMT and PEperPMT thresholds (default is a 2x2 trigger).
 
 // Bool_t process_tree_solid_lgc(TTree *tree_solid_lgc,double *hit_lgc_pmt,double *hit_lgc_pixel, Int_t *trigger_lgc, Int_t &ntrigsecs, Int_t PMTthresh = 2, Int_t PEthresh = 2)
-Bool_t process_tree_solid_lgc(TTree *tree_solid_lgc,bool Is_simsafe,double *hit_lgc_pmt,double *hit_lgc_quad,double *hit_lgc_pixel, Int_t *trigger_lgc, Int_t &ntrigsecs, Int_t PMTthresh = 2, Int_t PEthresh = 2)
+Bool_t process_tree_solid_lgc(TTree *tree_solid_lgc,bool Is_simsafe,double *hit_lgc_pmt,double *hit_lgc_quad,double *hit_lgc_pixel, Int_t *trigger_lgc, Int_t &ntrigsecs,Int_t &nphoton, Int_t PMTthresh = 2, Int_t PEthresh = 2)
 {
-//   double factor_packing=0.8; //from PMT packing ratio
-    double factor_packing=1.; //from PMT packing ratio
+  double factor_packing=0.8; //from PMT packing ratio
   double factor=factor_packing;
   if (Is_simsafe) factor=factor*0.5; //and addition sim safety factor  
 
@@ -59,8 +58,11 @@ Bool_t process_tree_solid_lgc(TTree *tree_solid_lgc,bool Is_simsafe,double *hit_
   double sectorhits_pixel[30][576] = {0};  //need to intialize to zero or bad stuff
   
   Int_t ntrigpmts =0;
- 
+  nphoton=0;
   for(UInt_t i = 0; i < solid_lgc_hitn->size(); i++){
+    if (solid_lgc_nphe->at(i)==0) nphoton += 1;  // at least 1 photon
+    else nphoton += solid_lgc_nphe->at(i);  // Nphoton >= Npe
+    
     if(solid_lgc_nphe->at(i)>0){
 //       cout << "solid_lgc " << " !!! " << solid_lgc_hitn->size() << ", " << solid_lgc_hitn->at(i) << " " << solid_lgc_sector->at(i) << " " << solid_lgc_pmt->at(i) << " " << solid_lgc_pixel->at(i) << " " << solid_lgc_nphe->at(i) << " " << solid_lgc_avg_t->at(i) << endl;      
       sectorhits_pmt[solid_lgc_sector->at(i)-1][solid_lgc_pmt->at(i)-1] += solid_lgc_nphe->at(i)*factor;
@@ -96,7 +98,6 @@ Bool_t process_tree_solid_lgc(TTree *tree_solid_lgc,bool Is_simsafe,double *hit_
       hit_lgc_pixel[i*576+j]=sectorhits_pixel[i][j];            
     }    
   }
-   ntrigsecs=solid_lgc_hitn->size();
   if(ntrigsecs){
     return 1;
   }else{
