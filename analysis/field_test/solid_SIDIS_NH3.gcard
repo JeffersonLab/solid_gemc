@@ -15,7 +15,7 @@
 <option name="MAX_Z_POS" value="20000"/>
 <option name="HALL_DIMENSIONS" value="20*m,20*m,20*m"/>
 
-<option name="FIELD_DIR" value="./"/>
+<option name="FIELD_DIR" value="../../field"/>
 <option name="HALL_FIELD" value="solenoid_CLEOv8"/>
 
 <option name="OUTPUT" value="evio,out.evio"/>

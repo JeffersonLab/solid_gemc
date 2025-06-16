@@ -1,22 +1,61 @@
-== field map =============================================================
-solenoid_CLEOv8.dat  has 1cm grid, just a copy from the field dir at ../../field
+== Info =============================================================
+This is to test SoLID field map
 
-oxford_ptarget.dat has 1cm grid, just a copy from the field dir at ../../field
+== note about gemc ==============================================================
+general note
+it needs MAX_FIELD_STEP to be small value close to ???????
 
-oxford_ptarget_1mm.dat has 1mm grid and needs download from
-https://hallaweb.jlab.org/12GeV/SoLID/download/field/oxford_ptarget_1mm.dat
+about gemc 2.9 in JLAB_VERSION 2.5
+1. it needs FIELD_PROPERTIES option to load any field
+2. it treats coordinate of local field map as absolute coordinate in root volume. old gemc 2.3 in JLAB_VERSION 1.3 treat as local coordinate in its mother volume. So gemc 2.9 needs to use DISPLACE_FIELDMAP option to load oxford_ptarget at correct location
 
-== test NH3 target beam chicane angle ======================================
-This is to angle and position of beamline chicane to let beam go into NH3 target field, then go out along regular beamline which is along solenoid axis
+about gemc 2.3 in JLAB_VERSION 1.3
+1. it had a bug handling cylindrical-x and cylindrical-y field. It was fixed in 2020/05 for solid used jlab 1.3 at /group/solid/apps/jlab_root/1.3/Linux_RedHat7.9-x86_64-gcc4.8.5/gemc/2.3/source/fields/symmetries/cylindrical.cc and for github https://github.com/gemc/source/issues/168
 
-NH3 magnet made of Helmholz coils has a "solenoid" field along +x direction in its map.
+== test SoLID SIDIS NH3 beam bending ======================================
 
-in "beam__geometry_Original.txt", the field holder and several planes 
-please note the field holder is enlarged to include large area while it still stop at solenoid entrance
+????????????????????????????
+gemc solidgem.gcard -BEAM_P="chargedgeantino,11*GeV,12*deg,0*deg" -BEAM_V="(0,0,-350)cm" -FIELD_DIR="../../field" -HALL_FIELD="solenoid_CLEOv8" -FIELD_PROPERTIES="solenoid_CLEOv8, 1*mm, G4ClassicalRK4,linear" -MAX_FIELD_STEP=1
+
+
+This is to find angle and position of beamline chicane to let beam go into NH3 target field, then go out along regular beamline which is along solenoid axis
+
+NH3 magnet made of Helmholz coils has a "solenoid" field along +x or -x direction in its map.
+
+**** with 1 3D map and JLAB_VERSION 2.5 *************************************
+
+set up env at jlab ifarm with instruction at https://github.com/JeffersonLab/solid_release/blob/master/howto.md
+then run this to shoot the positive chargedgeantino from origin at solenoid center backwards toward NH3 target
+(chargedgeantino is better then e+ because it has no energy loss in field.)
+
+solid_gemc beam_1field.gcard -BEAM_P="chargedgeantino,11*GeV,180*deg,0*deg" -BEAM_V="(0,0,0)cm" -FIELD_DIR="/group/solid/www/solid/html/files/field" -HALL_FIELD="solenoid_v4p_5Tv1p_trans" -FIELD_PROPERTIES="solenoid_v4p_5Tv1p_trans, 1*mm, G4ClassicalRK4,linear" -MAX_FIELD_STEP=1
+
+"beam.txt_11GeV_solenoid_v4p_5Tv1p_trans" has avg_y=-52.4332028571mm,py=-587.053650705MeV,pz=-10984.3237394MeV, theta 3.059deg and phi 90deg at z=-4500mm
+"beam.txt_8.8GeV_solenoid_v4p_5Tv1p_trans" has avg_y=-65.5920126203mm,py=-587.009331309MeV,pz=-8780.39976567MeV, theta 3.825deg and phi 90deg at z=-4500mm
+"beam.txt_11GeV_solenoid_v4p_5Tv1n_trans" has avg_y=52.435621065mm,py=587.070287409MeV,pz=-10984.3228502MeV, theta 3.059deg and phi -90deg at z=-4500mm
+"beam.txt_8.8GeV_solenoid_v4p_5Tv1n_trans" has avg_y=65.5946927124mm,py=587.021083088MeV,pz=-8780.39897999MeV, theta 3.825deg and phi -90deg at z=-4500mm
+
+solid_gemc beam_1field.gcard -BEAM_P="chargedgeantino,11*GeV,180*deg,0*deg" -BEAM_V="(0,0,0)cm" -FIELD_DIR="/group/solid/www/solid/html/files/field" -HALL_FIELD="solenoid_v4_5Tv1TransPos" -FIELD_PROPERTIES="solenoid_v4_5Tv1TransPos, 1*mm, G4ClassicalRK4,linear"
+
+"beam.txt_11GeV_solenoid_v4_5Tv1TransPos" has avg_y=-52.43379186mm, theta 3.059 deg and phi 90 deg at z=-4500mm
+"beam.txt_8.8GeV_solenoid_v4_5Tv1TransPos" has avg_y=-65.5922241249mm, theta 3.825 deg and phi 90 deg at z=-4500mm
+
+**** with 2 cylindrical maps and JLAB_VERSION 2.5 *************************************
+
+set up env at jlab ifarm with instruction at https://github.com/JeffersonLab/solid_release/blob/master/howto.md
+then run following
+
+solid_gemc beam.gcard -BEAM_P="e+,11*GeV,180*deg,0*deg" -BEAM_V="(0,0,0)cm" -FIELD_PROPERTIES="solenoid_CLEOv8, 1*mm, G4ClassicalRK4,linear" -FIELD_PROPERTIES="oxford_ptarget, 1*mm, G4ClassicalRK4,linear" -DISPLACE_FIELDMAP="oxford_ptarget,0*cm,0*cm,-350*cm" -MAX_FIELD_STEP=1
+
+**** with 2 cylindrical maps and JLAB_VERSION 1.3 *************************************
+map oxford_ptarget is along +x and solenoid_v8 is along +z direction
+in "beam__geometry_Original.txt", the field holder and several planes. please note the field holder is enlarged to include large area while it still stop at solenoid entrance
+
+The latest result in 2020 was done after fixing a bug of gemc 2.3 
 
 set up env at jlab ifarm
 > source /group/solid/solid_github/JeffersonLab/solid_gemc/set_solid 1.3 /group/solid/apps/jlab_root /group/solid/solid_github/JeffersonLab/solid_gemc"
-then run this to shoots positron from origin at solenoid center backwards toward NH3 target
+then run this to shoot positron from origin at solenoid center backwards toward NH3 target
 > solid_gemc beam.gcard -BEAM_P="e+,11*GeV,180*deg,0*deg" -BEAM_V="(0,0,0)cm"
 or flip target field, solenoid field or both
 > solid_gemc beam.gcard -BEAM_P="e+,11*GeV,180*deg,0*deg" -BEAM_V="(0,0,0)cm" -SCALE_FIELD="oxford_ptarget, -1"
@@ -32,14 +71,13 @@ atan(py/px) tells the phi angle in rad
 "beam.txt_11GeV_oxfordflip_v8" has avg_y=21.9503mm, theta 2.553 deg and phi -90 deg at z=-4000mm
 "beam.txt_11GeV_oxford_v8flip" shows solenoid field direction has no effect
 "beam.txt_11GeV_oxfordflip_v8flip" shows solenoid field direction has no effect
-
 "beam.txt_8.8GeV_oxford_v8" has avg_y=-27.4506mm, theta 3.194 deg and phi 90 deg at z=-4000mm
-
 "beam.txt_20GeV_oxford_v8" has avg_y=-12.0661mm, theta 1.404 deg and phi 90 deg at z=-4000mm
 "beam.txt_24GeV_oxford_v8" has avg_y=-10.0523mm, theta 1.170 deg and phi 90 deg at z=-4000mm
 
+== test SoLID SIDIS NH3 particles bending ===============================
 
-== test particles bending by NH3 target field and SoLID solenoid field ===============================
+**** with 2 cylindrical maps and JLAB_VERSION 1.3 *************************************
 
 Use the two field in vacuum with no material and use some virtual planes to observer tracks bending
 
@@ -50,17 +88,3 @@ run simulation in interactive mode
 run simulation in batch mode
 > solid_gemc solid_SIDIS_NH3.gcard -BEAM_P="e-,5.5*GeV,25*deg,0*deg" -SPREAD_P="5.5*GeV,25*deg,180*deg" -BEAM_V="(0,0,-350)cm" -SPREAD_V="(2.4,1.413)cm" -N=1e5
 > evio2root -INPUTF=out.evio 
-
-To test oxford_ptarget_1mm.dat, use solid_SIDIS_NH3_1mm.gcard 
-
-== log =======================================================
-Zhiwen Zhao, 2020/07/03
-test particles bending by NH3
-
-Zhiwen Zhao, 2017/10/23
-"solenoid_ptarget.dat" map is wrong which gives about 60% larger field integral for beam
-replace it with "g2p_ptarget.dat" which is calculated by 
-hallbfield.f for g2p Helmholtz calculation and agrees within 1% with measurement
-
-Zhiwen Zhao, 2016/05/26
-initial checkin

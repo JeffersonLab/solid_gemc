@@ -1,0 +1,353 @@
+   Simulation Conditions, TAG 5:
+   > beam_1field  is loaded with factory TEXT, variation Original and run number 1
+   > option ACTIVEFIELDS solenoid_v4_5Tv1TransPos 
+   > option ALIGN_ZAXIS no
+   > option ALLRAWS no
+   > option BANK_VERBOSITY 1
+   > option BEAM_P chargedgeantino,11*GeV,180*deg,0*deg
+   > option BEAM_V (0,0,0)cm
+   > option CATCH Maurizio
+   > option CHANGEVOLUMEMATERIALTO none
+   > option CHECK_OVERLAPS 0
+   > option COSMICAREA 0*cm, 0*cm, 0*cm, 50*cm
+   > option COSMICRAYS no
+   > option DATABASE no
+   > option DAWN_N 0
+   > option DBHOST no
+   > option DBPORT 0
+   > option DBPSWD no
+   > option DBUSER gemc
+   > option DEFAULT_MATERIAL none
+   > option DF no
+   > option DIGITIZATION_TIMESTAMP no
+   > option DIGITIZATION_VARIATION default
+   > option DISPLACE_FIELDMAP no
+   > option ELECTRONICNOISE no
+   > option ENERGY_CUT -1
+   > option EVN 1
+   > option EVTN 1
+   > option EXEC_MACRO no
+   > option FASTMCMODE 0
+   > option FIELDS_FILENAMES none
+   > option FIELD_DIR /group/solid/www/solid/html/files/field
+   > option FIELD_PROPERTIES no
+   > option FIELD_PROPERTIES__REPETITION__1 solenoid_v4_5Tv1TransPos, 1*mm, G4ClassicalRK4,linear
+   > option FIELD_VERBOSITY 0
+   > option FILTER_HADRONS 0
+   > option FILTER_HIGHMOM 0
+   > option FILTER_HITS 0
+   > option FILTER_NULL_VARIABLES 0
+   > option FORCE_MUON_RADIATIVE_DECAY 0
+   > option G4FIELDCACHESIZE 
+   > option G4P_VERBOSITY 1
+   > option G4TRACK_VERBOSITY 0
+   > option GEN_VERBOSITY 0
+   > option GEO_VERBOSITY 1
+   > option GUIPOS (150, 150)
+   > option GUI_VERBOSITY 1
+   > option HALL_DIMENSIONS 20*m,20*m,20*m
+   > option HALL_FIELD solenoid_v4_5Tv1TransPos
+   > option HALL_MATERIAL G4_Galactic
+   > option HARDWARESTATUS 0
+   > option HIGH_RES 1
+   > option HIT_PROCESS_LIST solid
+   > option HIT_VERBOSITY 1
+   > option INPUT_GEN_FILE gemc_internal
+   > option INTEGRATEDDGT yes
+   > option INTEGRATEDRAW flux
+   > option ION_P no
+   > option LOG_MSG 
+   > option LOG_VERBOSITY 0
+   > option LUMI2_EVENT 0, 2*ns
+   > option LUMI2_P proton, 50*GeV, 175*deg, 180*deg
+   > option LUMI2_SPREAD_P 0*GeV, 0*deg, 0*deg
+   > option LUMI2_SPREAD_V (0, 0)cm
+   > option LUMI2_V (4, 0, 50)cm
+   > option LUMI_EVENT 0, 0*ns, 2*ns
+   > option LUMI_P e-, 11*GeV, 0*deg, 0*deg
+   > option LUMI_SPREAD_P 0*GeV, 0*deg, 0*deg
+   > option LUMI_SPREAD_V (0, 0)cm
+   > option LUMI_V (0, 0, -20)cm
+   > option MATERIAL_VERBOSITY 0
+   > option MAX_FIELD_STEP 0
+   > option MAX_X_POS 20000
+   > option MAX_Y_POS 20000
+   > option MAX_Z_POS 20000
+   > option MERGE_BGHITS no
+   > option MERGE_LUND_BG no
+   > option MIRROR_VERBOSITY 0
+   > option N 1
+   > option NGENP 10
+   > option NO_FIELD none
+   > option OUTPUT txt,beam.txt
+   > option PARAMETER_VERBOSITY 0
+   > option PHYSICS QGSP_BERT+STD+Optical
+   > option PHYS_VERBOSITY 0
+   > option PHY_VERBOSITY 1
+   > option POLAR 100, 0*deg, 0*deg
+   > option PRINT_EVENT 1000
+   > option PRODUCTIONCUT 10
+   > option PRODUCTIONCUTFORVOLUMES no
+   > option PROPAGATE_DVERTEXTIME 0
+   > option QTSTYLE no
+   > option RANDOM TIME
+   > option RECORD_MIRRORS 0
+   > option RECORD_OPTICALPHOTONS 0
+   > option RECORD_PASSBY 1
+   > option REMOVESENSITIVITY none
+   > option RERUN_SELECTED 
+   > option RFSETUP no
+   > option RFSTART 0
+   > option ROTATE_FIELDMAP no
+   > option RUNNO 1
+   > option RUN_WEIGHTS no
+   > option SAVE_ALL_ANCESTORS 0
+   > option SAVE_ALL_MOTHERS 0
+   > option SAVE_SELECTED 
+   > option SCALE_FIELD no, 1
+   > option SHIFT_LUND_VERTEX (0, 0, 0)cm
+   > option SIGNALVT no
+   > option SKIPNGEN 0
+   > option SKIPREJECTEDHITS 1
+   > option SPREAD_P 0*GeV,0*deg,0*deg
+   > option SPREAD_V (0,0)cm
+   > option STEER_BEAM 0
+   > option SWITCH_MATERIALTO none
+   > option SYNRAD 0
+   > option TSAMPLING 4, 250
+   > option USE_GUI 0
+   > option VTRESOLUTION 0.1
+   > option gcard beam_1field.gcard
+   > option geometry 620x620
+
+   Simulation JSON Conditions:  6:
+{
+  "fields": {
+    "SCALE_FIELD": [
+      {
+        "filename": "no",
+        "scale": 1.0
+      }
+    ]
+  },
+  "generator": {
+    "ALIGN_ZAXIS": [
+      {
+        "to:": "no"
+      }
+    ],
+    "BEAM_P": [
+      {
+        "momentum": 11.0,
+        "particleID": "chargedgeantino",
+        "phi": 0.0,
+        "theta": 180.0
+      }
+    ],
+    "BEAM_V": [
+      {
+        "unit": "cm",
+        "vx": 0.0,
+        "vy": 0.0,
+        "vz": 0.0
+      }
+    ],
+    "COSMICAREA": [
+      {
+        "radius": 50.0,
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    ],
+    "ION_P": [
+      {
+        "isPrimaryAPion": "no"
+      }
+    ],
+    "LUMI2_SPREAD_P": [
+      {
+        "denergy": 0.0,
+        "dphi": 0.0,
+        "dtheta": 0.0
+      }
+    ],
+    "LUMI_SPREAD_P": [
+      {
+        "denergy": 0.0,
+        "dphi": 0.0,
+        "dtheta": 0.0
+      }
+    ],
+    "MERGE_BGHITS": [
+      {
+        "bgfilename": "no"
+      }
+    ],
+    "MERGE_LUND_BG": [
+      {
+        "bgLundfilename": "no"
+      }
+    ],
+    "POLAR": [
+      {
+        "percentage": 100.0,
+        "phi": 0.0,
+        "theta": 0.0
+      }
+    ],
+    "SHIFT_LUND_VERTEX": [
+      {
+        "svx": 0.0,
+        "svy": 0.0,
+        "svz": 0.0,
+        "unit": "cm"
+      }
+    ],
+    "SPREAD_P": [
+      {
+        "denergy": 0.0,
+        "dphi": 0.0,
+        "dtheta": 0.0
+      }
+    ],
+    "SPREAD_V": [
+      {
+        "dr": 0.0,
+        "dz": 0.0,
+        "unit": "cm"
+      }
+    ]
+  },
+  "luminosity": {
+    "LUMI2_P": [
+      {
+        "momentum": 50.0,
+        "particleID": "proton",
+        "phi": 180.0,
+        "theta": 175.0
+      }
+    ],
+    "LUMI2_SPREAD_V": [
+      {
+        "denergy": 0.0,
+        "dphi": 0.0,
+        "dtheta": 0.0
+      }
+    ],
+    "LUMI2_V": [
+      {
+        "unit": "cm",
+        "vx": 4.0,
+        "vy": 0.0,
+        "vz": 50.0
+      }
+    ],
+    "LUMI_EVENT": [
+      {
+        "bunchTime": 2.0,
+        "nparticles": "0",
+        "timeWindow": 0.0
+      }
+    ],
+    "LUMI_P": [
+      {
+        "momentum": 11.0,
+        "particleID": "e-",
+        "phi": 0.0,
+        "theta": 0.0
+      }
+    ],
+    "LUMI_SPREAD_V": [
+      {
+        "dr": 0.0,
+        "dz": 0.0,
+        "unit": "cm"
+      }
+    ],
+    "LUMI_V": [
+      {
+        "unit": "cm",
+        "vx": 0.0,
+        "vy": 0.0,
+        "vz": -20.0
+      }
+    ]
+  },
+  "mysql": {
+    "DATABASE": [
+      {
+        "mysqlDatabase": "no"
+      }
+    ],
+    "DBHOST": [
+      {
+        "mysqlServer": "no"
+      }
+    ],
+    "DBPSWD": [
+      {
+        "mysqlUserPwd": "no"
+      }
+    ],
+    "DBUSER": [
+      {
+        "mysqlUserName": "gemc"
+      }
+    ]
+  },
+  "verbosity": {
+    "CATCH": [
+      {
+        "CATCH": "Maurizio"
+      }
+    ]
+  }
+}
+
+ --- Header Bank -- 
+    - (10, 1) time:	Wed, 10.18.2023 16:58:36
+    - (10, 5) beamPol:	0
+    - (10, 3) evn:	1
+    - (10, 4) evn_type:	-1
+    - (10, 2) runNo:	1
+ --- End of Header Bank -- 
+ --- User Header Bank -- 
+ --- End of User Header Bank -- 
+ --- flux  (50, 0) ---- 
+   -- integrated digitized bank  (52, 0) -- 
+    - (52, 1) id:	1	2	3	
+    - (52, 99) hitn:	1	2	3	
+   -- End of integrated digitized bank.
+   -- integrated true infos bank  (51, 0) -- 
+    - (51, 1) pid:	0	0	0	
+    - (51, 2) mpid:	0	0	0	
+    - (51, 3) tid:	1	1	1	
+    - (51, 4) mtid:	0	0	0	
+    - (51, 5) otid:	0	0	0	
+    - (51, 6) trackE:	11000	11000	11000	
+    - (51, 7) totEdep:	0	0	0	
+    - (51, 8) avg_x:	0.00142598985761	0.00188046954132	0.00238100523566	
+    - (51, 9) avg_y:	0.372191717248	-25.5722702987	-52.43379186	
+    - (51, 10) avg_z:	-3500.0001	-4000.0001	-4500.0001	
+    - (51, 11) avg_lx:	0.00142598985761	0.00188046954132	0.00238100523566	
+    - (51, 12) avg_ly:	0.372191717248	-25.5722702987	-52.43379186	
+    - (51, 13) avg_lz:	-0.000100000000202	-0.000100000000202	-0.000100000000202	
+    - (51, 14) px:	0.00889903481613	0.010620212845	0.0112686828431	
+    - (51, 15) py:	-391.527143807	-595.949420123	-587.059942052	
+    - (51, 16) pz:	-10993.0299052	-10983.8446952	-10984.3234031	
+    - (51, 17) vx:	0	0	0	
+    - (51, 18) vy:	0	0	0	
+    - (51, 19) vz:	0	0	0	
+    - (51, 20) mvx:	0	0	0	
+    - (51, 21) mvy:	0	0	0	
+    - (51, 22) mvz:	0	0	0	
+    - (51, 23) avg_t:	11.674743943	13.3448317125	15.0150572977	
+    - (51, 24) nsteps:	1	1	1	
+    - (51, 25) procID:	999	999	999	
+    - (51, 99) hitn:	1	2	3	
+   -- end of integrated raw bank.
+ --- Generated Particles Bank -- 
+    - Particle 1 pid: 0   -  mom: (1.34711147906e-12,0,-11000) MeV   -  vert: (0,0,0) mm
+    - Hit >na< Has 0 hit --- End of Generated Particles Bank -- 
+ ---- End of Event  ---- 

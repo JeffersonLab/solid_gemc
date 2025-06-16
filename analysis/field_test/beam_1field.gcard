@@ -1,0 +1,47 @@
+<gcard>
+<detector name="beam_1field" factory="TEXT" variation="Original"/>
+
+<option name="INTEGRATEDRAW" value="flux"/>
+
+<option name="HIT_PROCESS_LIST" value="solid"/>
+<option name="PHYSICS" value="QGSP_BERT+STD+Optical"/>
+<option name="RECORD_PASSBY" value="1"/>
+<option name="HALL_MATERIAL" value="G4_Galactic"/>
+
+<option name="MAX_X_POS" value="20000"/>
+<option name="MAX_Y_POS" value="20000"/>
+<option name="MAX_Z_POS" value="20000"/>
+<option name="HALL_DIMENSIONS" value="20*m,20*m,20*m"/>
+
+<option name="SPREAD_P" value="0*GeV,0*deg,0*deg"/>
+<option name="BEAM_V"   value="(0,0,0)cm"/>
+<option name="SPREAD_V" value="(0,0)cm"/>
+
+<option name="N" value="1"/>
+<option name="OUTPUT" value="txt,beam.txt"/>
+<option name="USE_GUI"  value="0"/>
+
+
+</gcard>
+
+<!--  comment out
+<option name="FIELD_VERBOSITY"  value="100"/>
+<option name="GEO_VERBOSITY"  value="100"/>
+
+<option name="CHECK_OVERLAPS"  value="1"/>
+<option name="USE_GUI"  value="0"/>
+
+<option name="SCALE_FIELD" value="solenoid_ptarget,-1"/>
+<option name="HALL_FIELD" value="solenoid_CLEOv8"/>
+
+<option name="BEAM_P"   value="e-,11*GeV,3.624*deg,90*deg"/>
+<option name="SPREAD_P" value="0*GeV,0*deg,0*deg"/>
+<option name="BEAM_V"   value="(0,-3.279,-400)cm"/>
+<option name="SPREAD_V" value="(0.1,0)cm"/>
+
+<option name="EXEC_MACRO" value="../../../solid_gemc2/script/solid_slice.vis"/>
+<option name="geometry" value="1000x1000"/>
+<option name="HIGH_RES" value="1"/>
+<option name="USE_GUI"  value="1"/>
+
+-->
