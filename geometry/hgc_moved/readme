@@ -8,7 +8,7 @@ The perl scripts is are produce these text files
 Except the parameter text file has all external parameter, it is edit by hand.
 
 A perl script will call other perl scripts and use parameter file to produce all other texts by running command below
-source your set_solid
+(source your set_solid or inside the container)
 ./solid_SIDIS_hgc.pl config_solid_SIDIS_hgc.dat
 
 The hit definition, bank definitions and corresponding hit processing routine "solid_hgc" of "solid_gemc" have to match to produce meaningful result.

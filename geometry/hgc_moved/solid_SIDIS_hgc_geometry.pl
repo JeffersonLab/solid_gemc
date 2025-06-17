@@ -15,8 +15,8 @@ sub solid_SIDIS_hgc_geometry
 {
 make_chamber();
 make_gas();
-# make_block();
-make_blockmirror1();
+make_block();
+# make_blockmirror1();
 make_window_front();
 # make_window_back();
 make_cone();
