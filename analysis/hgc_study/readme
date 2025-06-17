@@ -15,10 +15,12 @@ solid_gemc solid_SIDIS_He3_hgc_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEA
 solid_gemc solid_SIDIS_NH3_hgc_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3 -NO_FIELD="all"
 solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3
 solid_gemc solid_SIDIS_NH3_moved_hgc_batch.gcard -BEAM_P="pi-,5*GeV,10*deg,0*deg" -BEAM_V="(0,0,-350)cm" -OUTPUT=evio,output.evio -N=1e3
+(add -RECORD_OPTICALPHOTONS=1 for jlab_ce 2.5)
 
 #convert evio file in standalone simulation to root file
 evio2root -INPUTF=output.evio -B="../../geometry/hgc/solid_SIDIS_hgc"
 evio2root -INPUTF=output.evio -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+(add -R="flux" for jlab_ce 2.5)
 
 #run simulation with other subsystems
 solid_gemc solid_SIDIS_He3_full.gcard
@@ -26,6 +28,7 @@ solid_gemc solid_SIDIS_NH3_full.gcard
 
 #convert evio file in full simulation to root file
 evio2root -INPUTF=output.evio -B="../ec_solid_gemc/solid_SIDIS_ec_forwardangle ../ec_solid_gemc/solid_SIDIS_ec_largeangle ../../../solid_gemc2/geometry/hgc/solid_SIDIS_hgc ../../../solid_gemc2/geometry/lgc/solid_SIDIS_lgc ../../../solid_gemc2/geometry/hgc/solid_SIDIS_hgc ../../../solid_gemc2/geometry/gem/solid_SIDIS_gem ../../../solid_gemc2/geometry/mrpc/solid_SIDIS_mrpc_forwardangle ../../../solid_gemc2/geometry/spd/solid_SIDIS_spd_forwardangle ../../../solid_gemc2/geometry/spd/solid_SIDIS_spd_largeangle"
+(add -R="flux" for jlab_ce 2.5)
 
 use run option -NO_FIELD="all" to turn off all field temporally.
 

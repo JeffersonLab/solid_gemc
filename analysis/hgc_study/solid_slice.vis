@@ -1,0 +1,12 @@
+/vis/viewer/set/lineSegmentsPerCircle 120
+
+/vis/viewer/set/viewpointThetaPhi 90 180
+/vis/viewer/set/lightsThetaPhi 40 50
+/vis/viewer/zoom 1.5
+
+/vis/viewer/set/cutawayMode intersection
+/vis/viewer/addCutawayPlane 0  0  0  cm 1 0 0
+
+/vis/scene/add/axes 0 -3 2.5 1 m
+
+#/vis/scene/add/scale 1 m z 0 0 1 manual  1 -3 0 m
