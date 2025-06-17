@@ -5,7 +5,8 @@ our %configuration;
 our %parameters;
 use Getopt::Long;
 use Math::Trig;
-use Math::VectorReal;  
+# use Math::VectorReal;
+use VectorReal_mine;  
 
 my $DetectorName = 'solid_SIDIS_hgc';
 my $DetectorMother="root";
@@ -15,6 +16,7 @@ sub solid_SIDIS_hgc_geometry
 make_chamber();
 make_gas();
 # make_block();
+make_blockmirror1();
 make_window_front();
 # make_window_back();
 make_cone();
@@ -117,7 +119,7 @@ my $half_z = $windowhalf_z + $backendhalf_z;  # total half length of the PMT
 my $hitype="solid_hgc";  # alternative: "flux"
 my $material_chamber="G4_Al";
 my $material_gas="SL_HGC_C4F8O";  # alternative: "G4_Al"
-my $material_block="SL_HGC_C4F8O";  # alternative: "G4_Al"
+my $material_block="G4_Al";  # alternative: "G4_Al"
 # my $material_window_front_1 = "SL_HGC_kevlar";  # alternative: "G4_Al"
 # my $material_window_front_2 = "SL_HGC_mylar";  # alternative: "G4_Al"
 my $material_window_front_1 = "G4_Al";
@@ -172,11 +174,11 @@ my $pos_PMT = $pos_P+$dis_P_PMT*$dir_P_PMT;
 my $image_y = $pos_PMT->y();
 my $image_z = $pos_PMT->z();
 my $image_x = 0;
-print "PMT position $image_y $image_z\n";
-my $pos_x_sphere=sprintf('%f',$pos_sphere_center->y());
-my $pos_y_sphere=sprintf('%f',$pos_sphere_center->x());
+print "PMT position in xyz of $image_x $image_y $image_z\n";
+my $pos_x_sphere=sprintf('%f',$pos_sphere_center->y()); # somehow this needs to be swtiched
+my $pos_y_sphere=sprintf('%f',$pos_sphere_center->x()); # somehow this needs to be swtiched
 my $pos_z_sphere=sprintf('%f',$pos_sphere_center->z());
-print "Position of the center of sphere $pos_x_sphere $pos_y_sphere $pos_z_sphere";
+print "Position of the center of sphere in xyz of $pos_x_sphere $pos_y_sphere $pos_z_sphere\n";
 
 sub make_chamber
 {
@@ -302,6 +304,8 @@ sub make_block
      for(my $i=1; $i<=$N; $i++){
       my $sector_start=$sec_start+0.5*$ang_width+$ang_width*($i-1);
       
+      if ($i!=30 && $i!=15) {next;}
+      
       my %detector=init_det();
       $detector{"name"}        = "$DetectorName\_block_$i";
       $detector{"mother"}      = "$DetectorName\_gas";
@@ -310,14 +314,45 @@ sub make_block
       $detector{"rotation"}    = "0*deg 0*deg 0*deg";
       $detector{"color"}       = "22CC33";  
       $detector{"type"}        = "Polycone";
-      $detector{"dimensions"}  = "$sector_start*deg 0.0000005*deg 2*counts $Rmin1_gas*cm $Rmin2_gas*cm $Rmax1_gas*cm $Rmax2_gas*cm $Zmin_gas*cm $Zmax_gas*cm";
-      $detector{"material"}    = $material_block;
+      $detector{"dimensions"}  = "$sector_start*deg 0.5*deg 2*counts $Rmin1_gas*cm $Rmin2_gas*cm $Rmax1_gas*cm $Rmax2_gas*cm $Zmin_gas*cm $Zmax_gas*cm";
+      $detector{"material"}    = $material_block;     
       $detector{"mfield"}      = "no";
       $detector{"ncopy"}       = 1;
       $detector{"pMany"}       = 1;
       $detector{"exist"}       = 1;
-      $detector{"visible"}     = 0;
-      $detector{"style"}       = 0;
+      $detector{"visible"}     = 1;
+      $detector{"style"}       = 1;          
+      print_det(\%configuration, \%detector);
+    }
+}
+
+sub make_blockmirror1
+{
+     for(my $i=1; $i<=$N; $i++){
+      my $sector_start=$sec_start+0.5*$ang_width+$ang_width*($i-1);
+      
+      if ($i!=30 && $i!=15) {next;}
+      
+      my %detector=init_det();
+      $detector{"name"}        = "$DetectorName\_block_$i";
+      $detector{"mother"}      = "$DetectorName\_gas";
+      $detector{"description"} = $detector{"name"};
+      $detector{"pos"}         = "0*cm 0*cm 0*cm";
+      $detector{"rotation"}    = "0*deg 0*deg 0*deg";
+      $detector{"color"}       = "22CC33";  
+      $detector{"type"}        = "Polycone";
+      $detector{"dimensions"}  = "$sector_start*deg 0.5*deg 2*counts $Rmin1_gas*cm $Rmin2_gas*cm $Rmax1_gas*cm $Rmax2_gas*cm $Zmin_gas*cm $Zmax_gas*cm";
+      $detector{"material"}    = "$material_mirror";      
+      $detector{"mfield"}      = "no";
+      $detector{"ncopy"}       = 1;
+      $detector{"pMany"}       = 1;
+      $detector{"exist"}       = 1;
+      $detector{"visible"}     = 1;
+      $detector{"style"}       = 1;
+      $detector{"sensitivity"} = "mirror: SL_HGC_mirror";
+      $detector{"hit_type"}    = "mirror";
+      my $id=2200000+$i*1000+3;
+      $detector{"identifiers"} = "id manual $id";            
       print_det(\%configuration, \%detector);
     }
 }
@@ -558,6 +593,7 @@ sub make_mirror
       $detector{"mother"}      = "$DetectorName\_gas";
       $detector{"description"} = $detector{"name"};
       $detector{"pos"}         = "0*cm 0*cm $cons_z*cm";      
+#       $detector{"rotation"}    = "0*deg 0*deg $ang_zrot*deg";
       $detector{"rotation"}    = "0*deg 0*deg $ang_zrot*deg";
       $detector{"color"}       = "808080";  #gray				
       $detector{"type"}        = "Operation:@ $DetectorName\_mirror_cons_$i * $DetectorName\_mirror_sphere_$i";

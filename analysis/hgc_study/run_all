@@ -1,0 +1,40 @@
+#!/bin/sh
+
+#He3
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# do
+#     solid_gemc solid_SIDIS_He3_hgc_moved_batch.gcard -BEAM_P="pi-,$mom*GeV,11*deg,0*deg" -SPREAD_P="0*GeV,6*deg,180*deg" -BEAM_V="(0,0,-350)cm" -N=1e6 -OUTPUT=evio,output/output_pim_z0_p$mom\_blockoff.evio 
+#     evio2root -INPUTF=output/output_pim_z0_p$mom\_blockoff.evio  -B="../hgc_moved_solid_gemc/solid_SIDIS_hgc"
+#     rm -f output/output_pim_z0_p$mom\_blockoff.evio
+# done
+
+#NH3
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# do
+#     solid_gemc solid_SIDIS_NH3_hgc_moved_batch.gcard -BEAM_P="pi-,$mom*GeV,25*deg,0*deg" -SPREAD_P="0*GeV,25*deg,180*deg" -BEAM_V="(0,0,-350)cm" -N=1e6 -OUTPUT=evio,output/output_pim_z0_p$mom\_blockoff.evio 
+#     evio2root -INPUTF=output/output_pim_z0_p$mom\_blockoff.evio  -B="../hgc_moved_solid_gemc/solid_SIDIS_hgc"
+#     rm -f output/output_pim_z0_p$mom\_blockoff.evio
+# done
+
+
+#He3
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+for mom in 2.5 7.5
+do
+    solid_gemc solid_SIDIS_He3_moved_hgc_batch.gcard -BEAM_P="pi-,$mom*GeV,11*deg,90*deg" -SPREAD_P="0*GeV,6*deg,45*deg" -BEAM_V="(0,0,-350)cm" -N=1e4 -OUTPUT=evio,output/hgc_SIDIS_He3_pim_z350_p$mom\_1e4.evio 
+    evio2root -INPUTF=output/hgc_SIDIS_He3_pim_z350_p$mom\_1e4.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+done
+
+#NH3
+# for mom in 2.5 3.0 3.5 4.0 4.5 5.0 5.5 6.0 6.5 7.0 7.5
+# # for mom in 5.5 6.0 6.5 7.0 7.5
+# do
+# #     solid_gemc solid_SIDIS_NH3_hgc_moved_batch.gcard -BEAM_P="pi-,$mom*GeV,20*deg,0*deg" -SPREAD_P="0*GeV,20*deg,180*deg" -BEAM_V="(0,0,-350)cm" -N=1e6 -OUTPUT=evio,output/hgc_SIDIS_NH3_pim_z350_p$mom\_1e6.evio 
+# #     evio2root -INPUTF=output/hgc_SIDIS_NH3_pim_z350_p$mom\_1e6.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+#     solid_gemc solid_SIDIS_NH3_hgc_moved_batch.gcard -BEAM_P="pi+,$mom*GeV,20*deg,0*deg" -SPREAD_P="0*GeV,20*deg,180*deg" -BEAM_V="(0,0,-350)cm" -N=1e6 -OUTPUT=evio,output/hgc_SIDIS_NH3_pip_z350_p$mom\_1e6.evio 
+#     evio2root -INPUTF=output/hgc_SIDIS_NH3_pip_z350_p$mom\_1e6.evio  -B="../../geometry/hgc_moved/solid_SIDIS_hgc"
+# 
+# done
+
+
