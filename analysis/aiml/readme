@@ -1,0 +1,7 @@
+AIML testing ground
+
+To convert solid_gemc single particle sim output root file into a csv text file, use analysis_aiml.C
+
+To convert solid_gemc beam sim output root file into a csv text file, use analysis_aiml_bg_PVDIS_LD2.C and analysis_aiml_bg_SIDIS_He2.C
+
+See example in script "getplot"

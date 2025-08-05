@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# for xx in `ls /cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_1.3/pass9/*.root`
+for xx in `ls /work/halla/solid/zwzhao/solid/output_hgc_study/JLAB_VERSION_1.3/hgc_moved/output_pim_z350_1e5.root`
+
+do 
+# echo $xx
+root -l -b -q "analysis_hgc.C+(\"$xx\",\"trigger\",false,\"single\")"
+done

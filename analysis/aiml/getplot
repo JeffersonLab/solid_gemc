@@ -1,0 +1,44 @@
+# here is how to run the scripts below at ifarm
+
+# load root
+module use /group/halla/modulefiles
+module load root/6.32.08
+
+# use "lgcec" or "lgc" or "hgc" to produce files for different detectors
+
+#test code without writing out csv files
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_ele_z350_p3.0_theta12.0_1e6.root","lgcec",false,false,true)'
+
+#produce background root file ready for background merging
+root  -b -q -l  'analysis_aiml_bg_SIDIS_He3.C+("/cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_BeamOnTarget_5e10_filter.root","lgcec")'
+root  -b -q -l  'analysis_aiml_bg_PVDIS_LD2.C+("/cache/halla/solid/sim/solid_gemc/PVDIS_JLAB_VERSION_2.5/pass3/solid_PVDIS_LD2_moved_full_BeamOnTarget_1e10_filter.root","lgcec")'
+
+#prepare output dir for solid_SIDIS_He3_full_lgcec
+mkdir -p solid_SIDIS_He3_full_lgcec/backgroundno_nodecaytrack
+mkdir -p solid_SIDIS_He3_full_lgcec/background3sector_nodecaytrack
+mkdir -p solid_SIDIS_He3_full_lgcec/background3sectordouble_nodecaytrack
+
+#produce ele csv file with 0,1,2 background for solid_SIDIS_He3_full_lgcec
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_ele_z350_p3.0_theta12.0_1e6.root","lgcec",true,true,true,0,"solid_SIDIS_He3_full_lgcec/backgroundno_nodecaytrack")'
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_ele_z350_p3.0_theta12.0_1e6.root","lgcec",true,true,true,1,"solid_SIDIS_He3_full_lgcec/background3sector_nodecaytrack")'
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_ele_z350_p3.0_theta12.0_1e6.root","lgcec",true,true,true,2,"solid_SIDIS_He3_full_lgcec/background3sectordouble_nodecaytrack")'
+
+#produce pim csv file with 0,1,2 background for solid_SIDIS_He3_full_lgcec
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_pim_z350_p3.0_theta12.0_1e6.root","lgcec",false,true,true,0,"solid_SIDIS_He3_full_lgcec/backgroundno_nodecaytrack")'
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_pim_z350_p3.0_theta12.0_1e6.root","lgcec",false,true,true,1,"solid_SIDIS_He3_full_lgcec/background3sector_nodecaytrack")'
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/SIDIS_He3_JLAB_VERSION_2.5/pass3/solid_SIDIS_He3_moved_full_pim_z350_p3.0_theta12.0_1e6.root","lgcec",false,true,true,2,"solid_SIDIS_He3_full_lgcec/background3sectordouble_nodecaytrack")'
+
+#prepare output dir for solid_PVDIS_LD2_full_lgcec
+mkdir -p solid_PVDIS_LD2_full_lgcec/backgroundno_nodecaytrack
+mkdir -p solid_PVDIS_LD2_full_lgcec/background3sector_nodecaytrack
+mkdir -p solid_PVDIS_LD2_full_lgcec/background3sectordouble_nodecaytrack
+
+#produce ele csv file with 0,1,2 background for solid_PVDIS_LD2_full_lgcec
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/PVDIS_JLAB_VERSION_2.5/pass3/solid_PVDIS_LD2_moved_full_ele_z10_p2.5_theta22_1e6.root","lgcec",true,true,true,0,"solid_PVDIS_LD2_full_lgcec/backgroundno_nodecaytrack")'
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/PVDIS_JLAB_VERSION_2.5/pass3/solid_PVDIS_LD2_moved_full_ele_z10_p2.5_theta22_1e6.root","lgcec",true,true,true,1,"solid_PVDIS_LD2_full_lgcec/background3sector_nodecaytrack")'
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/PVDIS_JLAB_VERSION_2.5/pass3/solid_PVDIS_LD2_moved_full_ele_z10_p2.5_theta22_1e6.root","lgcec",true,true,true,2,"solid_PVDIS_LD2_full_lgcec/background3sectordouble_nodecaytrack")'
+
+#produce pim csv file with 0,1,2 background for solid_PVDIS_LD2_full_lgcec
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/PVDIS_JLAB_VERSION_2.5/pass3/solid_PVDIS_LD2_moved_full_pim_z10_p2.5_theta22_1e6.root","lgcec",false,true,true,0,"solid_PVDIS_LD2_full_lgcec/backgroundno_nodecaytrack")'
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/PVDIS_JLAB_VERSION_2.5/pass3/solid_PVDIS_LD2_moved_full_pim_z10_p2.5_theta22_1e6.root","lgcec",false,true,true,1,"solid_PVDIS_LD2_full_lgcec/background3sector_nodecaytrack")'
+root -l 'analysis_aiml.C+("/cache/halla/solid/sim/solid_gemc/PVDIS_JLAB_VERSION_2.5/pass3/solid_PVDIS_LD2_moved_full_pim_z10_p2.5_theta22_1e6.root","lgcec",false,true,true,2,"solid_PVDIS_LD2_full_lgcec/background3sectordouble_nodecaytrack")'
