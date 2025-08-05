@@ -1,7 +1,10 @@
 AIML testing ground
 
-To convert solid_gemc single particle sim output root file into a csv text file, use analysis_aiml.C
+analysis_aiml.C can read solid_gemc single particle sim output root file and write csv text file ready for AIML code.
+It can take the two Cherenkov detectors "lgc", "hgc" or combined LGC and EC "lgcec"
 
-To convert solid_gemc beam sim output root file into a csv text file, use analysis_aiml_bg_PVDIS_LD2.C and analysis_aiml_bg_SIDIS_He2.C
+analysis_aiml_bg_PVDIS_LD2.C and analysis_aiml_bg_SIDIS_He2.C can read solid_gemc beam background output root file and write csv text file ready for background merging in analysis_aiml.C
 
 See example in script "getplot"
+
+dir "hgc" has old hgc
