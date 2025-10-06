@@ -1,0 +1,34 @@
+<gxml>
+	<volume name="MagnetCubes_16" mother="root" color="8899dd"  material="G4_Fe"   position="-603.16849*cm 0.00000*cm 1856.36000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_16" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-603.16849*cm 0.00000*cm 1856.36000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_17" mother="root" color="8899dd"  material="G4_Fe"   position="-603.99379*cm 0.00000*cm 1858.90000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_17" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-603.99379*cm 0.00000*cm 1858.90000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_18" mother="root" color="8899dd"  material="G4_Fe"   position="-604.81908*cm 0.00000*cm 1861.44000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_18" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-604.81908*cm 0.00000*cm 1861.44000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_19" mother="root" color="8899dd"  material="G4_Fe"   position="-605.64438*cm 0.00000*cm 1863.98000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_19" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-605.64438*cm 0.00000*cm 1863.98000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_20" mother="root" color="8899dd"  material="G4_Fe"   position="-606.46968*cm 0.00000*cm 1866.52000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_20" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-606.46968*cm 0.00000*cm 1866.52000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_21" mother="root" color="8899dd"  material="G4_Fe"   position="-607.29498*cm 0.00000*cm 1869.06000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_21" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-607.29498*cm 0.00000*cm 1869.06000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_22" mother="root" color="8899dd"  material="G4_Fe"   position="-608.12027*cm 0.00000*cm 1871.60000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_22" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-608.12027*cm 0.00000*cm 1871.60000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_23" mother="root" color="8899dd"  material="G4_Fe"   position="-608.94557*cm 0.00000*cm 1874.14000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_23" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-608.94557*cm 0.00000*cm 1874.14000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_24" mother="root" color="8899dd"  material="G4_Fe"   position="-609.77087*cm 0.00000*cm 1876.68000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_24" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-609.77087*cm 0.00000*cm 1876.68000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_25" mother="root" color="8899dd"  material="G4_Fe"   position="-610.59616*cm 0.00000*cm 1879.22000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_25" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-610.59616*cm 0.00000*cm 1879.22000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_26" mother="root" color="8899dd"  material="G4_Fe"   position="-611.42146*cm 0.00000*cm 1881.76000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_26" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-611.42146*cm 0.00000*cm 1881.76000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_27" mother="root" color="8899dd"  material="G4_Fe"   position="-612.24676*cm 0.00000*cm 1884.30000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_27" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-612.24676*cm 0.00000*cm 1884.30000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_28" mother="root" color="8899dd"  material="G4_Fe"   position="-613.07205*cm 0.00000*cm 1886.84000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_28" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-613.07205*cm 0.00000*cm 1886.84000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_29" mother="root" color="8899dd"  material="G4_Fe"   position="-613.89735*cm 0.00000*cm 1889.38000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_29" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-613.89735*cm 0.00000*cm 1889.38000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_30" mother="root" color="8899dd"  material="G4_Fe"   position="-614.72265*cm 0.00000*cm 1891.92000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_30" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-614.72265*cm 0.00000*cm 1891.92000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_31" mother="root" color="8899dd"  material="G4_Fe"   position="-615.54794*cm 0.00000*cm 1894.46000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_31" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-615.54794*cm 0.00000*cm 1894.46000*cm"  rotation="0*deg 18*deg 0*deg"/>
+</gxml>
