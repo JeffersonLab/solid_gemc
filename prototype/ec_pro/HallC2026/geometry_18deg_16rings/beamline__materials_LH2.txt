@@ -1,0 +1,2 @@
+             Al_7075  |                       Al_7075  |      2.81  |         5  |G4_Al 0.9 G4_Zn 0.06 G4_Mg 0.024 G4_Cr 0.002 G4_Cu 0.014  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
+             Al_2024  |                       Al_2024  |      2.78  |         4  |     G4_Al 0.94 G4_Mn 0.006 G4_Mg 0.014 G4_Cu 0.04  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  

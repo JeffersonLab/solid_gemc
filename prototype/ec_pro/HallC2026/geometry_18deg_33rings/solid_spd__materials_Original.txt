@@ -1,0 +1,1 @@
+SL_spd_ScintillatorB  |          Scintillator for SPD  |     1.032  |         2  |                                          H 10 C 9  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  
