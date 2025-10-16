@@ -6,33 +6,25 @@ for "cc_pro_tcd" location, change $AngY_tcd (angle relative to beam direction) ,
 for different gas in Cherenkov, change "$material_gas", $material_pmt_surface in cc_pro_geometry.pl
 give different "variation" for various different geometry
 
-= run simulation (need update)=====
-get ready to run on ifarm
-cd your_work_dir
-git clone https://github.com/JeffersonLab/solid_gemc.git  (or do git pull)
-cd solid_gemc
-singularity shell -s /bin/tcsh -B ${PWD}:/solid_gemc /group/solid/apps/jeffersonlab_jlabce_tag2.5_digest:sha256:9b9a9ec8c793035d5bfe6651150b54ac298f5ad17dca490a8039c530d0302008_20220413_s3.9.5.sif
-set prompt = '[#Container# %n@%m %c]$ '
-setenv SoLID_GEMC /solid_gemc
-setenv LD_LIBRARY_PATH ${GEMC}:${LD_LIBRARY_PATH}
-setenv PATH ${SoLID_GEMC}/source/${GEMC_VERSION}:${PATH}
-cd $SoLID_GEMC/source/${GEMC_VERSION}
-scons OPT=1 -j4  (compile solid_gemc, do it once)
+= run simulation =====
+refer to running simulationin container at https://github.com/JeffersonLab/solid_release/blob/master/howto.md
 
 create or update geometry
-cd $SoLID_GEMC/prototype/ec_pro/HallC2022/geometry/
+cd geometry
 ./beamline.pl config.dat
+./cc_pro_tcd.pl config.dat
 ./cc_pro.pl config.dat
 ./solid_spd.pl config.dat
 ./solid_gem.pl config.dat
 ./solid_ec.pl config.dat
+then rename output text file with proper variation
 
 run with graphic
-cd $SoLID_GEMC/prototype/ec_pro/HallC2022/analysis
-solid_gemc hallc2022.gcard
+cd analysis
+solid_gemc hallc2026.gcard
 
 run without graphic
-solid_gemc hallc2022_batch.gcard -BEAM_P="e-,3*GeV,73*deg,0*deg" -BEAM_V="(0,0,0)cm" -OUTPUT="evio,out_even.evio" -N=1e2
+solid_gemc hallc2026_batch.gcard -BEAM_P="e-,3*GeV,18*deg,0*deg" -BEAM_V="(0,0,0)cm" -N=1e2
 
 convert to root file
 evio2root -INPUTF=out_even.evio -B="../geometry/cc_pro ../geometry/solid_ec ../geometry/solid_gem ../geometry/solid_spd" -R="flux"
@@ -40,8 +32,12 @@ evio2root -INPUTF=out_even.evio -B="../geometry/cc_pro ../geometry/solid_ec ../g
 exit container
 ctrl-d or exit
 
-= analysis result  (need update) =====
+note
+adding the big beamline cad into simulation will slow down simulation running by about 100 times
+
+= analysis result =====
 (do this outside of the container)
-cd your_work_dir/solid_gemc/prototype/ec_pro/HallC2022/analysis
-source /group/solid/apps/root/root_v6.24.06.Linux-centos7-x86_64-gcc4.8/bin/thisroot.csh
-root 'analysis.C+("out_even.root")'
+module use /group/halla/modulefiles
+module load root
+cd analysis
+root 'analysis.C+("out.root")'

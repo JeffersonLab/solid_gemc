@@ -61,7 +61,7 @@ foreach (@runs) {
 #         printf SCRIPT_FILE "mkdir sim$rnum; cd sim$rnum; \n";        
 # 	printf SCRIPT_FILE "cp $genlund ./gen.lund \n";                        
 # 	printf SCRIPT_FILE "cat $genlund > ./gen.lund \n";                        
-        printf SCRIPT_FILE "cp $cdir/input.dat $cdir/evgen.sh ./ \n";                        
+#       printf SCRIPT_FILE "cp $cdir/input.dat $cdir/evgen.sh ./ \n";                        
         printf SCRIPT_FILE "cp $cdir/load_singularity.sh $cdir/do_it_all.sh $cdir/solid.gcard ./ \n";                
         printf SCRIPT_FILE "./load_singularity.sh; \n";
         printf SCRIPT_FILE "mv out.root $odir/$outroot; \n";

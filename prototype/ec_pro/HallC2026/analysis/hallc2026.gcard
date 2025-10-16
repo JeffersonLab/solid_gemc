@@ -1,14 +1,14 @@
 <gcard>
 
-<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/beamline" factory="TEXT" variation="LD2"/>
-<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/cc_pro_tcd" factory="TEXT" variation="18deg"/>
-<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/cc_pro" factory="TEXT" variation="CO2"/>
-<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/solid_spd" factory="TEXT" variation="Original"/>
-<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/solid_ec" factory="TEXT" variation="Original"/>
-<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/solid_gem" factory="TEXT" variation="nofield"/>
+<detector name="../geometry/beamline" factory="TEXT" variation="LD2"/>
+<detector name="../geometry/cc_pro_tcd" factory="TEXT" variation="18deg16copy"/>
+<detector name="../geometry/cc_pro" factory="TEXT" variation="CO2"/>
+<detector name="../geometry/solid_spd" factory="TEXT" variation="Original"/>
+<detector name="../geometry/solid_ec" factory="TEXT" variation="Original"/>
+<detector name="../geometry/solid_gem" factory="TEXT" variation="nofield"/>
 <!--
-<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/magnet_cad_third/" factory="CAD"/>
-<detector name="/solid_gemc/prototype/ec_pro/HallC2022/geometry/beamline_cad/" factory="CAD"/>
+<detector name="../geometry/magnet_cad_11rings/" factory="CAD"/>
+<detector name="../../HallC2022/geometry/beamline_cad/" factory="CAD"/>
 -->
 
 <option name="INTEGRATEDRAW" value="flux"/>
@@ -26,16 +26,14 @@
 <option name="HALL_DIMENSIONS" value="50*m,50*m,50*m"/>
 
 <!--
-<option name="FIELD_DIR" value="/solid_gemc/prototype/ec_pro/HallC2026/field"/>
+<option name="FIELD_DIR" value="../field"/>
 <option name="HALL_FIELD" value="halbach_11ring_4col_field_map"/>
 <option name="FIELD_PROPERTIES" value="halbach_11ring_4col_field_map, 1*mm, G4ClassicalRK4,linear"/>
 -->
 
 <option name="geometry" value="1000x1000"/>
 <option name="HIGH_RES" value="1"/>
-
-<option name="OUTPUT" value="evio,out.evio"/>
-<option name="USE_GUI"  value="0"/>
+<option name="USE_GUI"  value="1"/>
 
 </gcard>
 
@@ -46,6 +44,8 @@
 <option name="CHECK_OVERLAPS"  value="1"/>
 <option name="USE_GUI"  value="0"/>
 
+<option name="OUTPUT" value="evio,out.evio"/>
+<option name="USE_GUI"  value="0"/>
 
 <option name="EXEC_MACRO" value="solid_slice.vis"/>
 <option name="geometry" value="1000x1000"/>
