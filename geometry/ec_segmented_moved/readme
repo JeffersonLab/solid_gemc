@@ -5,7 +5,7 @@ We use one standard config.dat, then specify detector name as option as follow
 ./solid_ec.pl solid_SIDIS_ec_largeangle
 
 layout according to ANL design for ec_forwardangle in "analysis/ec_layout"
-each module is according to ANL drawing "200318"
+each module is according to ANL drawing "./drawing/200318*pdf"
 
 ANL ec_layout has 1748 modules
 Actual layout is determined by choosing only modules with Rmin and Rmax according to nominal acceptance.
