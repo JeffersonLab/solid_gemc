@@ -39,6 +39,7 @@ my $hz2	= $hz1+45*2.54+35*2.54 ;
 #my $hdz1= 80*2.54;
 my $hdz1= 18*2.54/2.;
 my $hdz2= 35*2.54;
+my $z14 = 6;
 sub beamline
 {
 #make_beam_entrance_cryo();
@@ -46,7 +47,7 @@ sub beamline
 #make_beam_coli();
 #make_beam_coli2();
 #make_beam_dummy();
-
+make_virutal();
 make_beam_LH2_CH();
 make_beam_LD2();
 #make_beam_carbon();
@@ -677,6 +678,31 @@ sub make_beam_dummy
     $detector{"identifiers"} = "no";
     print_det(\%configuration, \%detector);
  }
+}
+
+sub make_virutal 
+{
+ my %detector=init_det();
+ $detector{"name"}        = "$DetectorName\_virtualplane";
+ $detector{"mother"}      = "$DetectorMother";
+ $detector{"description"} = $detector{"name"};
+ $detector{"pos"}         = "0*cm 0*cm $z14*cm";
+ $detector{"rotation"}    = "0*deg 0*deg 0*deg";
+ $detector{"color"}       = "CC6633";
+ $detector{"type"}       = "Box";
+ $detector{"dimensions"} = "50*cm 50*cm 0.0001*cm";
+ $detector{"material"}    = "G4_Galactic";
+ $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 0;
+ $detector{"sensitivity"} = "flux";
+ $detector{"hit_type"}    = "flux";
+ my $ID = 55;
+ $detector{"identifiers"} = "id manual $ID";
+ print_det(\%configuration, \%detector);
 }
 
 beamline();
