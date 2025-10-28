@@ -1,0 +1,14 @@
+<gxml>
+	<volume name="MagnetCubes_26" mother="root" color="8899dd"  material="G4_Fe"   position="-611.42146*cm 0.00000*cm 1881.76000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_26" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-611.42146*cm 0.00000*cm 1881.76000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_27" mother="root" color="8899dd"  material="G4_Fe"   position="-612.24676*cm 0.00000*cm 1884.30000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_27" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-612.24676*cm 0.00000*cm 1884.30000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_28" mother="root" color="8899dd"  material="G4_Fe"   position="-613.07205*cm 0.00000*cm 1886.84000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_28" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-613.07205*cm 0.00000*cm 1886.84000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_29" mother="root" color="8899dd"  material="G4_Fe"   position="-613.89735*cm 0.00000*cm 1889.38000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_29" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-613.89735*cm 0.00000*cm 1889.38000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_30" mother="root" color="8899dd"  material="G4_Fe"   position="-614.72265*cm 0.00000*cm 1891.92000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_30" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-614.72265*cm 0.00000*cm 1891.92000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="MagnetCubes_31" mother="root" color="8899dd"  material="G4_Fe"   position="-615.54794*cm 0.00000*cm 1894.46000*cm"  rotation="0*deg 18*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_31" mother="root" color="00ff77"  material="G4_POLYCARBONATE"   position="-615.54794*cm 0.00000*cm 1894.46000*cm"  rotation="0*deg 18*deg 0*deg"/>
+</gxml>
