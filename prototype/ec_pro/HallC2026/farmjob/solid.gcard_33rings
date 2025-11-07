@@ -5,7 +5,7 @@
 <detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/cc_pro" factory="TEXT" variation="CO2"/>
 <detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/solid_spd" factory="TEXT" variation="Original"/>
 <detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/solid_ec" factory="TEXT" variation="Original"/>
-<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/solid_gem" factory="TEXT" variation="33rings"/>
+<detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/solid_gem" factory="TEXT" variation="33ringsColli"/>
 <detector name="/solid_gemc/prototype/ec_pro/HallC2026/geometry/magnet_cad_33rings/" factory="CAD"/>
 <!--
 <detector name="/solid_gemc/prototype/ec_pro/HallC2022/geometry/beamline_cad/" factory="CAD"/>
