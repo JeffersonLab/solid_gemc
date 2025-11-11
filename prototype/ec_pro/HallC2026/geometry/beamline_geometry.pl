@@ -39,7 +39,8 @@ my $hz2	= $hz1+45*2.54+35*2.54 ;
 #my $hdz1= 80*2.54;
 my $hdz1= 18*2.54/2.;
 my $hdz2= 35*2.54;
-my $z14 = 6;
+# my $z14 = 6;
+my $z14 = 20;
 sub beamline
 {
 #make_beam_entrance_cryo();
@@ -47,12 +48,17 @@ sub beamline
 #make_beam_coli();
 #make_beam_coli2();
 #make_beam_dummy();
-make_virutal();
-make_beam_LH2_CH();
-make_beam_LD2();
+# make_beam_LH2_CH();
+make_target();
+# make_beam_LH2();
+# make_beam_LD2();
 #make_beam_carbon();
-make_beam_LH2_CH_con();
-#make_target();
+# make_beam_LH2_CH_con();
+# make_beam_entrance();
+# make_beam_exit();
+make_beam_exit_long();
+# make_virutal();
+
 }
 sub make_beam_entrance_cryo
 {
@@ -266,17 +272,16 @@ sub make_beam_exit
 
 sub make_beam_exit_long
 {
- my @z    = (17.25*2.54+100*2+800,0);
- my @Rin  = (0.,0.);
- my @Rout1 = (2.375/2*2.54,2.067/2*2.54);
- my @Rout2 = (10.375/2*2.54,10.067/2*2.54); 
- my @Dz   = (800,800);
-
- my $NUM  = 2; 
- my @name = ("exit_long_outer","exit_long_inner"); 
- my @mother=("$DetectorMother","$DetectorName\_exit_long_outer");
- my @mat  = ("G4_Al","G4_Galactic");
- my @color = ("ff00ff","808080");
+ my $NUM  = 4;
+ my @z    = (10/2+3000,0,-3000+0.02*2.54/2,3000-0.01/2);
+ my @Rin = (0,0,0,0);
+ my @Rout1 = (2.375/2*2.54,2.067/2*2.54,2.067/2*2.54,10.067/2*2.54);
+ my @Rout2 = (10.375/2*2.54,10.067/2*2.54,2.067/2*2.54,10.067/2*2.54);
+ my @Dz   = (3000,3000,0.02*2.54/2,0.01);
+ my @name = ("exit_long_outer","exit_long_inner","exit_long_front","exit_long_end");
+ my @mother=("$DetectorMother","$DetectorName\_exit_long_outer","$DetectorName\_exit_long_inner","$DetectorName\_exit_long_inner");
+ my @mat  = ("G4_Al","G4_Galactic","G4_Be","Kryptonite");
+ my @color = ("ff00ff","808080","ff0000","ffffff");
 
  for(my $n=1; $n<=$NUM; $n++)
  {
@@ -304,122 +309,6 @@ sub make_beam_exit_long
     print_det(\%configuration, \%detector);
  }
 }
-
-sub make_beam_coolgas_NOtarget
-{
-# upstream Be window .01thk, 12.80 from TC, downstream Be window .02thk, 17.25 from TC
-# filled with N2 gas
- my $NUM  = 1;
- my @z    = ((-12.80+17.25)*2.54/2);
- my @Rin  = (0.);
- my @Rout = (75);
- my @Dz   = ((12.80+17.25)*2.54/2);
- my @name = ("coolgas_everywhere"); 
- my @mother = ("$DetectorMother");
- my @mat  = ("G4_N");
- my @color = ("808088");
- 
- for(my $n=1; $n<=$NUM; $n++)
- {
-    my %detector=init_det();
-    $detector{"name"}        = "$DetectorName\_$name[$n-1]";
-    $detector{"mother"}      = "$mother[$n-1]" ;
-    $detector{"description"} = "$DetectorName\_$name[$n-1]";
-    $detector{"pos"}        = "0*cm 0*cm $z[$n-1]*cm";
-    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
-    $detector{"color"}      = $color[$n-1];
-    $detector{"type"}       = "Tube";
-    $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz[$n-1]*cm 0*deg 360*deg";
-    $detector{"material"}   = $mat[$n-1];
-    $detector{"mfield"}     = "no";
-    $detector{"ncopy"}      = 1;
-    $detector{"pMany"}       = 1;
-    $detector{"exist"}       = 1;
-    $detector{"visible"}     = 1;
-    $detector{"style"}       = 0;
-    $detector{"sensitivity"} = "no";
-    $detector{"hit_type"}    = "no";
-    $detector{"identifiers"} = "no";
-    print_det(\%configuration, \%detector);
- }
-}
-
-sub make_beam_coolgas_He3
-{
-# upstream Be window .01thk, 12.80 from TC, downstream Be window .02thk, 17.25 from TC
-# filled with N2 gas
- my $NUM  = 3;
- my @z    = ((-12.80*2.54-$target_length/2)/2,(17.25*2.54+$target_length/2)/2,0);
- my @Rin  = (0.,0.,1.1);
- my @Rout = (75,75,75);
- my @Dz   = ((12.80*2.54-$target_length/2)/2-0.1,(17.25*2.54-$target_length/2)/2-0.1,$target_length/2);
- my @name = ("coolgas_upstream","coolgas_downstream","coolgas_around"); 
- my @mother = ("$DetectorMother","$DetectorMother","$DetectorMother");
- my @mat  = ("G4_N","G4_N","G4_N");
- my @color = ("808088","808088","808088");
- 
- for(my $n=1; $n<=$NUM; $n++)
- {
-    my %detector=init_det();
-    $detector{"name"}        = "$DetectorName\_$name[$n-1]";
-    $detector{"mother"}      = "$mother[$n-1]" ;
-    $detector{"description"} = "$DetectorName\_$name[$n-1]";
-    $detector{"pos"}        = "0*cm 0*cm $z[$n-1]*cm";
-    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
-    $detector{"color"}      = $color[$n-1];
-    $detector{"type"}       = "Tube";
-    $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz[$n-1]*cm 0*deg 360*deg";
-    $detector{"material"}   = $mat[$n-1];
-    $detector{"mfield"}     = "no";
-    $detector{"ncopy"}      = 1;
-    $detector{"pMany"}       = 1;
-    $detector{"exist"}       = 1;
-    $detector{"visible"}     = 1;
-    $detector{"style"}       = 0;
-    $detector{"sensitivity"} = "no";
-    $detector{"hit_type"}    = "no";
-    $detector{"identifiers"} = "no";
-    print_det(\%configuration, \%detector);
- }
-}
-sub make_beam_coolgas_carbon_hole
-{
- my @y_hole   = ((0.906-1.125/2)*2.54,(0.906-1.125/2)*2.54);
-
- my $NUM  = 2;
- my @Rin  = (0,0);
- my @Rout = (0.039/2*2.54,0.039/2*2.54);
- my @Dz   = ($target_length_C/2,$target_length_C/2);
- my @name = ("target_carbon2_hole","target_carbon3_hole"); 
- my @mother = ("$DetectorName\_target_carbon2","$DetectorName\_target_carbon3");
- my @mat  = ("G4_N","G4_N");
- my @color = ("808088","808088");
- 
- for(my $n=1; $n<=$NUM; $n++)
- {
-    my %detector=init_det();
-    $detector{"name"}        = "$DetectorName\_$name[$n-1]";
-    $detector{"mother"}      = "$mother[$n-1]" ;
-    $detector{"description"} = "$DetectorName\_$name[$n-1]";
-    $detector{"pos"}        = "0*cm $y_hole[$n-1]*cm 0*cm";
-    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
-    $detector{"color"}      = $color[$n-1];
-    $detector{"type"}       = "Tube";
-    $detector{"dimensions"} = "$Rin[$n-1]*cm $Rout[$n-1]*cm $Dz[$n-1]*cm 0*deg 360*deg";
-    $detector{"material"}   = $mat[$n-1];
-    $detector{"mfield"}     = "no";
-    $detector{"ncopy"}      = 1;
-    $detector{"pMany"}       = 1;
-    $detector{"exist"}       = 1;
-    $detector{"visible"}     = 1;
-    $detector{"style"}       = 0;
-    $detector{"sensitivity"} = "no";
-    $detector{"hit_type"}    = "no";
-    $detector{"identifiers"} = "no";
-    print_det(\%configuration, \%detector);
- }
-}
-
 sub make_beam_LH2_CH
 { # Target windows 2024-T3 aluminum 0.02 inches thick. The Chamber has an inner and outer radisus of 41 and 45 inches respectively.        
  my $NUM  = 5;
@@ -436,7 +325,7 @@ sub make_beam_LH2_CH
  my @mother=("$DetectorMother","$DetectorMother","$DetectorName\_TACHR","$DetectorName\_TACHR","$DetectorName\_TACWI");
  #my @mother=("$DetectorMother","$DetectorName\_TACHR","$DetectorMother","$DetectorName\_TACWI");
  my @mat  = ("G4_Al","G4_Galactic","Al_2024","G4_Galactic","G4_Galactic");
- my @color  = ("808080","FF00FF","00FFFF","0000ff","ff00ff");
+ my @color  = ("808080","ff00ff","808080","ff00ff","ff00ff");
 
  for(my $n=1; $n<=$NUM; $n++)
  {
@@ -547,7 +436,7 @@ sub make_beam_LD2
  my @phi  = (-90,0,0,0);
  my @Rin  = (0.,0.,0.,0.);
  my @Rout = (3.81/2,3.81/2-0.0278,3.81/2-0.0278,3.81/2-0.0278);
- my @Dz   = (5.0+0.15,0.015/2,0.019/2,10.0/2);
+ my @Dz   = (5.0+0.15,0.0116/2,0.0184/2,10.0/2);
  my @name = ("$DetectorName\_TACH","$DetectorName\_TAEN","$DetectorName\_TAEX","$DetectorName\_TALH");
  my @mother=("$DetectorName\_TACHI","$DetectorName\_TACH","$DetectorName\_TACH","$DetectorName\_TACH");
  my @mat  = ("G4_Galactic","Al_7075","Al_7075","LD2");
@@ -621,7 +510,7 @@ sub make_beam_LH2_CH_con
 sub make_target
  {
     my %detector=init_det();
-    $detector{"name"}        = "$DetectorName\_LH2";
+    $detector{"name"}        = "$DetectorName\_target";
     $detector{"mother"}      = "$DetectorMother" ;
     $detector{"description"} = $detector{"name"};
     $detector{"pos"}        = "0*cm 0*cm 0*cm";
@@ -629,8 +518,8 @@ sub make_target
     $detector{"color"}      = "ff0000";
     $detector{"type"}       = "Tube";
     $detector{"dimensions"} = "0*cm 1.88*cm 5*cm 0*deg 360*deg";
-#    $detector{"dimensions"} = "0*cm 2.5*cm 20*cm 0*deg 360*deg";
-    $detector{"material"}   = "G4_lH2";
+#     $detector{"material"}   = "G4_lH2";
+     $detector{"material"}   = "LD2";
     $detector{"mfield"}     = "no";
     $detector{"ncopy"}      = 1;
     $detector{"pMany"}       = 1;
@@ -684,13 +573,14 @@ sub make_virutal
 {
  my %detector=init_det();
  $detector{"name"}        = "$DetectorName\_virtualplane";
- $detector{"mother"}      = "$DetectorMother";
+ $detector{"mother"}      = "$DetectorName\_TACHI";
  $detector{"description"} = $detector{"name"};
- $detector{"pos"}         = "0*cm 0*cm $z14*cm";
- $detector{"rotation"}    = "0*deg 0*deg 0*deg";
+#  $detector{"pos"}         = "0*cm 0*cm $z14*cm";
+ $detector{"pos"}         = "0*cm $z14*cm 0*cm";
+ $detector{"rotation"}    = "-90*deg 0*deg 0*deg";
  $detector{"color"}       = "CC6633";
- $detector{"type"}       = "Box";
- $detector{"dimensions"} = "50*cm 50*cm 0.0001*cm";
+ $detector{"type"}       = "Tube";
+ $detector{"dimensions"} = "0.1*cm 30*cm 0.0001*cm 0*deg 360*deg";
  $detector{"material"}    = "G4_Galactic";
  $detector{"mfield"}      = "no";
  $detector{"ncopy"}       = 1;
