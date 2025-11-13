@@ -14,7 +14,7 @@ my $DetectorMother="cc_pro_tcd";
 sub solid_gem_geometry
 {
 make_gem();
-#make_coli();
+make_coli();
 #make_target_field();
 }
 
@@ -28,7 +28,8 @@ my $hx	= 5.12;
 my $hy	= 5.12;
 my $hx1	= 12*2.54/2.;
 my $hy1	= 12*2.54/2.;
-my $cz1	= -56*2.54/2-8.26-7.03-9.-5.5-2.54/2;
+#my $cz1	= -56*2.54/2-8.26-7.03-9.-5.5-2.54/2;
+my $cz1	= -56*2.54/2-8.26-7.03-9.-5.5-2.54/2-30;
 my $fz1	= -56*2.54/2-8.26-7.03-9.-5.5-2.54/2-20./2.;
 
 my @PlateZ = ($z1,$z3,$z2,$z4);
