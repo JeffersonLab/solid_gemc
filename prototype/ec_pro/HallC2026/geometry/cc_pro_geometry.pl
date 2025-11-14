@@ -18,13 +18,6 @@ my $DEG=180/3.1415926;  # conversion factor between degrees and radians
 
 # Parameters
 ## Chamber
-my $AngX_tcd=0.0;
-# my $AngY_tcd=0.0;
-# my $AngY_tcd=-74.55;  #2020 hallc test, large angle 74.55deg at left side of beam direction, angle from the upstream beamline to the Cherenkov is about 105.45 with a hard to estimate error,  
-# my $AngY_tcd=3.5; #2020 hallc test, small angle 3.5deg at right side of beam direction
-#my $AngY_tcd=-82.2; #2022 hallc test, large angle at left side of beam direction, according to survey and alignment to target center is very good within 0.3deg
-my $AngY_tcd=18; #2022 hallc test, large angle at left side of beam direction, according to survey and alignment to target center is very good within 0.3deg
-#my $AngY_tcd=7; #2022 hallc test, large angle at left side of beam direction, according to survey and alignment to target center is very good within 0.3deg
 
 # at 2020 hallc test
 # measurement done at front scintilator plane ($sc1_r) which is 5" before chamber front window
@@ -41,10 +34,6 @@ my $rmin_chamber=2021.67;  # r position of the chamber entrance at large angle a
 my $halflength_chamber_l = 56*2.54/2;
 my $rmax_chamber=$rmin_chamber+$halflength_chamber_l*2;  # z position of the chamber exit
 my $r_chamber=$rmin_chamber+$halflength_chamber_l; # z position of the chamber center and is tcd center
-
-my $x_chamber = sin(-$AngY_tcd/$DEG)*$r_chamber;
-my $y_chamber = 0.0;
-my $z_chamber = cos($AngY_tcd/$DEG)*$r_chamber;
 
 my $Rmin_chamber=0;  # inner radius of the chamber
 # my $Rmax_chamber=14/2*2.54;  # outer radius of the chamber, 14 inch diameter, 
@@ -110,7 +99,7 @@ my $hy1 = 6*2.54/2;
 my $hx1	= 30.48/2;
 my $hdz1= 10.16/2;
 my $hdz2= 30.48/2;
-#my $hdz3= 40.64/2;
+# my $hdz3= 40.64/2;
 my $hdz3= 81.28/2;
 my $hx2	= 10.16/2;
 my $hy2	= 6*2.54/2;
@@ -127,7 +116,6 @@ my $hz4	= 22.+10./2.+30.48/2.-133+2.5;
 
 sub cc_pro_geometry
 {
-make_tcd();
 make_chamber();
 make_gas();
 make_window_front();
@@ -138,33 +126,6 @@ make_coli();
 make_coli2();
 make_coli3();
 make_coli4();
-}
-
-sub make_tcd
-{
- my %detector=init_det();
- $detector{"name"}        = "$DetectorName\_tcd";
- $detector{"mother"}      = "$DetectorMother";
- $detector{"description"} = $detector{"name"};
- $detector{"pos"}         = "$x_chamber*cm $y_chamber*cm $z_chamber*cm";
- $detector{"rotation"}    = "$AngX_tcd*deg $AngY_tcd*deg 0*deg";
- $detector{"color"}       = "CCCC33";
- $detector{"type"}        = "Box";
- #$detector{"dimensions"}  = "35*cm 60*cm 250*cm";
- $detector{"dimensions"}  = "50*cm 60*cm 250*cm";
-# $detector{"dimensions"}  = "70*cm 60*cm 300*cm";
- $detector{"material"}    = "G4_AIR";
- #$detector{"material"}    = "G4_Galactic";
- $detector{"mfield"}      = "no";
- $detector{"ncopy"}       = 1;
- $detector{"pMany"}       = 1;
- $detector{"exist"}       = 1;
- $detector{"visible"}     = 0;
- $detector{"style"}       = 0;
- $detector{"sensitivity"} = "no";
- $detector{"hit_type"}    = "no";
- $detector{"identifiers"} = "no";
- print_det(\%configuration, \%detector);
 }
 
 sub make_chamber
@@ -459,7 +420,7 @@ sub make_coli3
 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "1a4fff";
         $detector{"type"}       = "Box";
-        $detector{"dimensions"} = "$hx3*cm $hy3*cm $hdz3*cm";    
+        $detector{"dimensions"} = "$hx3*cm $hy3*cm $hdz3*cm";
 	$detector{"material"}    = "G4_Pb";
 	$detector{"mfield"}      = "no";
 	$detector{"ncopy"}       = 1;
@@ -472,29 +433,30 @@ sub make_coli3
         $detector{"identifiers"} = "no";
         print_det(\%configuration, \%detector);
 }
-sub make_coli4 
-{ 
-        my %detector=init_det(); 
-        $detector{"name"}        = "$DetectorName\_coli4"; 
-        $detector{"mother"}      = "$DetectorName\_tcd"; 
-#        $detector{"mother"}      = "$DetectorMother"; 
-        $detector{"description"} = $detector{"name"}; 
-        $detector{"pos"}         = "13.5*cm 0*cm $hz4*cm"; 
-        $detector{"rotation"}    = "0*deg 0*deg 0*deg"; 
-        $detector{"color"}       = "1a4fff"; 
-        $detector{"type"}       = "Box"; 
-        $detector{"dimensions"} = "$hx4*cm $hy4*cm $hdz4*cm";     
-        $detector{"material"}    = "G4_Pb"; 
-        $detector{"mfield"}      = "no"; 
-        $detector{"ncopy"}       = 1; 
-        $detector{"pMany"}       = 1; 
-        $detector{"exist"}       = 1; 
-        $detector{"visible"}     = 1; 
-        $detector{"style"}       = 1; 
-        $detector{"sensitivity"} = "no"; 
-        $detector{"hit_type"}    = "no"; 
-        $detector{"identifiers"} = "no"; 
-        print_det(\%configuration, \%detector); 
-} 
+sub make_coli4
+{
+        my %detector=init_det();
+        $detector{"name"}        = "$DetectorName\_coli4";
+        $detector{"mother"}      = "$DetectorName\_tcd";
+#        $detector{"mother"}      = "$DetectorMother";
+        $detector{"description"} = $detector{"name"};
+        $detector{"pos"}         = "13.5*cm 0*cm $hz4*cm";
+        $detector{"rotation"}    = "0*deg 0*deg 0*deg";
+        $detector{"color"}       = "1a4fff";
+        $detector{"type"}       = "Box";
+        $detector{"dimensions"} = "$hx4*cm $hy4*cm $hdz4*cm";
+        $detector{"material"}    = "G4_Pb";
+        $detector{"mfield"}      = "no";
+        $detector{"ncopy"}       = 1;
+        $detector{"pMany"}       = 1;
+        $detector{"exist"}       = 1;
+        $detector{"visible"}     = 1;
+        $detector{"style"}       = 1;
+        $detector{"sensitivity"} = "no";
+        $detector{"hit_type"}    = "no";
+        $detector{"identifiers"} = "no";
+        print_det(\%configuration, \%detector);
+}
+
 cc_pro_geometry();
 1;
