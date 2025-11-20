@@ -48,7 +48,6 @@ map<string, double> solid_gem_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 // 	    z  = z  +  pos[s].z()/((double) nsteps);
 // 	}
 
-	/*
 	lx_in = Lpos[0].x();
 	ly_in = Lpos[0].y();
 	lz_in = Lpos[0].z();
@@ -56,17 +55,6 @@ map<string, double> solid_gem_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	lx_out = Lpos[nsteps-1].x();
 	ly_out = Lpos[nsteps-1].y();
 	lz_out = Lpos[nsteps-1].z();
-	*/
-
-	//  I guess these should be in lab coords
-	//  for the digitization software
-	lx_in = pos[0].x();
-	ly_in = pos[0].y();
-	lz_in = pos[0].z();
-
-	lx_out = pos[nsteps-1].x();
-	ly_out = pos[nsteps-1].y();
-	lz_out = pos[nsteps-1].z();
 
 	// entrance and exit time
 	double time_in = 0;
