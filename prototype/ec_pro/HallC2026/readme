@@ -15,8 +15,9 @@ cd geometry
 ./cc_pro_tcd.pl config.dat
 ./cc_pro.pl config.dat
 ./solid_spd.pl config.dat
-./solid_gem.pl config.dat
 ./solid_ec.pl config.dat
+./solid_gem.pl config.dat
+./solid_magnet_virtualplane.pl config.dat
 then rename output text file with proper variation
 
 run with graphic
@@ -28,9 +29,6 @@ solid_gemc hallc2026_batch.gcard -BEAM_P="e-,3*GeV,18*deg,0*deg" -BEAM_V="(0,0,0
 
 convert to root file
 evio2root -INPUTF=out_even.evio -B="../geometry/cc_pro ../geometry/solid_ec ../geometry/solid_gem ../geometry/solid_spd" -R="flux"
-
-exit container
-ctrl-d or exit
 
 note
 adding the big beamline cad into simulation will slow down simulation running by about 100 times

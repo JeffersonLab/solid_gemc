@@ -7,6 +7,7 @@
 <detector name="../geometry/solid_ec" factory="TEXT" variation="Original"/>
 <detector name="../geometry/solid_gem" factory="TEXT" variation="Original"/>
 <detector name="../geometry/solid_magnet_virtualplane" factory="TEXT" variation="Original"/>
+<detector name="../geometry/solid_collimator" factory="TEXT" variation="11rings"/>
 <detector name="../geometry/magnet_cad_11rings/" factory="CAD"/>
 <!--
 <detector name="../../HallC2022/geometry/beamline_cad/" factory="CAD"/>
