@@ -14,8 +14,7 @@ my $DetectorMother="cc_pro_tcd";
 sub solid_gem_geometry
 {
 make_gem();
-make_coli();
-#make_target_field();
+# make_coli();
 }
 
 #my $z1	= -56*2.54/2-30.48-8.26-7.03-9.3-1.5/2;
@@ -30,9 +29,10 @@ my $hx1	= 12*2.54/2.;
 my $hy1	= 12*2.54/2.;
 #my $cz1	= -56*2.54/2-8.26-7.03-9.-5.5-2.54/2;
 my $cz1	= -56*2.54/2-8.26-7.03-9.-5.5-2.54/2-30;
-my $fz1	= -56*2.54/2-8.26-7.03-9.-5.5-2.54/2-20./2.;
 
 my @PlateZ = ($z1,$z3,$z2,$z4);
+
+my @PlateZ_virt = ($z1-1,$z3-1,$z2-1,$z4-1);
 
 sub make_gem
 {
@@ -118,7 +118,29 @@ my @hittype = ("no","no","no","no","solid_gem","solid_gem","solid_gem","no","sol
 
  for(my $n=1; $n<=4; $n++)
  {
-    my %detector=init_det();
+     my %detector=init_det();
+
+    $detector{"name"}        = "$DetectorName\_virt_$n";
+    $detector{"mother"}      = "$DetectorMother" ;
+    $detector{"description"} = $detector{"name"};
+    $detector{"pos"}        = "0*cm 0*cm $PlateZ_virt[$n-1]*cm";
+    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
+    $detector{"color"}      = "111111";
+    $detector{"type"}       = "Box";
+    $detector{"dimensions"} = "$hx*cm $hy*cm 0.01*mm";
+    $detector{"material"}    = "G4_Galactic";
+    $detector{"mfield"}      = "no";
+    $detector{"ncopy"}       = 1;
+    $detector{"pMany"}       = 1;
+    $detector{"exist"}       = 1;
+    $detector{"visible"}     = 1;
+    $detector{"style"}       = 0;
+    $detector{"sensitivity"} = "flux";
+    $detector{"hit_type"}    = "flux";
+    my $ID = 1+$n;
+    $detector{"identifiers"} = "id manual $ID";
+    print_det(\%configuration, \%detector);
+
     $detector{"name"}        = "$DetectorName\_$n";
     $detector{"mother"}      = "$DetectorMother" ;
     $detector{"description"} = $detector{"name"};
@@ -190,6 +212,8 @@ my @hittype = ("no","no","no","no","solid_gem","solid_gem","solid_gem","no","sol
 	    print_det(\%configuration, \%detector);
 	}
     }
+
+
  }
 }
 sub make_coli
@@ -215,48 +239,6 @@ sub make_coli
 	$detector{"hit_type"}    = "no";
         $detector{"identifiers"} = "no";
         print_det(\%configuration, \%detector);
-}
-
-sub make_target_field
-{
- my $NUM  = 1;
- my @z    = (-350);
-#  my @Rin  = (0);
-#  my @Rout = (65);
-#  my @Dz   = (65);
-  my @Dx = (65);
-  my @Dy = (65);
-  my @Dz = (65);
- my @name = ("field"); 
- my @mat  = ("G4_AIR");
- 
-     my %detector=init_det(); 
-    $detector{"name"}        = "$DetectorName\_field"; 
-    $detector{"mother"}      = "$DetectorMother";
-    $detector{"description"} = $detector{"name"};
-    $detector{"pos"}        = "0*cm 0*cm $fz1*cm";
-    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
-    $detector{"color"}      = "ffff99";
-#    $detector{"type"}       = "Box";
-#    $detector{"dimensions"} = "65*cm 65*cm 65*cm";    
-     $detector{"type"}       = "Tube";
-     $detector{"dimensions"} = "0*cm 10*cm 10*cm 0*deg 360*deg";
-#     $detector{"type"}       = "Polycone";
-#     $detector{"dimensions"} = "0*deg 360*deg 4*counts 0*cm 0*cm 1.1*cm 3*cm 65*cm 65*cm 65*cm 65*cm -65*cm 25*cm 25*cm 65*cm";
-    $detector{"material"}   = "G4_AIR";
-#     $detector{"mfield"}     = "solenoid_ptarget";
-#     $detector{"mfield"}     = "g2p_ptarget";
-#    $detector{"mfield"}     = "oxford_ptarget";
-    $detector{"mfield"}     = "Halbach_field_reverse";
-    $detector{"ncopy"}      = 1;
-    $detector{"pMany"}       = 1;
-    $detector{"exist"}       = 1;
-    $detector{"visible"}     = 1;
-    $detector{"style"}       = 1;  # style 0 shows only borders
-    $detector{"sensitivity"} = "no";
-    $detector{"hit_type"}    = "no";
-    $detector{"identifiers"} = "no";
-    print_det(\%configuration, \%detector);
 }
 
 solid_gem_geometry();

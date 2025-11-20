@@ -92,11 +92,10 @@ const double DEG=180./3.1415926;   //rad to degree
 //#####################################################################################################################################################
 
 int analysis(string inputfile_name,string runmode="trigger", bool Is_tellorig=false,string filetype="",bool Is_new=true){
-
 // gStyle->SetOptStat(11111111);
 // gStyle->SetOptStat("ioue");
 // gStyle->SetOptStat(1);
-gStyle->SetOptStat(0);
+// gStyle->SetOptStat(0);
 
 // gStyle->SetPalette(57);
 
@@ -257,11 +256,16 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 // 	TH2F *hhit_hgc_2D=new TH2F("hit_hgc_2D","hit,N_{p.e.} rate(Hz);sensor_lx;sensor_ly",sensor_trans_hgc,0,sensor_trans_hgc,sensor_trans_hgc,0,sensor_trans_hgc);
 // 	TH2F *hocc_hgc_2D=new TH2F("occ_hgc_2D","occupancy,rate(Hz);sensor_lx;sensor_ly",sensor_trans_hgc,0,sensor_trans_hgc,sensor_trans_hgc,0,sensor_trans_hgc);
 
-	TH2F *hrate_gem[4];
+	TH2F *hrate_gem_xy[4],*hrate_gem_vzvr[4];
+	TH1F *hrate_gem_vz[4];
 	for(int i=0;i<4;i++){
 	  char hstname[200];
-	  sprintf(hstname,"rate_gem_%i",i);
-	  hrate_gem[i]=new TH2F(hstname,"rate (KHz/cm2);x (cm);y (cm)",10,-5,5,10,-5,5);
+	  sprintf(hstname,"rate_gem_xy_%i",i);
+	  hrate_gem_xy[i]=new TH2F(hstname,"rate (KHz/cm2);x (cm);y (cm)",10,-5,5,10,-5,5);
+	  sprintf(hstname,"rate_gem_vzvr_%i",i);
+	  hrate_gem_vzvr[i]=new TH2F(hstname,"rate (KHz/cm2);vz (cm);vr (cm)",2500,-100,2400,1000,0,1000);
+	  sprintf(hstname,"rate_gem_vz_%i",i);
+	  hrate_gem_vz[i]=new TH1F(hstname,";vz (cm);rate (KHz/cm)",2500,-100,2400);
 	}
 
 	TH1F *hpe_hgc[4],*hhit_hgc[4],*hocc_hgc[4];
@@ -556,8 +560,8 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 	//      loop trees
 	//---------------------------
 	for(long int i=0;i<N_events;i++){
-// 	for(long int i=1;i<N_events-1;i++){	  				
-	// for(long int i=0;i<N_events/10;i++){
+	// for(long int i=0;i<N_events/100;i++){
+// 	for(long int i=1;i<N_events-1;i++){
 // 	for(long int i=N_events/2;i<N_events;i++){	  		
 // 	for(long int i=520;i<521;i++){  //pip event
 // 	for(long int i=5289;i<5290;i++){	  // background event			  
@@ -740,17 +744,18 @@ TFile *outputfile=new TFile(outputfile_name, "recreate");
 			// $id=1000000+$n*100000+$sec*1000+$i;
 			if(component_ID==1006){ // 6th layer is the main GEM gas layer
 				// cout << "ETot " << solid_gem_ETot->at(j) << endl;
-				if(solid_gem_ETot->at(j)>=36e-6){  // deposit energy >36eV to make a signal
+				if(solid_gem_ETot->at(j)>=26e-6){  // deposit energy >=26eV to make a signal
 					if(0<subdetector_ID && subdetector_ID<5){//only 4 gems
 					// if(0<subdetector_ID && subdetector_ID<2){//only 1 gems
-						// cout  << "hit pos " << solid_gem_lxin->at(j) << " " << solid_gem_lyin->at(j) << " " << solid_gem_lzin->at(j) << " " << solid_gem_lxout->at(j) << " " << solid_gem_lyout->at(j) << " " << solid_gem_lzout->at(j) << endl;
-						// cout  << "hit pos " << solid_gem_lxin->at(j)*cos(18/DEG)+solid_gem_lzin->at(j)*sin(18/DEG) << " " << -solid_gem_lxin->at(j)*sin(18/DEG)+solid_gem_lzin->at(j)*cos(18/DEG) << endl;
-						double hit_lx=solid_gem_lxin->at(j)*cos(18/DEG)+solid_gem_lzin->at(j)*sin(18/DEG);
-						double hit_ly=solid_gem_lyin->at(j);
-						double hit_lz=-solid_gem_lxin->at(j)*sin(18/DEG)+solid_gem_lzin->at(j)*cos(18/DEG);
+						// cout  << "hit pos " << solid_gem_lxin->at(j) << " " << solid_gem_lyin->at(j) << " " << solid_gem_lzin->at(j) << " " << solid_gem_lxout->at(j) << " " << solid_gem_lyout->at(j) << " " << solid_gem_lzout->at(j) << " " << solid_gem_x->at(j) << " " << solid_gem_y->at(j) << " " << solid_gem_z->at(j) << endl;
 
-						hrate_gem[subdetector_ID-1]->Fill(hit_lx/10,hit_ly/10,rate/1e3);
-						// hrate_gem[subdetector_ID-1]->Fill(hit_lx/10,hit_ly/10);
+						double hit_lx=solid_gem_lxin->at(j);
+						double hit_ly=solid_gem_lyin->at(j);
+						double hit_lz=solid_gem_lzin->at(j);
+
+						hrate_gem_xy[subdetector_ID-1]->Fill(hit_lx/10,hit_ly/10,rate/1e3);
+						hrate_gem_vz[subdetector_ID-1]->Fill(solid_gem_vz->at(j)/10,rate/1e3);
+						hrate_gem_vzvr[subdetector_ID-1]->Fill(solid_gem_vz->at(j)/10,sqrt(solid_gem_vx->at(j)*solid_gem_vx->at(j)+solid_gem_vy->at(j)*solid_gem_vy->at(j))/10,rate/1e3);
 					}
 				}
 			}
@@ -1031,21 +1036,37 @@ hhit_Edepsc2->SetLineColor(kRed);
 hhit_Edepsc2->Draw("same");
 
 TCanvas *c_gem = new TCanvas("gem", "gem",1800,1000);
-c_gem->Divide(2,2);
+c_gem->Divide(4,3);
 c_gem->cd(1);
-hrate_gem[0]->Draw("colz");
+hrate_gem_xy[0]->Draw("colz");
 c_gem->cd(2);
-hrate_gem[1]->Draw("colz");
+hrate_gem_xy[1]->Draw("colz");
 c_gem->cd(3);
-hrate_gem[2]->Draw("colz");
+hrate_gem_xy[2]->Draw("colz");
 c_gem->cd(4);
-hrate_gem[3]->Draw("colz");
+hrate_gem_xy[3]->Draw("colz");
+c_gem->cd(5);
+hrate_gem_vz[0]->Draw("colz");
+c_gem->cd(6);
+hrate_gem_vz[1]->Draw("colz");
+c_gem->cd(7);
+hrate_gem_vz[2]->Draw("colz");
+c_gem->cd(8);
+hrate_gem_vz[3]->Draw("colz");
+c_gem->cd(9);
+hrate_gem_vzvr[0]->Draw("colz");
+c_gem->cd(10);
+hrate_gem_vzvr[1]->Draw("colz");
+c_gem->cd(11);
+hrate_gem_vzvr[2]->Draw("colz");
+c_gem->cd(12);
+hrate_gem_vzvr[3]->Draw("colz");
 
 double rate_avg[4]={0};
 for (Int_t k=0;k<4;k++) {
 for (Int_t i=1;i<11;i++) {
 for (Int_t j=1;j<11;j++) {
-	rate_avg[k] += hrate_gem[k]->GetBinContent(i,j);
+	rate_avg[k] += hrate_gem_xy[k]->GetBinContent(i,j);
 }}}
 cout << rate_avg[0]/100 << " " << rate_avg[1]/100 << " " << rate_avg[2]/100 << " " << rate_avg[3]/100 << endl;
 

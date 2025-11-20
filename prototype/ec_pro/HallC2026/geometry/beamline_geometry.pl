@@ -273,11 +273,11 @@ sub make_beam_exit
 sub make_beam_exit_long
 {
  my $NUM  = 4;
- my @z    = (10/2+3000,0,-3000+0.02*2.54/2,3000-0.01/2);
+ my @z    = (10/2+1500,0,-1500+0.02*2.54/2,1500-0.01);
  my @Rin = (0,0,0,0);
  my @Rout1 = (2.375/2*2.54,2.067/2*2.54,2.067/2*2.54,10.067/2*2.54);
  my @Rout2 = (10.375/2*2.54,10.067/2*2.54,2.067/2*2.54,10.067/2*2.54);
- my @Dz   = (3000,3000,0.02*2.54/2,0.01);
+ my @Dz   = (1500,1500,0.02*2.54/2,0.01);
  my @name = ("exit_long_outer","exit_long_inner","exit_long_front","exit_long_end");
  my @mother=("$DetectorMother","$DetectorName\_exit_long_outer","$DetectorName\_exit_long_inner","$DetectorName\_exit_long_inner");
  my @mat  = ("G4_Al","G4_Galactic","G4_Be","Kryptonite");

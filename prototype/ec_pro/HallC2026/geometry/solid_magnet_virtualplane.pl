@@ -44,20 +44,11 @@ our %configuration = load_configuration($config_file);
 #}
 
 # One can change the "variation" here if one is desired different from the config.dat
-$configuration{"detector_name"} = "solid_gem";
+$configuration{"detector_name"} = "solid_magnet_virtualplane";
 # $configuration{"variation"} = "Original";
 
 # To get the parameters proper authentication is needed.
 # our %parameters    = get_parameters(%configuration);
 
 #Geometry definition
-require "./solid_gem_geometry.pl";
-
-#materials definition 
-require "./solid_gem_materials.pl";
-
-#hit definition
-require "./solid_gem_hit.pl";
-
-# bank definition
-require "./solid_gem_bank.pl";
+require "./solid_magnet_virtualplane_geometry.pl";

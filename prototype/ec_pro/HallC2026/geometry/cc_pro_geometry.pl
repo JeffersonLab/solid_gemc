@@ -108,11 +108,12 @@ my $hy3	= 6*2.54/2;
 my $hz1	= 23;
 my $hz2	= 22.+10./2.+30.48/2.;
 my $hz3	= 56*2.54/2+4.5+8.5+6.12+5.62+6.89+5.12+40.64/2-35.48/2;
-my $hx4	= 10.16/2;
-my $hy4	= 6*2.54/2;
-my $hdz4= 20.32/2;
-#my $hz4	= 22.+10./2.+30.48/2.-133;
-my $hz4	= 22.+10./2.+30.48/2.-133+2.5;
+
+my $hdx4	= 10/2;
+my $hdy4	= 30/2;
+my $hdz4= 100/2;
+my $hx4	= 25;
+my $hz4	= -100;
 
 sub cc_pro_geometry
 {
@@ -440,11 +441,11 @@ sub make_coli4
         $detector{"mother"}      = "$DetectorName\_tcd";
 #        $detector{"mother"}      = "$DetectorMother";
         $detector{"description"} = $detector{"name"};
-        $detector{"pos"}         = "13.5*cm 0*cm $hz4*cm";
+        $detector{"pos"}         = "$hx4*cm 0*cm $hz4*cm";
         $detector{"rotation"}    = "0*deg 0*deg 0*deg";
         $detector{"color"}       = "1a4fff";
         $detector{"type"}       = "Box";
-        $detector{"dimensions"} = "$hx4*cm $hy4*cm $hdz4*cm";
+        $detector{"dimensions"} = "$hdx4*cm $hdy4*cm $hdz4*cm";
         $detector{"material"}    = "G4_Pb";
         $detector{"mfield"}      = "no";
         $detector{"ncopy"}       = 1;

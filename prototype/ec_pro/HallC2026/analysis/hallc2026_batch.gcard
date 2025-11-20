@@ -1,13 +1,14 @@
 <gcard>
 
 <detector name="../geometry/beamline" factory="TEXT" variation="LD2"/>
-<detector name="../geometry/cc_pro_tcd" factory="TEXT" variation="18deg16copy"/>
+<detector name="../geometry/cc_pro_tcd" factory="TEXT" variation="18deg"/>
 <detector name="../geometry/cc_pro" factory="TEXT" variation="CO2"/>
 <detector name="../geometry/solid_spd" factory="TEXT" variation="Original"/>
 <detector name="../geometry/solid_ec" factory="TEXT" variation="Original"/>
-<detector name="../geometry/solid_gem" factory="TEXT" variation="nofield"/>
-<!--
+<detector name="../geometry/solid_gem" factory="TEXT" variation="Original"/>
+<detector name="../geometry/solid_magnet_virtualplane" factory="TEXT" variation="Original"/>
 <detector name="../geometry/magnet_cad_11rings/" factory="CAD"/>
+<!--
 <detector name="../../HallC2022/geometry/beamline_cad/" factory="CAD"/>
 -->
 
@@ -19,6 +20,10 @@
 <option name="RECORD_PASSBY" value="1"/>
 <option name="HALL_MATERIAL" value="G4_AIR"/>
 <option name="RECORD_OPTICALPHOTONS" value="1"/>
+
+<option name="FIELD_DIR" value="../field"/>
+<option name="HALL_FIELD" value="halbach_11ring_4col_field_map"/>
+<option name="FIELD_PROPERTIES" value="halbach_11ring_4col_field_map, 1*mm, G4ClassicalRK4,linear"/>
 
 <option name="MAX_X_POS" value="50000"/>
 <option name="MAX_Y_POS" value="50000"/>
@@ -33,7 +38,6 @@
 
 <option name="OUTPUT" value="evio,out.evio"/>
 <option name="USE_GUI"  value="0"/>
-
 
 </gcard>
 

@@ -14,7 +14,7 @@ setenv PATH ${SoLID_GEMC}/source/${GEMC_VERSION}:${PATH}
 #solid_gemc solid.gcard -FILTER_HITS=1 -BEAM_P="e-,10.6*GeV,0*deg,0*deg" -SPREAD_P="0*GeV,0*deg,0*deg" -BEAM_V="(0,0,-40)cm" -SPREAD_V="(0.25,0)cm" -ENERGY_CUT=10 -N=2e7 | cat >> out.log
 # solid_gemc solid.gcard -FILTER_HITS=1 -BEAM_P="e-,10.6*GeV,0*deg,0*deg" -SPREAD_P="0*GeV,0*deg,0*deg" -BEAM_V="(0,0,-40)cm" -SPREAD_V="(0.25,0)cm" -FIELD_VERBOSITY=2 -DISPLACE_FIELDMAP="halbach_11ring_4col_field_map,-6072.9498*mm, 0*mm, 18690.6*mm" -ROTATE_FIELDMAP="halbach_11ring_4col_field_map, 0*deg, 18*deg, 0*deg" -N=1e3 | cat >> out.log
 
-solid_gemc solid.gcard -FILTER_HITS=1 -BEAM_P="e-,10.6*GeV,0*deg,0*deg" -SPREAD_P="0*GeV,0*deg,0*deg" -BEAM_V="(0,0,-40)cm" -SPREAD_V="(0.25,0)cm" -N=1e7 | cat >> out.log
+solid_gemc solid.gcard -FILTER_HITS=1 -BEAM_P="e-,10.6*GeV,0*deg,0*deg" -SPREAD_P="0*GeV,0*deg,0*deg" -BEAM_V="(0,0,-5)cm" -SPREAD_V="(0.25,0)cm" -N=1e7 | cat >> out.log
 
 # solid_gemc solid.gcard -FILTER_HITS=1 -BEAM_P="e-,11*GeV,0*deg,0*deg" -SPREAD_P="0*GeV,0*deg,0*deg" -BEAM_V="(0,0,-400)cm" -SPREAD_V="(0.25,0)cm"  -N=5e7 | cat >> out.log
 
