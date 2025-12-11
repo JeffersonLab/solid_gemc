@@ -111,9 +111,12 @@ my $hz3	= 56*2.54/2+4.5+8.5+6.12+5.62+6.89+5.12+40.64/2-35.48/2;
 
 my $hdx4	= 10/2;
 my $hdy4	= 30/2;
-my $hdz4= 100/2;
+# my $hdz4= 100/2;
+my $hdz4= 50/2;
 my $hx4	= 25;
-my $hz4	= -100;
+# my $hz4	= -100;
+my $hz4	= -75;
+
 
 sub cc_pro_geometry
 {
@@ -126,7 +129,7 @@ make_pmt();
 make_coli();
 make_coli2();
 make_coli3();
-make_coli4();
+# make_coli4();
 }
 
 sub make_chamber

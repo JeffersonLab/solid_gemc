@@ -280,7 +280,8 @@ sub make_beam_exit_long
  my @Dz   = (1500,1500,0.02*2.54/2,0.01);
  my @name = ("exit_long_outer","exit_long_inner","exit_long_front","exit_long_end");
  my @mother=("$DetectorMother","$DetectorName\_exit_long_outer","$DetectorName\_exit_long_inner","$DetectorName\_exit_long_inner");
- my @mat  = ("G4_Al","G4_Galactic","G4_Be","Kryptonite");
+#  my @mat  = ("G4_Al","G4_Galactic","G4_Be","Kryptonite"); #Kryptonite at a beamline end will create too much text output on terminal with "In  Kryptonite Track killed"
+ my @mat  = ("G4_Al","G4_Galactic","G4_Be","G4_Galactic");
  my @color = ("ff00ff","808080","ff0000","ffffff");
 
  for(my $n=1; $n<=$NUM; $n++)

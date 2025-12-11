@@ -34,8 +34,8 @@ my $r_chamber=$rmin_chamber+$halflength_chamber_l; # z position of the chamber c
 
 my $Ang_tcd=18;
 
-my $Ntcd=16; # make number of copy
-# my $Ntcd=1; # just make 1
+# my $Ntcd=16; # make number of copy
+my $Ntcd=1; # just make 1
 
 sub make_tcd
 {

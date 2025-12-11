@@ -18,6 +18,7 @@ cd geometry
 ./solid_ec.pl config.dat
 ./solid_gem.pl config.dat
 ./solid_magnet_virtualplane.pl config.dat
+./solid_collimator.pl config.dat
 then rename output text file with proper variation
 
 run with graphic
