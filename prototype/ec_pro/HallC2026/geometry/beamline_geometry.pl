@@ -50,6 +50,7 @@ sub beamline
 #make_beam_dummy();
 # make_beam_LH2_CH();
 make_target();
+make_target_window();
 # make_beam_LH2();
 # make_beam_LD2();
 #make_beam_carbon();
@@ -273,15 +274,14 @@ sub make_beam_exit
 sub make_beam_exit_long
 {
  my $NUM  = 4;
- my @z    = (10/2+1500,0,-1500+0.02*2.54/2,1500-0.01);
+ my @z    = (10/2+1500+0.0508,0,-1500+0.02*2.54/2,1500-0.01);
  my @Rin = (0,0,0,0);
  my @Rout1 = (2.375/2*2.54,2.067/2*2.54,2.067/2*2.54,10.067/2*2.54);
  my @Rout2 = (10.375/2*2.54,10.067/2*2.54,2.067/2*2.54,10.067/2*2.54);
  my @Dz   = (1500,1500,0.02*2.54/2,0.01);
  my @name = ("exit_long_outer","exit_long_inner","exit_long_front","exit_long_end");
  my @mother=("$DetectorMother","$DetectorName\_exit_long_outer","$DetectorName\_exit_long_inner","$DetectorName\_exit_long_inner");
-#  my @mat  = ("G4_Al","G4_Galactic","G4_Be","Kryptonite"); #Kryptonite at a beamline end will create too much text output on terminal with "In  Kryptonite Track killed"
- my @mat  = ("G4_Al","G4_Galactic","G4_Be","G4_Galactic");
+ my @mat  = ("G4_Al","G4_Galactic","G4_Be","Kryptonite");
  my @color = ("ff00ff","808080","ff0000","ffffff");
 
  for(my $n=1; $n<=$NUM; $n++)
@@ -302,7 +302,7 @@ sub make_beam_exit_long
     $detector{"pMany"}       = 1;
     $detector{"exist"}       = 1;
     $detector{"visible"}     = 1;
-    $detector{"style"}       = 1;
+    $detector{"style"}       = 0;
     $detector{"sensitivity"} = "no";
     $detector{"hit_type"}    = "no";
     $detector{"identifiers"} = "no";
@@ -595,6 +595,29 @@ sub make_virutal
  $detector{"identifiers"} = "id manual $ID";
  print_det(\%configuration, \%detector);
 }
+sub make_target_window
+ { 
+    my %detector=init_det();
+    $detector{"name"}        = "$DetectorName\_targeti\_window";
+    $detector{"mother"}      = "$DetectorMother" ;
+    $detector{"description"} = $detector{"name"};
+    $detector{"pos"}        = "0*cm 0*cm 5.0254*cm";
+    $detector{"rotation"}   = "0*deg 0*deg 0*deg";
+    $detector{"color"}      = "CC6633";
+    $detector{"type"}       = "Tube";
+    $detector{"dimensions"} = "0*cm 1.88*cm 0.0254*cm 0*deg 360*deg";
+    $detector{"material"}   = "Al_2024";
+    $detector{"mfield"}     = "no";
+    $detector{"ncopy"}      = 1;
+    $detector{"pMany"}       = 1;
+    $detector{"exist"}       = 1;
+    $detector{"visible"}     = 1;
+    $detector{"style"}       = 1;
+    $detector{"sensitivity"} = "no";
+    $detector{"hit_type"}    = "no";
+    $detector{"identifiers"} = "no";
+    print_det(\%configuration, \%detector);
+ }
 
 beamline();
 1;
