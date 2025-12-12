@@ -28,7 +28,7 @@ my $z4  = -116.5;
 my $z5  = -116.5;
 my $z6  = -267;
 my $z16  = -267-2.2;
-my $z7  = -114.5;
+my $z7  = -116.6;
 my $hx	= 50;
 my $hy	= 50;
 my $hx4	= 15.5;
@@ -218,7 +218,7 @@ sub make_7
  $detector{"rotation"}    = "0*deg 0*deg 0*deg";
  $detector{"color"}       = "CC6633";
  $detector{"type"}        = "Tube";
- $detector{"dimensions"}  = "$Rmin*cm $Rmax*cm 16.4*cm 0*deg 360*deg"; 
+ $detector{"dimensions"}  = "$Rmin*cm $Rmax*cm 15.6*cm 0*deg 360*deg"; 
  $detector{"material"}    = "G4_Galactic";
  $detector{"mfield"}      = "no";
  $detector{"ncopy"}       = 1;
