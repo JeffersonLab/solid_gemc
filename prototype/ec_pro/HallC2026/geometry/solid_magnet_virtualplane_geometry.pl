@@ -24,27 +24,42 @@ my $z1	= -98;
 my $z3  = -167;
 my $z13  = -167-2.2;
 my $z2  = -131;
-my $z4  = -116.5;
-my $z5  = -116.5;
 my $z6  = -267;
 my $z16  = -267-2.2;
 my $z7  = -116.6;
 my $hx	= 50;
 my $hy	= 50;
-my $hx4	= 15.5;
+# 1 inch poly
+#my $hx4	= 15.5;
+#my $hy4	= 7.15;
+#my $hx5	= 15.5;
+#my $hy5	= 7.15;
+#my $hx24= 15.5;
+#my $hy24= 9.15;
+#my $hx25= 15.5;
+#my $hy25= 9.15;
+#my $z4  = -116.5;
+#my $z5  = -116.5;
+
+# 2 inch poly
+my $hx4	= 15.5-2./2;
 my $hy4	= 7.15;
-my $hx5	= 15.5;
+my $hx5	= 15.5-2./2;
 my $hy5	= 7.15;
+
+my $hx24= 15.5-2./2;
+my $hy24= 9.15;
+my $hx25= 15.5-2./2;
+my $hy25= 9.15;
+my $z4  = -116.5-2./2;
+my $z5  = -116.5-2./2;
+
 my $Rmin= 7.1;
 my $Rmax= 7.1+0.0001;
 my $hx13= 30;
 my $hy13= 30;
 my $hx16= 30;
 my $hy16= 30;
-my $hx24= 15.5;
-my $hy24= 9.15;
-my $hx25= 15.5;
-my $hy25= 9.15;
 
 sub solid_magnet_virtualplane
 {

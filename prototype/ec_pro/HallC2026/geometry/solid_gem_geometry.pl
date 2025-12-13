@@ -15,6 +15,7 @@ sub solid_gem_geometry
 {
 make_gem();
 make_coli();
+#make_coli2();
 }
 
 #my $z1	= -56*2.54/2-30.48-8.26-7.03-9.3-1.5/2;
@@ -29,6 +30,7 @@ my $hx1	= 12*2.54/2.;
 my $hy1	= 12*2.54/2.;
 #my $cz1	= -56*2.54/2-8.26-7.03-9.-5.5-2.54/2;
 my $cz1	= -56*2.54/2-8.26-7.03-9.-4;
+my $cz2	= -56*2.54/2-8.26-7.03-9.-4-2.54/2;
 
 my @PlateZ = ($z1,$z3,$z2,$z4);
 
@@ -223,6 +225,30 @@ sub make_coli
 	$detector{"mother"}      = "$DetectorMother";
 	$detector{"description"} = $detector{"name"};
 	$detector{"pos"}         = "0*cm 0*cm $cz1*cm";
+	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
+	$detector{"color"}       = "ff0000";
+        $detector{"type"}       = "Box";
+        $detector{"dimensions"} = "$hx1*cm $hy1*cm 1.27*cm";    
+	#$detector{"material"}    = "G4_Pb";
+	$detector{"material"}    = "G4_POLYSTYRENE";
+	$detector{"mfield"}      = "no";
+	$detector{"ncopy"}       = 1;
+	$detector{"pMany"}       = 1;
+	$detector{"exist"}       = 1;
+	$detector{"visible"}     = 1;
+	$detector{"style"}       = 1;
+	$detector{"sensitivity"} = "no";
+	$detector{"hit_type"}    = "no";
+        $detector{"identifiers"} = "no";
+        print_det(\%configuration, \%detector);
+}
+sub make_coli2
+{
+	my %detector=init_det();
+	$detector{"name"}        = "$DetectorName\_coli2";
+	$detector{"mother"}      = "$DetectorMother";
+	$detector{"description"} = $detector{"name"};
+	$detector{"pos"}         = "0*cm 0*cm $cz2*cm";
 	$detector{"rotation"}    = "0*deg 0*deg 0*deg";
 	$detector{"color"}       = "ff0000";
         $detector{"type"}       = "Box";
