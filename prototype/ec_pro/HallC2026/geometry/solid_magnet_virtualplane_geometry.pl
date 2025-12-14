@@ -29,6 +29,8 @@ my $z16  = -267-2.2;
 my $z7  = -116.6;
 my $hx	= 50;
 my $hy	= 50;
+my $hx1	= 5;
+my $hy1	= 5;
 # 1 inch poly
 #my $hx4	= 15.5;
 #my $hy4	= 7.15;
@@ -42,24 +44,35 @@ my $hy	= 50;
 #my $z5  = -116.5;
 
 # 2 inch poly
-my $hx4	= 15.5-2./2;
-my $hy4	= 7.15;
-my $hx5	= 15.5-2./2;
-my $hy5	= 7.15;
+#my $hx4	= 15.5-2./2;
+#my $hy4	= 7.15;
+#my $hx5	= 15.5-2./2;
+#my $hy5	= 7.15;
 
-my $hx24= 15.5-2./2;
+#my $hx24= 15.5-2./2;
+#my $hy24= 9.15;
+#my $hx25= 15.5-2./2;
+#my $hy25= 9.15;
+#my $z4  = -116.5-2./2;
+#my $z5  = -116.5-2./2;
+# no poly
+my $hx4	= 15.5+2.54;
+my $hy4	= 7.15;
+my $hx5	= 15.5+2.54;
+my $hy5	= 7.15;
+my $hx24= 15.5+2.54;
 my $hy24= 9.15;
-my $hx25= 15.5-2./2;
+my $hx25= 15.5+2.54;
 my $hy25= 9.15;
-my $z4  = -116.5-2./2;
-my $z5  = -116.5-2./2;
+my $z4  = -116.5+2.54;
+my $z5  = -116.5+2.54;
 
 my $Rmin= 7.1;
 my $Rmax= 7.1+0.0001;
-my $hx13= 15;
-my $hy13= 15;
-my $hx16= 15;
-my $hy16= 15;
+my $hx13= 30;
+my $hy13= 30;
+my $hx16= 30;
+my $hy16= 30;
 
 sub solid_magnet_virtualplane
 {
@@ -88,7 +101,7 @@ sub make_1
  $detector{"rotation"}    = "0*deg 0*deg 0*deg";
  $detector{"color"}       = "CC6633";
  $detector{"type"}       = "Box";
- $detector{"dimensions"} = "$hx*cm $hy*cm 0.0001*cm";	    
+ $detector{"dimensions"} = "$hx1*cm $hy1*cm 0.0001*cm";	    
  $detector{"material"}    = "G4_Galactic";
  $detector{"mfield"}      = "no";
  $detector{"ncopy"}       = 1;
@@ -253,7 +266,7 @@ sub make_colli1{
     my %outer = init_det();
     $outer{"name"}        = $outer_name;
     $outer{"mother"}      = $DetectorMother;
-    $outer{"description"} = "30x30 cm pb collimator outer box";
+    $outer{"description"} = "60x60 cm pb collimator outer box";
     $outer{"pos"}         = "0*cm 0*cm $z13*cm";
     $outer{"rotation"}    = "0*deg 0*deg 0*deg";
     $outer{"color"}       = "cc6633";
