@@ -27,10 +27,36 @@ my $z2  = -131;
 my $z6  = -267;
 my $z16  = -267-2.2;
 my $z7  = -116.6;
+my $z17  = -96.2;
+my $z27  = -96.2+3.0/2.;
 my $hx	= 50;
 my $hy	= 50;
 my $hx1	= 5;
 my $hy1	= 5;
+my $hx15= 2.54/2.;
+my $hy15= 5.5;
+my $hz15= 0.0001;
+my $hx14= 2.54/2.;
+my $hy14= 5.5;
+my $hz14= 0.0001;
+my $x15  = 5.6;
+my $y15  = 0;
+my $z15  = -97.5+2.54/2.;
+my $x14  = -5.6;
+my $y14  = 0;
+my $z14  = -97.5+2.54/2;
+my $hy35= 2.54/2.;
+my $hx35= 5.5;
+my $hz35= 0.0001;
+my $hy34= 2.54/2.;
+my $hx34= 5.5;
+my $hz34= 0.0001;
+my $y35  = 5.6;
+my $x35  = 0;
+my $z35  = -97.5+2.54/2.;
+my $y34  = -5.6;
+my $x34  = 0;
+my $z34  = -97.5+2.54/2;
 # 1 inch poly
 #my $hx4	= 15.5;
 #my $hy4	= 7.15;
@@ -100,6 +126,11 @@ make_colli1();
 #make_6();
 #make_colli2();
 #make_7();
+make_gem_left();
+make_gem_right();
+make_gem_top();
+make_gem_bottom();
+make_gem_back();
 make_Tunnel_left();
 make_Tunnel_right();
 make_Tunnel_top();
@@ -275,6 +306,150 @@ sub make_7
  $detector{"identifiers"} = "id manual $ID";
  print_det(\%configuration, \%detector);
 }
+sub make_gem_around
+{
+ my %detector=init_det();
+ $detector{"name"}        = "$DetectorName\_gemaround";
+ $detector{"mother"}      = "$DetectorMother";
+ $detector{"description"} = $detector{"name"};
+ $detector{"pos"}         = "0*cm 0*cm $z17*cm";
+ $detector{"rotation"}    = "0*deg 0*deg 0*deg";
+ $detector{"color"}       = "CC6633";
+ $detector{"type"}        = "Tube";
+ $detector{"dimensions"}  = "$Rmin*cm $Rmax*cm 1.27*cm 0*deg 360*deg";
+ $detector{"material"}    = "G4_Galactic";
+ $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 0;
+ $detector{"sensitivity"} = "flux";
+ $detector{"hit_type"}    = "flux";
+ my $ID = 52;
+ $detector{"identifiers"} = "id manual $ID";
+ print_det(\%configuration, \%detector);
+}
+sub make_gem_left
+{
+ my %detector=init_det();
+ $detector{"name"}        = "$DetectorName\_gemleft";
+ $detector{"mother"}      = "$DetectorMother";
+ $detector{"description"} = $detector{"name"};
+ $detector{"pos"}         = "$x15*cm $y15*cm $z15*cm";
+ $detector{"rotation"}    = "0*deg 90*deg 0*deg";
+ $detector{"color"}       = "CC6633";
+ $detector{"type"}       = "Box";
+ $detector{"dimensions"} = "$hx15*cm $hy15*cm $hz15*cm";	    
+ $detector{"material"}    = "G4_Galactic";
+ $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 0;
+ $detector{"sensitivity"} = "flux";
+ $detector{"hit_type"}    = "flux";
+ my $ID = 31;
+ $detector{"identifiers"} = "id manual $ID";
+ print_det(\%configuration, \%detector);
+}
+sub make_gem_right
+{
+ my %detector=init_det();
+ $detector{"name"}        = "$DetectorName\_gemright";
+ $detector{"mother"}      = "$DetectorMother";
+ $detector{"description"} = $detector{"name"};
+ $detector{"pos"}         = "$x14*cm $y14*cm $z14*cm";
+ $detector{"rotation"}    = "0*deg 90*deg 0*deg";
+ $detector{"color"}       = "CC6633";
+ $detector{"type"}       = "Box";
+ $detector{"dimensions"} = "$hx14*cm $hy14*cm $hz14*cm";	    
+ $detector{"material"}    = "G4_Galactic";
+ $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 0;
+ $detector{"sensitivity"} = "flux";
+ $detector{"hit_type"}    = "flux";
+ my $ID = 32;
+ $detector{"identifiers"} = "id manual $ID";
+ print_det(\%configuration, \%detector);
+}
+sub make_gem_top
+{
+ my %detector=init_det();
+ $detector{"name"}        = "$DetectorName\_gemtop";
+ $detector{"mother"}      = "$DetectorMother";
+ $detector{"description"} = $detector{"name"};
+ $detector{"pos"}         = "$x35*cm $y35*cm $z35*cm";
+ $detector{"rotation"}    = "90*deg 0*deg 0*deg";
+ $detector{"color"}       = "CC6633";
+ $detector{"type"}       = "Box";
+ $detector{"dimensions"} = "$hx35*cm $hy35*cm $hz35*cm";	    
+ $detector{"material"}    = "G4_Galactic";
+ $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 0;
+ $detector{"sensitivity"} = "flux";
+ $detector{"hit_type"}    = "flux";
+ my $ID = 33;
+ $detector{"identifiers"} = "id manual $ID";
+ print_det(\%configuration, \%detector);
+}
+sub make_gem_bottom
+{
+ my %detector=init_det();
+ $detector{"name"}        = "$DetectorName\_gembottom";
+ $detector{"mother"}      = "$DetectorMother";
+ $detector{"description"} = $detector{"name"};
+ $detector{"pos"}         = "$x34*cm $y34*cm $z34*cm";
+ $detector{"rotation"}    = "90*deg 0*deg 0*deg";
+ $detector{"color"}       = "CC6633";
+ $detector{"type"}       = "Box";
+ $detector{"dimensions"} = "$hx34*cm $hy34*cm $hz34*cm";	    
+ $detector{"material"}    = "G4_Galactic";
+ $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 0;
+ $detector{"sensitivity"} = "flux";
+ $detector{"hit_type"}    = "flux";
+ my $ID = 34;
+ $detector{"identifiers"} = "id manual $ID";
+ print_det(\%configuration, \%detector);
+}
+sub make_gem_back
+{
+ my %detector=init_det();
+ $detector{"name"}        = "$DetectorName\_gemback";
+ $detector{"mother"}      = "$DetectorMother";
+ $detector{"description"} = $detector{"name"};
+ $detector{"pos"}         = "$x2*cm 0*cm $z27*cm";
+ $detector{"rotation"}    = "0*deg 0*deg 0*deg";
+ $detector{"color"}       = "CC6633";
+ $detector{"type"}       = "Box";
+ $detector{"dimensions"} = "$hx*cm $hy*cm 0.0001*cm";	    
+ $detector{"material"}    = "G4_Galactic";
+ $detector{"mfield"}      = "no";
+ $detector{"ncopy"}       = 1;
+ $detector{"pMany"}       = 1;
+ $detector{"exist"}       = 1;
+ $detector{"visible"}     = 1;
+ $detector{"style"}       = 0;
+ $detector{"sensitivity"} = "flux";
+ $detector{"hit_type"}    = "flux";
+ my $ID = 35;
+ $detector{"identifiers"} = "id manual $ID";
+ print_det(\%configuration, \%detector);
+}
 sub make_colli1{
     # Outer box: 30x30x4 cm³ Pb 
     my $outer_name = "${DetectorName}_collimator_box";
@@ -412,8 +587,8 @@ sub make_Tunnel_right
  $detector{"color"}       = "CC6633";
  $detector{"type"}       = "Box";
  $detector{"dimensions"} = "$hx4*cm $hy4*cm $hz4*cm";	    
- #$detector{"material"}    = "G4_Pb";
- $detector{"material"}    = "G4_POLYSTYRENE";
+ $detector{"material"}    = "G4_Pb";
+ #$detector{"material"}    = "G4_POLYSTYRENE";
  $detector{"ncopy"}       = 1;
  $detector{"pMany"}       = 1;
  $detector{"exist"}       = 1;
@@ -436,8 +611,8 @@ sub make_Tunnel_left
  $detector{"color"}       = "CC6633";
  $detector{"type"}       = "Box";
  $detector{"dimensions"} = "$hx5*cm $hy5*cm $hz5*cm";	    
- #$detector{"material"}    = "G4_Pb";
- $detector{"material"}    = "G4_POLYSTYRENE";
+ $detector{"material"}    = "G4_Pb";
+ #$detector{"material"}    = "G4_POLYSTYRENE";
  $detector{"mfield"}      = "no";
  $detector{"ncopy"}       = 1;
  $detector{"pMany"}       = 1;
@@ -460,8 +635,8 @@ sub make_Tunnel_top
  $detector{"color"}       = "999999";
  $detector{"type"}       = "Box";
  $detector{"dimensions"} = "$hy24*cm $hx24*cm $hz24*cm";	    
- #$detector{"material"}    = "G4_Pb";
- $detector{"material"}    = "G4_POLYSTYRENE";
+ $detector{"material"}    = "G4_Pb";
+ # $detector{"material"}    = "G4_POLYSTYRENE";
  $detector{"visible"}     = 1;
  $detector{"style"}       = 1;
  $detector{"ncopy"}       = 1;
@@ -484,8 +659,8 @@ sub make_Tunnel_bottom
  $detector{"color"}       = "999999";
  $detector{"type"}       = "Box";
  $detector{"dimensions"} = "$hy25*cm $hx25*cm $hz25*cm";	    
- #$detector{"material"}    = "G4_Pb";
- $detector{"material"}    = "G4_POLYSTYRENE";
+ $detector{"material"}    = "G4_Pb";
+ # $detector{"material"}    = "G4_POLYSTYRENE";
  $detector{"mfield"}      = "no";
  $detector{"ncopy"}       = 1;
  $detector{"pMany"}       = 1;
