@@ -56,23 +56,38 @@ my $hy1	= 5;
 #my $z4  = -116.5-2./2;
 #my $z5  = -116.5-2./2;
 # no poly
-my $hx4	= 15.5+2.54;
+#my $hx4	= 15.5+2.54;
+#my $hy4	= 7.15;
+#my $hx5	= 15.5+2.54;
+#my $hy5	= 7.15;
+#my $hx24= 15.5+2.54;
+#my $hy24= 9.15;
+#my $hx25= 15.5+2.54;
+#my $hy25= 9.15;
+#my $z4  = -116.5+2.54;
+#my $z5  = -116.5+2.54;
+# no poly half lead
+my $hx4	= (15.5+2.54)/2.;
 my $hy4	= 7.15;
-my $hx5	= 15.5+2.54;
+my $hz4	= 2.54;
+my $hx5	= (15.5+2.54)/2.;
 my $hy5	= 7.15;
-my $hx24= 15.5+2.54;
+my $hz5	= 2.54;
+my $hx24= (15.5+2.54)/2.;
 my $hy24= 9.15;
-my $hx25= 15.5+2.54;
+my $hz24= 2.54;
+my $hx25= (15.5+2.54)/2.;
 my $hy25= 9.15;
-my $z4  = -116.5+2.54;
-my $z5  = -116.5+2.54;
+my $hz25= 2.54;
+my $z4  = -116.5+2.54+(15.5+2.54)/2.;
+my $z5  = -116.5+2.54+(15.5+2.54)/2.;
 
 my $Rmin= 7.1;
 my $Rmax= 7.1+0.0001;
-my $hx13= 30;
-my $hy13= 30;
-my $hx16= 30;
-my $hy16= 30;
+my $hx13= 15;
+my $hy13= 15;
+my $hx16= 15;
+my $hy16= 15;
 
 sub solid_magnet_virtualplane
 {
@@ -266,7 +281,7 @@ sub make_colli1{
     my %outer = init_det();
     $outer{"name"}        = $outer_name;
     $outer{"mother"}      = $DetectorMother;
-    $outer{"description"} = "60x60 cm pb collimator outer box";
+    $outer{"description"} = "30x30 cm pb collimator outer box";
     $outer{"pos"}         = "0*cm 0*cm $z13*cm";
     $outer{"rotation"}    = "0*deg 0*deg 0*deg";
     $outer{"color"}       = "cc6633";
@@ -396,8 +411,9 @@ sub make_Tunnel_right
  $detector{"rotation"}    = "0*deg 90*deg 0*deg";
  $detector{"color"}       = "CC6633";
  $detector{"type"}       = "Box";
- $detector{"dimensions"} = "$hx4*cm $hy4*cm 2*cm";	    
- $detector{"material"}    = "G4_Pb";
+ $detector{"dimensions"} = "$hx4*cm $hy4*cm $hz4*cm";	    
+ #$detector{"material"}    = "G4_Pb";
+ $detector{"material"}    = "G4_POLYSTYRENE";
  $detector{"ncopy"}       = 1;
  $detector{"pMany"}       = 1;
  $detector{"exist"}       = 1;
@@ -419,8 +435,9 @@ sub make_Tunnel_left
  $detector{"rotation"}    = "0*deg 90*deg 0*deg";
  $detector{"color"}       = "CC6633";
  $detector{"type"}       = "Box";
- $detector{"dimensions"} = "$hx5*cm $hy5*cm 2*cm";	    
- $detector{"material"}    = "G4_Pb";
+ $detector{"dimensions"} = "$hx5*cm $hy5*cm $hz5*cm";	    
+ #$detector{"material"}    = "G4_Pb";
+ $detector{"material"}    = "G4_POLYSTYRENE";
  $detector{"mfield"}      = "no";
  $detector{"ncopy"}       = 1;
  $detector{"pMany"}       = 1;
@@ -442,8 +459,9 @@ sub make_Tunnel_top
  $detector{"rotation"}    = "90*deg 0*deg 0*deg";
  $detector{"color"}       = "999999";
  $detector{"type"}       = "Box";
- $detector{"dimensions"} = "$hy24*cm $hx24*cm 2*cm";	    
- $detector{"material"}    = "G4_Pb";
+ $detector{"dimensions"} = "$hy24*cm $hx24*cm $hz24*cm";	    
+ #$detector{"material"}    = "G4_Pb";
+ $detector{"material"}    = "G4_POLYSTYRENE";
  $detector{"visible"}     = 1;
  $detector{"style"}       = 1;
  $detector{"ncopy"}       = 1;
@@ -465,8 +483,9 @@ sub make_Tunnel_bottom
  $detector{"rotation"}    = "90*deg 0*deg 0*deg";
  $detector{"color"}       = "999999";
  $detector{"type"}       = "Box";
- $detector{"dimensions"} = "$hy25*cm $hx25*cm 2*cm";	    
- $detector{"material"}    = "G4_Pb";
+ $detector{"dimensions"} = "$hy25*cm $hx25*cm $hz25*cm";	    
+ #$detector{"material"}    = "G4_Pb";
+ $detector{"material"}    = "G4_POLYSTYRENE";
  $detector{"mfield"}      = "no";
  $detector{"ncopy"}       = 1;
  $detector{"pMany"}       = 1;
