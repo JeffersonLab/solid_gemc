@@ -22,7 +22,8 @@ my $DEG=180/3.1415926;  # conversion factor between degrees and radians
 # at 2022 hallc test
 #my $rmin_chamber=1086.33;  # r position of the chamber entrance at large angle according to survey, sqrt(8.4369^2+1.09^2)=850.7
 #my $rmin_chamber=1981.2;  # r position of the chamber entrance at large angle according to survey, sqrt(8.4369^2+1.09^2)=850.7
-my $rmin_chamber=2021.67;  # r position of the chamber entrance at large angle according to survey,19.95-30.48+45./2*2.54
+#my $rmin_chamber=2021.67;  # r position of the chamber entrance at large angle according to survey,19.95-30.48+45./2*2.54
+my $rmin_chamber=1929.00;  # r position of the chamber entrance at large angle according to survey,19.95-30.48+45./2*2.54
 
 # my $halflength_chamber_l = 60*2.54/2;
 my $halflength_chamber_l = 56*2.54/2;
@@ -33,7 +34,8 @@ my $r_chamber=$rmin_chamber+$halflength_chamber_l; # z position of the chamber c
 # my $rmax_tcd=$rmax_chamber+500;
 
 #my $Ang_tcd=18;
-my $Ang_tcd=15;
+#my $Ang_tcd=15;
+my $Ang_tcd=-92.9;
 
 # my $Ntcd=16; # make number of copy
 my $Ntcd=1; # just make 1

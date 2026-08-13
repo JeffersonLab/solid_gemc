@@ -13,7 +13,7 @@ my $DetectorName = 'solid_collimator';
 # my $DetectorMother="root";
 my $DetectorMother="cc_pro_tcd";
 
-my $z	= -140; # before 11ring
+my $z	= -140-50; # before 11ring
 
 sub solid_collimator
 {

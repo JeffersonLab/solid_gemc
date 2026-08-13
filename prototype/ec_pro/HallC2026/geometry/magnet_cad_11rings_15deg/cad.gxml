@@ -1,0 +1,24 @@
+<gxml>
+	<volume name="MagnetCubes_21" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -183*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_21" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -183*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_22" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -186*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_22" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -186*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_23" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -189*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_23" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -189*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_24" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -192*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_24" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -192*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_25" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -195*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_25" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -195*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_26" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -198*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_26" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -198*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_27" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -201*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_27" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -201*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_28" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -204*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_28" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -204*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_29" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -207*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_29" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -207*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_30" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -210*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_30" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -210*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="MagnetCubes_31" mother="cc_pro_tcd" color="8899dd"  material="G4_Fe"   position="0*cm 0*cm -213*cm"  rotation="0*deg 0*deg 0*deg"/>
+	<volume name="AnnularPlateHardcoded-AnnularPlate_31" mother="cc_pro_tcd" color="00ff77"  material="G4_POLYCARBONATE"  position="0*cm 0*cm -213*cm"  rotation="0*deg 0*deg 0*deg"/>
+</gxml>
