@@ -123,17 +123,54 @@ TGraph *g_QE_H12700_03_Hamamatsu_WL=new TGraph(51,Wavelength_Hamamatsu,QE_H12700
 g_QE_H12700_03_Hamamatsu_WL->SetTitle(";wavelength(nm);QE(%)");
 g_QE_H12700_03_Hamamatsu_WL->SetName("H12700_03_Hamamatsu");
 
+// LGC optical parameters from ../../geometry/lgc_moved/solid_lgc_OptMats.pl and solid_lgc_mirror.pl
+// LGC materials use the HGC photon energy table plus two more points
+const int n_LGC=43;
+double PhotonEnergy_LGC[n_LGC];
+for(int i=0;i<n;i++) PhotonEnergy_LGC[i]=PhotonEnergy[i];
+PhotonEnergy_LGC[41]=6.5254848;
+PhotonEnergy_LGC[42]=6.8927794367;
+
+double QE_LGC_H12700[n_LGC] = {  // SL_H12700 "efficiency"
+0.016, 0.02, 0.024, 0.035,
+0.040, 0.050, 0.055, 0.061,
+0.077, 0.085, 0.101, 0.121,
+0.145, 0.163, 0.181, 0.194,
+0.203, 0.224, 0.235, 0.253,
+0.268, 0.285, 0.300, 0.309,
+0.319, 0.329, 0.333, 0.335,
+0.333, 0.327, 0.322, 0.329,
+0.334, 0.318, 0.313, 0.327,
+0.331, 0.331, 0.331, 0.331,
+0.331, 0.331, 0.331
+};
+
+double Wavelength_LGC[n_LGC];
+for(int i=0;i<n_LGC;i++){
+Wavelength_LGC[i]=1.24/PhotonEnergy_LGC[i]*1e3; // in nm
+QE_LGC_H12700[i]=QE_LGC_H12700[i]*100;
+}
+
+TGraph *g_QE_LGC_H12700_E=new TGraph(n_LGC,PhotonEnergy_LGC,QE_LGC_H12700);
+g_QE_LGC_H12700_E->SetTitle(";E(eV);QE(%)");
+g_QE_LGC_H12700_E->SetName("LGC_H12700");
+TGraph *g_QE_LGC_H12700_WL=new TGraph(n_LGC,Wavelength_LGC,QE_LGC_H12700);
+g_QE_LGC_H12700_WL->SetTitle(";wavelength(nm);QE(%)");
+g_QE_LGC_H12700_WL->SetName("LGC_H12700");
+
 
 TLegend* leg_QE_E = new TLegend(0.8, 0.8, .95, .95);
 leg_QE_E->AddEntry(g_QE_H12700_03_E,g_QE_H12700_03_E->GetName());
 leg_QE_E->AddEntry(g_QE_H12700_03_WLS_meas_E,g_QE_H12700_03_WLS_meas_E->GetName());
 leg_QE_E->AddEntry(g_QE_H8500_03_E,g_QE_H8500_03_E->GetName());
+leg_QE_E->AddEntry(g_QE_LGC_H12700_E,g_QE_LGC_H12700_E->GetName());
 
 TLegend* leg_QE_WL = new TLegend(0.8, 0.8, .95, .95);
 leg_QE_WL->AddEntry(g_QE_H12700_03_WL,g_QE_H12700_03_WL->GetName());
 leg_QE_WL->AddEntry(g_QE_H12700_03_WLS_meas_WL,g_QE_H12700_03_WLS_meas_WL->GetName());
 leg_QE_WL->AddEntry(g_QE_H8500_03_WL,g_QE_H8500_03_WL->GetName());
 leg_QE_WL->AddEntry(g_QE_H12700_03_Hamamatsu_WL,g_QE_H12700_03_Hamamatsu_WL->GetName());
+leg_QE_WL->AddEntry(g_QE_LGC_H12700_WL,g_QE_LGC_H12700_WL->GetName());
 
 
 TCanvas *c_QE = new TCanvas("QE","QE",1600,800);
@@ -150,6 +187,9 @@ g_QE_H12700_03_WLS_meas_E->SetMarkerColor(kGreen);
 g_QE_H12700_03_WLS_meas_E->Draw("C*");
 g_QE_H8500_03_E->SetMarkerColor(kRed);
 g_QE_H8500_03_E->Draw("C*");
+g_QE_LGC_H12700_E->SetMarkerColor(kMagenta);
+g_QE_LGC_H12700_E->SetMarkerStyle(24);
+g_QE_LGC_H12700_E->Draw("P");
 leg_QE_E->Draw();
 c_QE->cd(2);
 // gPad->SetLogy(1);
@@ -165,6 +205,9 @@ g_QE_H8500_03_WL->SetMarkerColor(kRed);
 g_QE_H8500_03_WL->Draw("C*");
 g_QE_H12700_03_Hamamatsu_WL->SetMarkerColor(kBlack);
 g_QE_H12700_03_Hamamatsu_WL->Draw("C*");
+g_QE_LGC_H12700_WL->SetMarkerColor(kMagenta);
+g_QE_LGC_H12700_WL->SetMarkerStyle(24);
+g_QE_LGC_H12700_WL->Draw("P");
 leg_QE_WL->Draw();
 
 
@@ -186,7 +229,36 @@ TGraph *g_reflectivity_E=new TGraph(n,PhotonEnergy,reflectivity);
 g_reflectivity_E->SetTitle(";E(eV);reflectivity");
 TGraph *g_reflectivity_WL=new TGraph(n,Wavelength,reflectivity);
 g_reflectivity_WL->SetTitle(";wavelength(nm);reflectivity");
- 
+g_reflectivity_E->SetName("reflectivity");
+g_reflectivity_WL->SetName("reflectivity");
+
+double reflectivity_LGC[n] = {  // LGC_Mirror and LGC_WinstonCone "reflectivity"
+0.8678125, 0.8651562, 0.8639063, 0.8637500,
+0.8640625, 0.8645313, 0.8643750, 0.8656250,
+0.8653125, 0.8650000, 0.8648437, 0.8638281,
+0.8635156, 0.8631250, 0.8621875, 0.8617188,
+0.8613281, 0.8610156, 0.8610938, 0.8616016,
+0.8623047, 0.8637500, 0.8655859, 0.8673828,
+0.8700586, 0.8741992, 0.8781055, 0.8825195,
+0.8876172, 0.8937207, 0.8981836, 0.9027441,
+0.9078369, 0.9102002, 0.9093164, 0.9061743,
+0.9004223, 0.8915210, 0.8599536, 0.8208313,
+0.7625024
+};
+
+TGraph *g_reflectivity_LGC_E=new TGraph(n,PhotonEnergy,reflectivity_LGC);
+g_reflectivity_LGC_E->SetName("LGC mirror, Winston cone");
+TGraph *g_reflectivity_LGC_WL=new TGraph(n,Wavelength,reflectivity_LGC);
+g_reflectivity_LGC_WL->SetName("LGC mirror, Winston cone");
+
+TLegend* leg_reflectivity_E = new TLegend(0.6, 0.8, .95, .95);
+leg_reflectivity_E->AddEntry(g_reflectivity_E,g_reflectivity_E->GetName());
+leg_reflectivity_E->AddEntry(g_reflectivity_LGC_E,g_reflectivity_LGC_E->GetName());
+
+TLegend* leg_reflectivity_WL = new TLegend(0.6, 0.8, .95, .95);
+leg_reflectivity_WL->AddEntry(g_reflectivity_WL,g_reflectivity_WL->GetName());
+leg_reflectivity_WL->AddEntry(g_reflectivity_LGC_WL,g_reflectivity_LGC_WL->GetName());
+
 TCanvas *c_reflectivity = new TCanvas("reflectivity","reflectivity",1600,800);
 c_reflectivity->Divide(2,1);
 c_reflectivity->cd(1);
@@ -194,11 +266,19 @@ g_reflectivity_E->Draw("AC*");
 g_reflectivity_E->SetMaximum(1);
 g_reflectivity_E->SetMinimum(0.5);
 g_reflectivity_E->GetXaxis()->SetRangeUser(2,7);
+g_reflectivity_LGC_E->SetMarkerColor(kMagenta);
+g_reflectivity_LGC_E->SetMarkerStyle(24);
+g_reflectivity_LGC_E->Draw("P");
+leg_reflectivity_E->Draw();
 c_reflectivity->cd(2);
 g_reflectivity_WL->Draw("AC*");
 g_reflectivity_WL->SetMaximum(1);
 g_reflectivity_WL->SetMinimum(0.5);
 g_reflectivity_WL->GetXaxis()->SetRangeUser(200,800);
+g_reflectivity_LGC_WL->SetMarkerColor(kMagenta);
+g_reflectivity_LGC_WL->SetMarkerStyle(24);
+g_reflectivity_LGC_WL->Draw("P");
+leg_reflectivity_WL->Draw();
 
 double RefractiveIndex_C4F8O_oneandhalfatm[n] = {
 1.00205, 1.00205, 1.00205, 1.00206,
@@ -288,23 +368,46 @@ TGraph *g_RefractiveIndex_C4F10_oneatm_WL=new TGraph(n,Wavelength,RefractiveInde
 g_RefractiveIndex_C4F10_oneatm_WL->SetTitle(";wavelength(nm);RefractiveIndex");
 g_RefractiveIndex_C4F10_oneatm_WL->SetName("n C4F10 1.0atm");
 
+double RefractiveIndex_LGC_CO2_oneatm[n_LGC] = {  // SL_LGCCgas_SIDIS, used by LGC in both SIDIS and PVDIS
+1.000418, 1.000418, 1.000418, 1.000419,
+1.000419, 1.000419, 1.000419, 1.000419,
+1.000420, 1.000420, 1.000421, 1.000421,
+1.000421, 1.000421, 1.000422, 1.000422,
+1.000423, 1.000423, 1.000424, 1.000425,
+1.000425, 1.000426, 1.000427, 1.000428,
+1.000429, 1.000431, 1.000433, 1.000435,
+1.000437, 1.000440, 1.000442, 1.000445,
+1.000448, 1.000451, 1.000456, 1.000459,
+1.000462, 1.000466, 1.000473, 1.000481,
+1.000489, 1.000489, 1.000489
+};
+
+TGraph *g_RefractiveIndex_LGC_CO2_oneatm_E=new TGraph(n_LGC,PhotonEnergy_LGC,RefractiveIndex_LGC_CO2_oneatm);
+g_RefractiveIndex_LGC_CO2_oneatm_E->SetTitle(";E(eV);RefractiveIndex");
+g_RefractiveIndex_LGC_CO2_oneatm_E->SetName("n LGC CO2 1.0atm");
+TGraph *g_RefractiveIndex_LGC_CO2_oneatm_WL=new TGraph(n_LGC,Wavelength_LGC,RefractiveIndex_LGC_CO2_oneatm);
+g_RefractiveIndex_LGC_CO2_oneatm_WL->SetTitle(";wavelength(nm);RefractiveIndex");
+g_RefractiveIndex_LGC_CO2_oneatm_WL->SetName("n LGC CO2 1.0atm");
+
 TLegend* leg_Re_E = new TLegend(0.8, 0.8, .95, .95);
 leg_Re_E->AddEntry(g_RefractiveIndex_C4F8O_oneandhalfatm_E,g_RefractiveIndex_C4F8O_oneandhalfatm_E->GetName());
 leg_Re_E->AddEntry(g_RefractiveIndex_C4F8O_oneatm_E,g_RefractiveIndex_C4F8O_oneatm_E->GetName());
 leg_Re_E->AddEntry(g_RefractiveIndex_C4F10_oneandhalfatm_E,g_RefractiveIndex_C4F10_oneandhalfatm_E->GetName());
 leg_Re_E->AddEntry(g_RefractiveIndex_C4F10_oneatm_E,g_RefractiveIndex_C4F10_oneatm_E->GetName());
+leg_Re_E->AddEntry(g_RefractiveIndex_LGC_CO2_oneatm_E,g_RefractiveIndex_LGC_CO2_oneatm_E->GetName());
 
 TLegend* leg_Re_WL = new TLegend(0.8, 0.8, .95, .95);
 leg_Re_WL->AddEntry(g_RefractiveIndex_C4F8O_oneandhalfatm_WL,g_RefractiveIndex_C4F8O_oneandhalfatm_WL->GetName());
 leg_Re_WL->AddEntry(g_RefractiveIndex_C4F8O_oneatm_WL,g_RefractiveIndex_C4F8O_oneatm_WL->GetName());
 leg_Re_WL->AddEntry(g_RefractiveIndex_C4F10_oneandhalfatm_WL,g_RefractiveIndex_C4F10_oneandhalfatm_WL->GetName());
 leg_Re_WL->AddEntry(g_RefractiveIndex_C4F10_oneatm_WL,g_RefractiveIndex_C4F10_oneatm_WL->GetName());
+leg_Re_WL->AddEntry(g_RefractiveIndex_LGC_CO2_oneatm_WL,g_RefractiveIndex_LGC_CO2_oneatm_WL->GetName());
 
 TCanvas *c_RefractiveIndex = new TCanvas("RefractiveIndex","RefractiveIndex",1600,800);
 c_RefractiveIndex->Divide(2,1);
 c_RefractiveIndex->cd(1);
 g_RefractiveIndex_C4F8O_oneandhalfatm_E->SetMaximum(1.0025);
-g_RefractiveIndex_C4F8O_oneandhalfatm_E->SetMinimum(1.0010);
+g_RefractiveIndex_C4F8O_oneandhalfatm_E->SetMinimum(1.0003);
 g_RefractiveIndex_C4F8O_oneandhalfatm_E->GetXaxis()->SetRangeUser(2,7);
 g_RefractiveIndex_C4F8O_oneandhalfatm_E->SetMarkerColor(kBlack);
 g_RefractiveIndex_C4F8O_oneandhalfatm_E->Draw("AC*");
@@ -314,10 +417,12 @@ g_RefractiveIndex_C4F10_oneandhalfatm_E->SetMarkerColor(kRed);
 g_RefractiveIndex_C4F10_oneandhalfatm_E->Draw("C* same");
 g_RefractiveIndex_C4F10_oneatm_E->SetMarkerColor(kRed);
 g_RefractiveIndex_C4F10_oneatm_E->Draw("C* same");
+g_RefractiveIndex_LGC_CO2_oneatm_E->SetMarkerColor(kMagenta);
+g_RefractiveIndex_LGC_CO2_oneatm_E->Draw("C* same");
 leg_Re_E->Draw();
 c_RefractiveIndex->cd(2);
 g_RefractiveIndex_C4F8O_oneandhalfatm_WL->SetMaximum(1.0025);
-g_RefractiveIndex_C4F8O_oneandhalfatm_WL->SetMinimum(1.0010);
+g_RefractiveIndex_C4F8O_oneandhalfatm_WL->SetMinimum(1.0003);
 g_RefractiveIndex_C4F8O_oneandhalfatm_WL->GetXaxis()->SetRangeUser(200,800);
 g_RefractiveIndex_C4F8O_oneandhalfatm_WL->SetMarkerColor(kBlack);
 g_RefractiveIndex_C4F8O_oneandhalfatm_WL->Draw("AC*");
@@ -327,7 +432,39 @@ g_RefractiveIndex_C4F10_oneandhalfatm_WL->SetMarkerColor(kRed);
 g_RefractiveIndex_C4F10_oneandhalfatm_WL->Draw("C* same");
 g_RefractiveIndex_C4F10_oneatm_WL->SetMarkerColor(kRed);
 g_RefractiveIndex_C4F10_oneatm_WL->Draw("C* same");
+g_RefractiveIndex_LGC_CO2_oneatm_WL->SetMarkerColor(kMagenta);
+g_RefractiveIndex_LGC_CO2_oneatm_WL->Draw("C* same");
 leg_Re_WL->Draw();
+
+double RefractiveIndex_LGC_UVwin[n_LGC] = {  // SL_H12700UVwin, LGC PMT UV window
+1.51568, 1.513, 1.51024, 1.50472,
+1.50196, 1.49783, 1.49507, 1.49231,
+1.48679, 1.48403, 1.48128, 1.47852,
+1.47576, 1.473, 1.46901, 1.46995,
+1.46667, 1.46799, 1.46733, 1.46767,
+1.46934, 1.47201, 1.47434, 1.47838,
+1.4868, 1.49445, 1.5008, 1.50321,
+1.504, 1.504, 1.504, 1.504,
+1.504, 1.504, 1.504, 1.504,
+1.504, 1.504, 1.504, 1.504,
+1.504, 1.504, 1.504
+};
+
+TGraph *g_RefractiveIndex_LGC_UVwin_E=new TGraph(n_LGC,PhotonEnergy_LGC,RefractiveIndex_LGC_UVwin);
+g_RefractiveIndex_LGC_UVwin_E->SetTitle("LGC PMT UV window;E(eV);RefractiveIndex");
+TGraph *g_RefractiveIndex_LGC_UVwin_WL=new TGraph(n_LGC,Wavelength_LGC,RefractiveIndex_LGC_UVwin);
+g_RefractiveIndex_LGC_UVwin_WL->SetTitle("LGC PMT UV window;wavelength(nm);RefractiveIndex");
+
+TCanvas *c_RefractiveIndex_LGC_UVwin = new TCanvas("RefractiveIndex_LGC_UVwin","RefractiveIndex_LGC_UVwin",1600,800);
+c_RefractiveIndex_LGC_UVwin->Divide(2,1);
+c_RefractiveIndex_LGC_UVwin->cd(1);
+g_RefractiveIndex_LGC_UVwin_E->SetMarkerColor(kMagenta);
+g_RefractiveIndex_LGC_UVwin_E->Draw("AC*");
+g_RefractiveIndex_LGC_UVwin_E->GetXaxis()->SetRangeUser(2,7);
+c_RefractiveIndex_LGC_UVwin->cd(2);
+g_RefractiveIndex_LGC_UVwin_WL->SetMarkerColor(kMagenta);
+g_RefractiveIndex_LGC_UVwin_WL->Draw("AC*");
+g_RefractiveIndex_LGC_UVwin_WL->GetXaxis()->SetRangeUser(200,800);
 
 // double abs_length_C4F8O[n] = {
 // 87.7642, 87.7642, 87.7642, 87.7642, 
@@ -364,6 +501,35 @@ g_abs_length_C4F8O_E->SetTitle(";E(eV);abs_length_CO2 (m)");
 TGraph *g_abs_length_C4F8O_WL=new TGraph(n,Wavelength,abs_length_C4F8O);
 // g_abs_length_C4F8O_WL->SetTitle(";wavelength(nm);abs_length_C4F8O (m)");
 g_abs_length_C4F8O_WL->SetTitle(";wavelength(nm);abs_length_CO2 (m)");
+g_abs_length_C4F8O_E->SetName("abs_length");
+g_abs_length_C4F8O_WL->SetName("abs_length");
+
+double abs_length_LGC_CO2[n_LGC] = {  // SL_LGCCgas_SIDIS, from CO2_1atm_AbsLen_alt
+         70316.5, 66796.2, 63314.0, 56785.7,
+         53726.5, 49381.2, 46640.7, 44020.0,
+         39127.2, 36845.7, 34671.4, 32597.4,
+         30621.3, 28743.4, 26154.3, 23775.1,
+         22306.7, 19526.3, 18263.4, 16473.0,
+         14823.5, 12818.8, 11053.4, 9837.32,
+         8351.83, 6747.67, 5648.87, 4694.87,
+         3876.99, 3150.27, 2706.97, 2310.46,
+         1859.36, 1568.2, 1237.69, 1093.38,
+         962.586, 846.065, 643.562, 80.0,
+         4.0, 0.7465970, 0
+};
+
+TGraph *g_abs_length_LGC_CO2_E=new TGraph(n_LGC,PhotonEnergy_LGC,abs_length_LGC_CO2);
+g_abs_length_LGC_CO2_E->SetName("LGC CO2 1.0atm");
+TGraph *g_abs_length_LGC_CO2_WL=new TGraph(n_LGC,Wavelength_LGC,abs_length_LGC_CO2);
+g_abs_length_LGC_CO2_WL->SetName("LGC CO2 1.0atm");
+
+TLegend* leg_abs_length_E = new TLegend(0.6, 0.8, .95, .95);
+leg_abs_length_E->AddEntry(g_abs_length_C4F8O_E,g_abs_length_C4F8O_E->GetName());
+leg_abs_length_E->AddEntry(g_abs_length_LGC_CO2_E,g_abs_length_LGC_CO2_E->GetName());
+
+TLegend* leg_abs_length_WL = new TLegend(0.6, 0.8, .95, .95);
+leg_abs_length_WL->AddEntry(g_abs_length_C4F8O_WL,g_abs_length_C4F8O_WL->GetName());
+leg_abs_length_WL->AddEntry(g_abs_length_LGC_CO2_WL,g_abs_length_LGC_CO2_WL->GetName());
  
 
 
@@ -374,11 +540,25 @@ g_abs_length_C4F8O_E->Draw("AC*");
 // g_abs_length_C4F8O_E->SetMaximum(150);
 g_abs_length_C4F8O_E->SetMinimum(1);
 g_abs_length_C4F8O_E->GetXaxis()->SetRangeUser(2,7);
+g_abs_length_LGC_CO2_E->SetMarkerColor(kMagenta);
+g_abs_length_LGC_CO2_E->SetMarkerStyle(24);
+g_abs_length_LGC_CO2_E->Draw("P");
+leg_abs_length_E->Draw();
 c_abs_length->cd(2);
 g_abs_length_C4F8O_WL->Draw("AC*");
 // g_abs_length_C4F8O_WL->SetMaximum(150);
 g_abs_length_C4F8O_WL->SetMinimum(1);
 g_abs_length_C4F8O_WL->GetXaxis()->SetRangeUser(200,800);
+g_abs_length_LGC_CO2_WL->SetMarkerColor(kMagenta);
+g_abs_length_LGC_CO2_WL->SetMarkerStyle(24);
+g_abs_length_LGC_CO2_WL->Draw("P");
+leg_abs_length_WL->Draw();
 
+// save all canvases in the current dir, pdf works also inside the container
+c_QE->SaveAs("plot_parameter_QE.pdf");
+c_reflectivity->SaveAs("plot_parameter_reflectivity.pdf");
+c_RefractiveIndex->SaveAs("plot_parameter_RefractiveIndex.pdf");
+c_RefractiveIndex_LGC_UVwin->SaveAs("plot_parameter_RefractiveIndex_LGC_UVwin.pdf");
+c_abs_length->SaveAs("plot_parameter_abs_length.pdf");
 
 }
