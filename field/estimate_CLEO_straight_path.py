@@ -1,10 +1,13 @@
-"""Run: python3 estimate_CLEO_straight_path.py [9 10 11] --condition pvdis|pvdis_baffle|sidis
+"""Run: python3 estimate_CLEO_straight_path.py [9 10 11] --condition pvdis|pvdis_baffle|sidis|jpsi_full|jpsi_lite|jpsi_la
 
 Read maps beside this script and write CLEOvN_CONDITION_straight_path.csv.
 Defaults: v9, pvdis. Multiple maps also write CLEO_CONDITION_straight_path_compare.csv.
 PVDIS: target Z=0 cm, last plane Z=400 cm, angles 22/35 deg.
 PVDIS baffle: target Z=0 cm, last plane Z=200 cm, angles 22/35 deg.
 SIDIS: target Z=-350 cm, last plane Z=200 cm, angles 8/13 deg.
+J/psi full (CLEOv9): target Z=-315 cm, last plane Z=90 cm, angles 8/13/14/24 deg.
+J/psi lite (CLEOv10): target Z=-315 cm, last plane Z=190 cm, angles 8/13/14/24 deg.
+J/psi LA: target Z=-315 cm, last plane Z=-70 cm, angles 8/13/14/24 deg.
 Both use target R=0, momenta 2/5 GeV/c, and angles measured from +Z.
 Signed bending uses electrons (q=-1), with azimuthal deflection q*(t cross B).
 Ignore material, energy loss, and changes to the reference trajectory.
@@ -59,6 +62,9 @@ def main(version, condition):
         "pvdis": (0,400,(22,35)),
         "pvdis_baffle": (0,200,(22,35)),
         "sidis": (-350,200,(8,13)),
+        "jpsi_full": (-315,90,(8,13,14,24)),
+        "jpsi_lite": (-315,190,(8,13,14,24)),
+        "jpsi_la": (-315,-70,(8,13,14,24)),
     }[condition]
     source = Path(__file__).with_name(f"solenoid_CLEOv{version}.dat")
     with source.open() as stream:
@@ -108,7 +114,7 @@ def main(version, condition):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("versions",nargs="*",type=int,choices=(9,10,11),default=[9])
-    parser.add_argument("--condition",choices=("pvdis","pvdis_baffle","sidis"),default="pvdis")
+    parser.add_argument("--condition",choices=("pvdis","pvdis_baffle","sidis","jpsi_full","jpsi_lite","jpsi_la"),default="pvdis")
     args = parser.parse_args()
     versions = args.versions
     results = [row for version in versions for row in main(version,args.condition)]
