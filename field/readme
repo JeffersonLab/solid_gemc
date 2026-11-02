@@ -43,6 +43,9 @@ root '/group/solid/solid_github/JeffersonLab/solid_gemc/field/mapcompress3D.C("m
 
 tool for 2D maps
 plot_solenoid.C  SF7map_compare.C  SF7toGEMCmap.C
+2D map rows are "R Z Br Bz" (cm, gauss) after the <mfield> header, R-major with Z fastest; estimate_CLEO_straight_path.py relies on that order
+SF7toGEMCmap.C option 0 writes <input>.GEMCmap with field rows only, no <mfield> header, so it is not a ready solenoid_*.dat
+plot_solenoid.C: the Bperp bin at the target itself is undefined (atan2(0,0)); Bz_axis selects int(R)==0, right on 1 cm grids but takes extra rows on a finer grid
 
 == info ===
 cad
@@ -52,5 +55,5 @@ old field info
 https://solid.jlab.org/wiki/index.php/Magnetic_Field_Map
 
 old field map
-https://jlabsvn.jlab.org/svnroot/solid/solid_gemc/database_io/field/
+https://github.com/JeffersonLab/solid_svn/tree/master/solid_gemc/database_io/field/
 

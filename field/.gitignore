@@ -1,2 +1,6 @@
 # ROOT outputs of the plotting and conversion macros, regenerated from the maps
 *.root
+# raw POISSON SF7 output, regenerated from the .am file
+*.sf7
+# local backups
+backup_*/
