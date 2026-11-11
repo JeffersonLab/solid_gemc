@@ -155,6 +155,11 @@ vector<identifier> uRwell_HitProcess::processID(vector<identifier> id, G4Step* a
     G4Trap* Trap = dynamic_cast<G4Trap*>(solid);
     G4Box*  Box  = dynamic_cast<G4Box*>(solid);
 
+    // Readout geometry:
+    //   G4Trap -> big uRwell, keep U/V stereo-strip rotation.
+    //   G4Box  -> small prototype, use direct local X/Y coordinates.
+    bool isXY = (Box != nullptr);
+
     if (Trap == nullptr && Box == nullptr) {
         cout << "Warning: uRwell sensitive volume is neither G4Trap nor G4Box. Returning original id." << endl;
 
@@ -202,12 +207,13 @@ vector<identifier> uRwell_HitProcess::processID(vector<identifier> id, G4Step* a
     }
 
     // ------------------------------------------------------------
-    // STRIP U
-    // layer = 1, component = U strip number
+    // STRIP U / X
+    // G4Trap: U stereo readout; G4Box: direct local-X readout
+    // layer = 1, component = strip number
     // ------------------------------------------------------------
     uRwellC.get_strip_info("strip_u", isProto);
     vector<uRwell_strip_found> multi_hit_u =
-        URwell_strip.FindStrip(lxyz, depe, uRwellC, time, isProto);
+        URwell_strip.FindStrip(lxyz, depe, uRwellC, time, isProto, isXY, "x");
     /*cout << "DEBUG sector=" << id[1].id
      << " layer U, x=" << lxyz.x()/mm
      << " y=" << lxyz.y()/mm
@@ -257,12 +263,13 @@ vector<identifier> uRwell_HitProcess::processID(vector<identifier> id, G4Step* a
     }
 
     // ------------------------------------------------------------
-    // STRIP V
-    // layer = 2, component = V strip number
+    // STRIP V / Y
+    // G4Trap: V stereo readout; G4Box: direct local-Y readout
+    // layer = 2, component = strip number
     // ------------------------------------------------------------
     uRwellC.get_strip_info("strip_v", isProto);
     vector<uRwell_strip_found> multi_hit_v =
-        URwell_strip.FindStrip(lxyz, depe, uRwellC, time, isProto);
+        URwell_strip.FindStrip(lxyz, depe, uRwellC, time, isProto, isXY, "y");
     /*cout << "DEBUG uRwell returned IDs: ";
     for (unsigned int ii = 0; ii < id.size(); ii++) {
         cout<<" [id="<<id[ii].id<<", sharing="<<id[ii].id_sharing<<"]";

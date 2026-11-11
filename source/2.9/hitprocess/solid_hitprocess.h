@@ -14,6 +14,7 @@
 #include "solid_spacal_hitprocess.h"
 #include "uRwell_hitprocess.h"
 #include "uRgroove_hitprocess.h"
+#include "GEM_hitprocess.h"
 
 //   This function allows us to add in our own hit processor for SoLID
 
@@ -28,6 +29,7 @@ void solid_hitprocess( map<string, HitProcess_Factory> &hitMap ){
     hitMap["solid_spacal"]= &solid_spacal_HitProcess::createHitClass;
     hitMap["urwell"]= &uRwell_HitProcess::createHitClass;        
     hitMap["urgroove"]= &uRgroove_HitProcess::createHitClass;        
+    hitMap["lmu_gem"]= &GEM_HitProcess::createHitClass;        
     return;
 }
 

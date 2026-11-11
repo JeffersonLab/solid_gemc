@@ -211,9 +211,9 @@ sub make_lmu_size_gem_modules
 
             if($USE_URWELL_SENSITIVE_GAS && $group eq "cathode" && $mat eq "gas")
             {
-                $detector{"sensitivity"} = "urwell";
-                $detector{"hit_type"}    = "urwell";
-		my $sector_id = 100 + $module_id;
+                $detector{"sensitivity"} = "lmu_gem";
+                $detector{"hit_type"}    = "lmu_gem";
+		my $sector_id = $module_id;
                 $detector{"identifiers"} =
                     "region manual 1 sector manual $sector_id chamber manual 1 layer manual 1 component manual 1";
             }

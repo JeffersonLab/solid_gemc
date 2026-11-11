@@ -130,7 +130,7 @@ public:
 	G4ThreeVector strip_endpoint1;
 	G4ThreeVector strip_endpoint2;
 	
-	vector<uRwell_strip_found> FindStrip( G4ThreeVector   xyz , double Edep, uRwellConstants uRwellc, double time, bool isProto); // Strip Finding Routine
+	vector<uRwell_strip_found> FindStrip( G4ThreeVector xyz, double Edep, uRwellConstants uRwellc, double time, bool isProto, bool isXY = false, string readout = "u"); // Strip Finding Routine
 	void Carac_strip(int strip, uRwellConstants uRwellc); //length of the strip
 	double Weight_td(int strip, double x, double y, double z, uRwellConstants uRwellc, bool isProto); //Compute the fraction of Nel falling onto the strip, depending on x,y in the FMT coordinate system
 	bool Build_strip(int strip, uRwellConstants uRwellc );
