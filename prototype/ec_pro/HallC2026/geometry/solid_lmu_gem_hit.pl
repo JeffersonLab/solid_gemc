@@ -11,7 +11,7 @@ sub solid_lmu_gem_hit
 
     my %hit = init_hit();
 
-    $hit{"name"}            = "urwell";
+    $hit{"name"}            = "lmu_gem";
     $hit{"description"}     = "LMU-style urwell/GEM strip hit definition";
     $hit{"identifiers"}     = "region sector chamber layer component";
     $hit{"signalThreshold"} = "0.1*KeV";

@@ -6,7 +6,7 @@
 #include <cmath>
 #define _USE_MATH_DEFINES
 
-vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Edep, uRwellConstants uRwellc, double time, bool isProto)
+vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz, double Edep, uRwellConstants uRwellc, double time, bool isProto, bool isXY, string readout)
 {
 	vector<uRwell_strip_found> strip_found;
 	uRwell_strip_found ThisStrip;
@@ -24,17 +24,45 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 
 	N_el = G4Poisson(N_el*uRwellc.gain);
 
-	// Transform the hit position into the strip coordinate frame.
-	// y_real is the coordinate perpendicular to the strip direction.
-	double x_real = xyz.x()*cos(M_PI*uRwellc.get_stereo_angle()/180) + xyz.y()*sin(M_PI*uRwellc.get_stereo_angle()/180);
-	double y_real = xyz.y()*cos(M_PI*uRwellc.get_stereo_angle()/180) - xyz.x()*sin(M_PI*uRwellc.get_stereo_angle()/180);
+	double strip_coordinate = 0.0;
+	double half_size = 0.0;
 	double z_real = xyz.z();
 
-	// For the rectangular beam-test uRWell geometry, use local strip numbering:
-	// component = 1 ... number_of_strip for each sector and readout layer.
-	// This avoids the old CLAS12 centered strip numbering, which returned 0 near the detector center.
-	double pitch = 2.0*uRwellc.Yhalf/uRwellc.number_of_strip;
-	int stripID = (int) floor((y_real + uRwellc.Yhalf)/pitch) + 1;
+	if (isXY) {
+		// Small Hall C rectangular prototype (G4Box):
+		// direct X-Y readout, with NO stereo-angle rotation.
+		if (readout == "x") {
+			strip_coordinate = xyz.x();
+			half_size = uRwellc.Xhalf_base;
+		}
+		else if (readout == "y") {
+			strip_coordinate = xyz.y();
+			half_size = uRwellc.Yhalf;
+		}
+		else {
+			ThisStrip.numberID = -15000;
+			ThisStrip.weight   = 1;
+			ThisStrip.time     = -1;
+			strip_found.push_back(ThisStrip);
+			return strip_found;
+		}
+	}
+	else {
+		// Big trapezoidal uRwell (G4Trap):
+		// preserve the original stereo-strip rotation.
+		double x_real = xyz.x()*cos(M_PI*uRwellc.get_stereo_angle()/180)
+		              + xyz.y()*sin(M_PI*uRwellc.get_stereo_angle()/180);
+		double y_real = xyz.y()*cos(M_PI*uRwellc.get_stereo_angle()/180)
+		              - xyz.x()*sin(M_PI*uRwellc.get_stereo_angle()/180);
+		(void)x_real;
+		strip_coordinate = y_real;
+		half_size = uRwellc.Yhalf;
+	}
+
+	// Local strip numbering:
+	// component = 1 ... number_of_strip for each readout layer.
+	double pitch = 2.0*half_size/uRwellc.number_of_strip;
+	int stripID = (int) floor((strip_coordinate + half_size)/pitch) + 1;
 
 	// Reject hits outside the active strip range.
 	if (stripID < 1 || stripID > uRwellc.number_of_strip) {
@@ -55,7 +83,6 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	strip_found.push_back(ThisStrip);
 	return strip_found;
 }
-
 
 
 double uRwell_strip::Weight_td(int strip, double x, double y, double z, uRwellConstants uRwellc, bool isProto){

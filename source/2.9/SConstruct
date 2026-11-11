@@ -28,6 +28,8 @@ hitp_sources = Split("""
 	hitprocess/uRwell_strip.cc
 	hitprocess/uRgroove_hitprocess.cc
 	hitprocess/uRgroove_strip.cc
+	hitprocess/GEM_hitprocess.cc
+	hitprocess/GEM_strip.cc
 	""")
 env.Library(source = hitp_sources, target = "lib/ghitprocess")
 

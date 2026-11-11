@@ -15,8 +15,8 @@ our %configuration;
 #   i for integers
 #   d for doubles
 
-my $bankID   = 2200;
-my $bankname = "urwell";
+my $bankID   = 2500;
+my $bankname = "lmu_gem";
 
 sub solid_lmu_gem_bank
 {
