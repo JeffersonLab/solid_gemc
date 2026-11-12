@@ -53,7 +53,7 @@ our %configuration = load_configuration($config_file);
 # $configuration{"detector_name"} = "solid_PVDIS";
 
 #Geometry definition
-require "solid_solenoid_cryo_geometry.pl";
+require "./solid_solenoid_cryo_geometry.pl";
 solid_solenoid_cryo();
 
 #hit and bank definition Execute only when there are changes

@@ -1,7 +1,7 @@
 this dir is for longer endcap magnet, while "../magnet" is for shorter endcap
 
 To produce solenoid cryo text file, run this
-./solid_solenoid_cryo_geometry.pl config_solid_solenoid_cryo.dat
+./solid_solenoid_cryo.pl config_solid_solenoid_cryo.dat
 
 To produce solenoid text files, scripts run slightly differently than typical gemc detector construction. 
 We use one standard config.dat, then specify detector name as option as follow
