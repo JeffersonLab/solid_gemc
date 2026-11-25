@@ -1,0 +1,133 @@
+SoLID BaBar coil in CLEO-II iron, version 10
+;Created 2026-11-02 from CLEOv10.am: the CLEO-II iron of CLEOv10 (barrel, slab spacers, collars), except the collars
+;moved 6 cm outward in z (|z| 195-272.5) and the barrel (inner, slab spacers, outer) shifted 3.4 cm outward in r, bore 176.6 -> 180.0,
+;to clear the cryostat; the collars extended outward to r 181.3 to keep touching the barrel (user, 2026-11-02);
+;the CLEO coil (regions 2-7) replaced by the BaBar coil of BABARv3.am / BABARv4.am / BaBar_zwzhao.am
+;(github.com/JeffersonLab/solid_svn, solid_gemc/database_io/field; all three have the same coil):
+;  3 sections of 1706400 A-turns each (5.119 MA-turns), r 152-154, z -172.8 to 172.8;
+;  the two end sections (86.4 cm) carry twice the current density of the center section (172.8 cm).
+;Cryostat (user, 2026-11-02): aluminium, IR 142, OR 177, length 385 cm (z -192.5 to 192.5), modelled as a solid
+;  non-magnetic region (mat=1, no current) listed before the coil, so the coil and the iron (listed later) override it.
+;  The BaBar files' comment had IR 140, OR 173.
+;The BaBar files' comment gives the winding center as R 149.85 cm, length 345.5 cm; their model (used here) has r 152-154.
+;BaBar NIM A 479 (2002) 1, Table 4 (references/BaBar_NIM_A479_magnet.md): cryostat inner radius 1420 mm (the table says
+;  "diameter"), radial thickness 350 mm, length 3850 mm, as modelled. Coil mean diameter 3060 mm -> r 153.0, the centre of
+;  the modelled r 152-154 (the 149.85 comment is wrong). Current sheet length 3513 mm (z -175.65 to 175.65) vs 345.6 cm
+;  modelled: NOT changed yet (user, 2026-11-02). Ends graded by a thinner stabilizer (conductor 4.93 vs 8.49 mm).
+;
+&reg kprob=	0	,           	; Declares a POISSON problem
+
+icylin=1,               ; Cylindrical symmetry
+ienergy=1,              ; Calculate the full energy
+xjfact= 1.0             ; The current multiplicative factor
+dx=1.0,                 ; Mesh interval 0.3 originally
+rhogam=0.02,            ; relaxation parameter (2026-10-31: 0.08, the POISSON default, stalled on the saturated CLEOv11 bridge; 0.02 converges, same results). Was 1e-6 (from CLEO_E_03): left saturated steel unconverged (see log.md 2026-10-14)
+;mode=-1                ; Use fixed gamma for material 2
+mode=0                  ; Use variable gamma for material 2
+
+xreg1=  80.,  kreg1=  41,
+xreg2= 120.,  kreg2=  81,
+xreg3= 150.,  kreg3= 141,
+xreg4= 156.,  kreg4= 201,
+xreg5= 190.,  kreg5= 269,
+xreg6= 320.,  kreg6= 399,
+xreg7= 400.,  kreg7= 439,
+              kmax = 464,
+
+
+nbsup=0,                ; Dirichlet boundary condition on upper edge
+nbslf=0,                ; Dirichlet boundary condition on left edge
+nbsrt=0,                ; Dirichlet boundary condition on right edge
+nbslo=0,                ; Dirichlet boundary condition on bottom
+ibound=0 &
+
+;Hall      Region  1
+&po y= -500. ,x=  0.  &
+&po y=  700. ,x=  0.  &
+&po y=  700. ,x=500.  &
+&po y= -500. ,x=500.  &
+&po y= -500. ,x=  0.  &
+
+; Cryostat Region 2 - ALUMINIUM (non-magnetic: mat=1, no current), IR 142, OR 177, z -192.5 to 192.5 (385 cm)
+&reg    mat=1,   cur=0.0 &
+&po y=-192.50,  x=142.00  &
+&po y= 192.50,  x=142.00  &
+&po y= 192.50,  x=177.00  &
+&po y=-192.50,  x=177.00  &
+&po y=-192.50,  x=142.00  &
+
+; BaBar Upstream coil Region 3 - 1706400 A-turns
+&reg    mat=1,   cur=1706400.0 &
+&po y= -172.80,  x=152.00  &
+&po y=  -86.40,  x=152.00  &
+&po y=  -86.40,  x=154.00  &
+&po y= -172.80,  x=154.00  &
+&po y= -172.80,  x=152.00  &
+
+; BaBar Central coil Region 4 - 1706400 A-turns
+&reg    mat=1,   cur=1706400.0 &
+&po y=  -86.40,  x=152.00  &
+&po y=   86.40,  x=152.00  &
+&po y=   86.40,  x=154.00  &
+&po y=  -86.40,  x=154.00  &
+&po y=  -86.40,  x=152.00  &
+
+; BaBar Downstream coil Region 5 - 1706400 A-turns
+&reg    mat=1,   cur=1706400.0 &
+&po y=   86.40,  x=152.00  &
+&po y=  172.80,  x=152.00  &
+&po y=  172.80,  x=154.00  &
+&po y=   86.40,  x=154.00  &
+&po y=   86.40,  x=152.00  &
+
+; Barrel yoke Inner Region 6 (CLEOv10 shape shifted 3.4 cm outward in r, user 2026-11-02): bore 180.0 (3 cm clearance to the BaBar cryostat OR 177), 181.3 over the collars
+&reg    mat=2  &
+&po y=-266.50,  x=216.00  &
+&po y=-266.50,  x=181.30  &
+&po y=-189.00,  x=181.30  &
+&po y=-189.00,  x=180.00  &
+&po y= 189.00,  x=180.00  &
+&po y= 189.00,  x=181.30  &
+&po y= 266.50,  x=181.30  &
+&po y= 266.50,  x=216.00  &
+&po y=-266.50,  x=216.00  &
+
+; Barrel yoke Outer Region 7 (CLEOv10 shape shifted 3.4 cm outward in r, user 2026-11-02)
+&reg    mat=2  &
+&po y=-266.50,  x=224.90  &
+&po y= 266.50,  x=224.90  &
+&po y= 266.50,  x=260.90  &
+&po y=-266.50,  x=260.90  &
+&po y=-266.50,  x=224.90  &
+
+; Slab spacer Upstream Region 8 - they cover about 90% of the circumference, compensated here by the width 34cm->30.6cm; (CLEOv10 shape shifted 3.4 cm outward in r, user 2026-11-02)
+&reg    mat=2  &
+&po y=-266.50,  x=216.00  &
+&po y=-266.50,  x=224.90  &
+&po y=-235.90,  x=224.90  &
+&po y=-235.90,  x=216.00  &
+&po y=-266.50,  x=216.00  &
+
+; Slab spacer Downstream Region 9 - they cover about 90% of the circumference, compensated here by the width 34cm->30.6cm; (CLEOv10 shape shifted 3.4 cm outward in r, user 2026-11-02)
+&reg    mat=2  &
+&po y= 235.90,  x=216.00  &
+&po y= 235.90,  x=224.90  &
+&po y= 266.50,  x=224.90  &
+&po y= 266.50,  x=216.00  &
+&po y= 235.90,  x=216.00  &
+
+; Coil collar Upstream Region 10 - moved 6 cm outward in z to |z| 195-272.5 (user, 2026-11-02): 2.5 cm clearance to the BaBar cryostat end at |z| 192.5; outer radius 177.9 -> 181.3 to keep touching the barrel shifted 3.4 cm outward
+&reg    mat=2  &
+&po y=-272.50,  x=144.00  &
+&po y=-195.00,  x=144.00  &
+&po y=-195.00,  x=181.30  &
+&po y=-272.50,  x=181.30  &
+&po y=-272.50,  x=144.00  &
+
+; Coil collar Downstream Region 11 - moved 6 cm outward in z to |z| 195-272.5 (user, 2026-11-02): 2.5 cm clearance to the BaBar cryostat end at |z| 192.5; outer radius 177.9 -> 181.3 to keep touching the barrel shifted 3.4 cm outward
+&reg    mat=2  &
+&po y= 195.00,  x=144.00  &
+&po y= 272.50,  x=144.00  &
+&po y= 272.50,  x=181.30  &
+&po y= 195.00,  x=181.30  &
+&po y= 195.00,  x=144.00  &
