@@ -1,8 +1,14 @@
-== field map list ==
-field map dir besides this dir
+== overview ==
+
+overview about SoLID magnet
+https://solid.jlab.org/wiki/index.php?title=Magnet
+
+== 3D field map list ==
+Made by using TOSCA/OPERA
+
+As those maps are too big for git, they are stored at other places
 web https://solid.jlab.org/files/field/
 jlab /group/solid/www/solid-rh9/html/files/field/
-CAD on wiki https://solid.jlab.org/wiki/index.php/Engineering_Integration_and_CAD#magnet
 
 https://solid.jlab.org/files/field/solenoid_v4.dat
 like v3, but reduce endcap steel to 6" thick, by Jay Benesch  in 2022
@@ -24,6 +30,9 @@ refer to
 https://solid.jlab.org/cgi-bin/public/ShowDocument?docid=54
 https://solid.jlab.org/cgi-bin/public/ShowDocument?docid=62
 
+== 2D field map list ==
+Made by using Poisson Superfish unless mentioned otherwise
+
 solenoid_CLEOv10, unmodified CLEO2 iron,using POSSION, by Zhiwen Zhao
 solenoid_CLEOv9, longer endcap than CLEOv8,using POSSION, by Zhiwen Zhao 
 solenoid_CLEOv8, SoLID CLEO2 magnet map,using POSSION, by Zhiwen Zhao 
@@ -34,7 +43,9 @@ oxford_ptarget,  SoLID SIDIS NH3 target field, map according to oxford 2012 desi
 solenoid_ptarget, SoLID SIDIS NH3 target field, converted from g2p map incorrectly, by Kalyan Allada and Zhiwen Zhao
 g2p_ptarget, original g2p map, using code "g2p_hallbfield.f", by Chao Gu
 
-== tool ==
+am and fce files are original Poisson setup
+
+== script tool ==
 this way to find a field value
 grep -P '216\t0\t 344' solenoid_v3.dat 
 
@@ -47,13 +58,22 @@ plot_solenoid.C  SF7map_compare.C  SF7toGEMCmap.C
 SF7toGEMCmap.C option 0 writes <input>.GEMCmap with field rows only, no <mfield> header, so it is not a ready solenoid_*.dat
 plot_solenoid.C: the Bperp bin at the target itself is undefined (atan2(0,0)); Bz_axis selects int(R)==0, right on 1 cm grids but takes extra rows on a finer grid
 
-== info ===
-cad
-https://solid.jlab.org/wiki/index.php/Engineering_Integration_and_CAD#magnet
+== webpage ==
+"CLEO-II Stage 1 and 2.html"
+  CLEO-II for SoLID: stage 1 (CLEOv10: barrel, coil and collars) and two stage 2 options (CLEOv11: full endcap; CLEOv12: no donut, no back plates, front-only nose)
+  https://htmlpreview.github.io/?https://github.com/JeffersonLab/solid_gemc/blob/master/field/CLEO-II%20Stage%201%20and%202.html
 
+"BaBar Coil in CLEO-II Iron.html"
+  BaBar for SoLID (BaBar cryostat and coil with CLEOv10 iron)
+  https://htmlpreview.github.io/?https://github.com/JeffersonLab/solid_gemc/blob/master/field/BaBar%20Coil%20in%20CLEO-II%20Iron.html
+
+== other reference ===
 old field info
 https://solid.jlab.org/wiki/index.php/Magnetic_Field_Map
 
 old field map
 https://github.com/JeffersonLab/solid_svn/tree/master/solid_gemc/database_io/field/
+
+cad
+https://solid.jlab.org/wiki/index.php/Engineering_Integration_and_CAD#magnet
 
