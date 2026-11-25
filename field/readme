@@ -65,6 +65,7 @@ plot_solenoid.C: the Bperp bin at the target itself is undefined (atan2(0,0)); B
 
 "BaBar Coil in CLEO-II Iron.html"
   BaBar for SoLID (BaBar cryostat and coil with CLEOv10 iron)
+  BABARv10.am with the 1995 TDR coil, BABARv11.am with the as-built coil (1067 turns at 4596 A)
   https://htmlpreview.github.io/?https://github.com/JeffersonLab/solid_gemc/blob/master/field/BaBar%20Coil%20in%20CLEO-II%20Iron.html
 
 == other reference ===

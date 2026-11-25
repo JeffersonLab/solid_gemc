@@ -1,0 +1,131 @@
+SoLID BaBar coil in CLEO-II iron, version 11
+;Created 2026-11-25 from BABARv10.am (user): same iron, cryostat, mesh and solver settings; only the coil changed
+;  from the 1995 TDR design (3 x 1706400 A-turns, r 152-154, z +-172.8) to the as-built BaBar coil:
+;  Bell et al., NPB Proc. Suppl. 78 (1999) 559 and O'Connor et al., IEEE TAS 9 (1999) 847 (references/babar_coil/README.md):
+;  1067 turns in 2 layers, operating current 4596 A (1.50 T in the BaBar iron) -> 4,903,932 A-turns,
+;  winding length 3512 mm and mean radius 1530 mm at room temperature.
+;Cold (4.5 K) dimensions (user, 2026-11-25): shrunk by 0.432 % (3470 -> 3455 mm, the 1995 design's warm-to-cold ratio):
+;  length 349.68 cm (z -174.84 to 174.84), mean radius 152.3; the two 20 mm layers as one block r 150.3-154.3.
+;Grading: one series circuit, thin conductor (4.93 mm) at both ends, thick (8.49 mm) in the middle (O'Connor Table IV:
+;  "thin forward", "thick middle", "thin backward"). No paper gives the section lengths; assumed (user, 2026-11-25):
+;  3 continuous regions, the same transition z in both layers, axial pitch = conductor + 0.5 mm insulation (user,
+;  2026-11-25: the minimum turn-to-turn insulation of the 1997 specification UCRL-ID-126263, 5.3.3; was 0.4 mm, the TDR's,
+;  archive/BABARv11_2026-11-25_delta0.4.am), turns 360 + 347 + 360 (180 + 173.5 + 180 per layer), lengths scaled to
+;  fill 3512 mm, then cold: ends 97.25 cm, centre 155.19 cm; J end/centre = 8.99/5.43 = 1.66.
+;
+&reg kprob=	0	,           	; Declares a POISSON problem
+
+icylin=1,               ; Cylindrical symmetry
+ienergy=1,              ; Calculate the full energy
+xjfact= 1.0             ; The current multiplicative factor
+dx=1.0,                 ; Mesh interval 0.3 originally
+rhogam=0.02,            ; relaxation parameter (2026-10-31: 0.08, the POISSON default, stalled on the saturated CLEOv11 bridge; 0.02 converges, same results). Was 1e-6 (from CLEO_E_03): left saturated steel unconverged (see log.md 2026-10-14)
+;mode=-1                ; Use fixed gamma for material 2
+mode=0                  ; Use variable gamma for material 2
+
+xreg1=  80.,  kreg1=  41,
+xreg2= 120.,  kreg2=  81,
+xreg3= 150.,  kreg3= 141,
+xreg4= 156.,  kreg4= 201,
+xreg5= 190.,  kreg5= 269,
+xreg6= 320.,  kreg6= 399,
+xreg7= 400.,  kreg7= 439,
+              kmax = 464,
+
+
+nbsup=0,                ; Dirichlet boundary condition on upper edge
+nbslf=0,                ; Dirichlet boundary condition on left edge
+nbsrt=0,                ; Dirichlet boundary condition on right edge
+nbslo=0,                ; Dirichlet boundary condition on bottom
+ibound=0 &
+
+;Hall      Region  1
+&po y= -500. ,x=  0.  &
+&po y=  700. ,x=  0.  &
+&po y=  700. ,x=500.  &
+&po y= -500. ,x=500.  &
+&po y= -500. ,x=  0.  &
+
+; Cryostat Region 2 - ALUMINIUM (non-magnetic: mat=1, no current), IR 142, OR 177, z -192.5 to 192.5 (385 cm)
+&reg    mat=1,   cur=0.0 &
+&po y=-192.50,  x=142.00  &
+&po y= 192.50,  x=142.00  &
+&po y= 192.50,  x=177.00  &
+&po y=-192.50,  x=177.00  &
+&po y=-192.50,  x=142.00  &
+
+; BaBar Upstream coil Region 3 - 360 turns x 4596 A = 1654560 A-turns
+&reg    mat=1,   cur=1654560.0 &
+&po y= -174.84,  x=150.30  &
+&po y=  -77.59,  x=150.30  &
+&po y=  -77.59,  x=154.30  &
+&po y= -174.84,  x=154.30  &
+&po y= -174.84,  x=150.30  &
+
+; BaBar Central coil Region 4 - 347 turns x 4596 A = 1594812 A-turns
+&reg    mat=1,   cur=1594812.0 &
+&po y=  -77.59,  x=150.30  &
+&po y=   77.59,  x=150.30  &
+&po y=   77.59,  x=154.30  &
+&po y=  -77.59,  x=154.30  &
+&po y=  -77.59,  x=150.30  &
+
+; BaBar Downstream coil Region 5 - 360 turns x 4596 A = 1654560 A-turns
+&reg    mat=1,   cur=1654560.0 &
+&po y=   77.59,  x=150.30  &
+&po y=  174.84,  x=150.30  &
+&po y=  174.84,  x=154.30  &
+&po y=   77.59,  x=154.30  &
+&po y=   77.59,  x=150.30  &
+
+; Barrel yoke Inner Region 6 (CLEOv10 shape shifted 3.4 cm outward in r, user 2026-11-02): bore 180.0 (3 cm clearance to the BaBar cryostat OR 177), 181.3 over the collars
+&reg    mat=2  &
+&po y=-266.50,  x=216.00  &
+&po y=-266.50,  x=181.30  &
+&po y=-189.00,  x=181.30  &
+&po y=-189.00,  x=180.00  &
+&po y= 189.00,  x=180.00  &
+&po y= 189.00,  x=181.30  &
+&po y= 266.50,  x=181.30  &
+&po y= 266.50,  x=216.00  &
+&po y=-266.50,  x=216.00  &
+
+; Barrel yoke Outer Region 7 (CLEOv10 shape shifted 3.4 cm outward in r, user 2026-11-02)
+&reg    mat=2  &
+&po y=-266.50,  x=224.90  &
+&po y= 266.50,  x=224.90  &
+&po y= 266.50,  x=260.90  &
+&po y=-266.50,  x=260.90  &
+&po y=-266.50,  x=224.90  &
+
+; Slab spacer Upstream Region 8 - they cover about 90% of the circumference, compensated here by the width 34cm->30.6cm; (CLEOv10 shape shifted 3.4 cm outward in r, user 2026-11-02)
+&reg    mat=2  &
+&po y=-266.50,  x=216.00  &
+&po y=-266.50,  x=224.90  &
+&po y=-235.90,  x=224.90  &
+&po y=-235.90,  x=216.00  &
+&po y=-266.50,  x=216.00  &
+
+; Slab spacer Downstream Region 9 - they cover about 90% of the circumference, compensated here by the width 34cm->30.6cm; (CLEOv10 shape shifted 3.4 cm outward in r, user 2026-11-02)
+&reg    mat=2  &
+&po y= 235.90,  x=216.00  &
+&po y= 235.90,  x=224.90  &
+&po y= 266.50,  x=224.90  &
+&po y= 266.50,  x=216.00  &
+&po y= 235.90,  x=216.00  &
+
+; Coil collar Upstream Region 10 - moved 6 cm outward in z to |z| 195-272.5 (user, 2026-11-02): 2.5 cm clearance to the BaBar cryostat end at |z| 192.5; outer radius 177.9 -> 181.3 to keep touching the barrel shifted 3.4 cm outward
+&reg    mat=2  &
+&po y=-272.50,  x=144.00  &
+&po y=-195.00,  x=144.00  &
+&po y=-195.00,  x=181.30  &
+&po y=-272.50,  x=181.30  &
+&po y=-272.50,  x=144.00  &
+
+; Coil collar Downstream Region 11 - moved 6 cm outward in z to |z| 195-272.5 (user, 2026-11-02): 2.5 cm clearance to the BaBar cryostat end at |z| 192.5; outer radius 177.9 -> 181.3 to keep touching the barrel shifted 3.4 cm outward
+&reg    mat=2  &
+&po y= 195.00,  x=144.00  &
+&po y= 272.50,  x=144.00  &
+&po y= 272.50,  x=181.30  &
+&po y= 195.00,  x=181.30  &
+&po y= 195.00,  x=144.00  &
